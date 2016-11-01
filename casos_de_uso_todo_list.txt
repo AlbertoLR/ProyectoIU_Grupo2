@@ -7,6 +7,6 @@ Secretario: Gestionar Usuarios, Gestionar Documentación, Gestionar Horarios, Ge
 
 - Repartir los casos de uso para:
 En el caso de gestionar desglosar en (consulta, alta, baja y modificación)
-Descripción detalla del caso de uso (flujo de eventos)
+Descripción detallada del caso de uso (flujo de eventos)
 Diagrama de Secuencia (Actor y Sistema)
 Diagrama de Secuencia Detallado (Actor, IU, Controlador/es Especifico/s, Modelo/os)
