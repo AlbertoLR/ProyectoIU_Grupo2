@@ -2,3 +2,9 @@ Nombre:
 Actividad: Descripción, Diagrama parcial del Casos de Uso, Diagrama de Clases Parcial del Casos de Uso, DS y DSD de Casos de Uso.
 Descripción concreta: (Aqui ponéis el caso de uso que habeis desarrollado exactamente).
 Fechas: Días y horas(inicio y fin).
+
+Nombre: Iago Gómez
+Actividad: Programación
+Descripción concreta: Comprender y adaptar el esquema de este proyecto https://github.com/lipido/mvcblog a nuestra aplicación para realizar el core.
+Se prepara el layout principal (layout.php), Modelo y Controlador para Usuarios, Login y Platilla para el diseño utilizando bootstrap.
+Fechas: Viernes 18.00-20.00 y Domingo de 19.00 a 22.00
