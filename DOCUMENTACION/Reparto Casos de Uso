@@ -1,8 +1,8 @@
-Alberto:Gestion trabajadores, Gestion Reserva
-Borja: Gestionar categorias, Control Asistencia
-Brais: Gestion Usuarios, Gestion Caja
-Marco: Gestion Inscripcion, Gestion Facturacion
-Bruno: Gestion eventos, Gestionar Espacion
-Luismi: Gestion Documentos, Gestion Pagos
-Angel: Gestionar actividad, Realizar alerta.
-Fer: Gestion horarios, Realizar notificacion.
+Alberto:Gestion trabajadores, Gestion Reserva, Gestionar Controlador, Gestionar Acciones de Controlador.
+Borja: Gestionar categorias, Control Asistencia, Gestionar Actividad Cliente,Gestionar Actividad Trabajadores.
+Brais: Gestion Usuarios, Gestion Caja, Gestionar Perfiles de Usuario, Gestionar Clientes Externos.
+Marco: Gestion Inscripcion, Gestion Facturacion, Gestionar Servicios.
+Bruno: Gestion eventos, Gestionar Espacios.
+Luismi: Gestion Documentos, Gestion Pagos, Gestionar Descuentos.
+Angel: Gestionar actividad, Realizar alerta, , Gestion horarios, Gestionar Calendario.
+Fer: Realizar notificacion, Gestionar Consulta Fisio.
