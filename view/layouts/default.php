@@ -31,11 +31,11 @@ $currentuser = $view->getVariable("currentusername");
 		    <div id="navbar" class="navbar-collapse collapse">
 			<?php if (isset($currentuser)): ?>
 			    <!--  <p><?= sprintf(i18n("Hello %s"), $currentuser) ?></p> -->
-			    <form class="navbar-form navbar-right" action="index.php?controller=users&amp;action=logout" method="POST">
+			    <form class="navbar-form navbar-right" action="index.php?controller=user&amp;action=logout" method="POST">
 				<button type="submit" class="btn btn-success"><?= i18n("Logout") ?></button>
 			    </form>
 			<?php else: ?>
-			    <form class="navbar-form navbar-right" action="index.php?controller=users&amp;action=login" method="POST">
+			    <form class="navbar-form navbar-right" action="index.php?controller=user&amp;action=login" method="POST">
 			    <div class="form-group">
 				<input type="text" placeholder="<?= i18n("Username")?>" class="form-control" name="username">
 			    </div>

@@ -1,5 +1,5 @@
 <?php
-define("DEFAULT_CONTROLLER", "Users");
+define("DEFAULT_CONTROLLER", "user");
 define("DEFAULT_ACTION", "login");
 
 function run() {
@@ -26,7 +26,8 @@ function loadController($controllerName) {
 }
  
 function getControllerClassName($controllerName) {
-    return strToUpper(substr($controllerName, 0, 1)).substr($controllerName, 1)."_Controller";
+    return strToUpper($controllerName)."_Controller";
+    //return strToUpper(substr($controllerName, 0, 1)).substr($controllerName, 1)."_Controller";
 }
 
 run();

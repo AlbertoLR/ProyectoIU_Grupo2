@@ -5,7 +5,7 @@ require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/UserMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
-class Users_Controller extends BaseController {
+class USER_Controller extends BaseController {
     
     private $userMapper;    
   
@@ -27,12 +27,12 @@ class Users_Controller extends BaseController {
             }
         }
         
-        $this->view->render("users", "login");    
+        $this->view->render("user", "login");    
     }
 
     public function logout() {
         session_destroy();
-        $this->view->redirect("users", "login");
+        $this->view->redirect("user", "login");
     }
   
 }
