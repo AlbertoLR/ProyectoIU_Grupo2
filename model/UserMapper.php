@@ -12,12 +12,27 @@ class UserMapper {
 
     public function fetch_all(){
         $sql = $this->db->prepare("SELECT * FROM users");
-        return $sql->execute();
+        $users_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = array();
+
+        foreach ($users_db as $user) {
+            array_push($users, new User($user["id"], $user["username"]));
+        }
+        
+        return $users;
     }
 
-    public function fetch(User $user){
+    public function fetch($userID){
         $sql = $this->db-prepare("SELECT * FROM users WHERE id=?");
-        return $sql->execute(array($user->getID()));
+        $sql->execute(array($userID));
+        $user = $sql->fetch(PDO::FETCH_ASSOC);
+    
+        if($user != null) {
+            return new User($user["id"], $user["username"])
+        } else {
+            return NULL;
+        }
     }
       
     public function insert(User $user) {
