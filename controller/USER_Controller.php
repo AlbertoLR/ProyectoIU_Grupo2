@@ -19,7 +19,7 @@ class USER_Controller extends BaseController {
         if (isset($_POST["username"])){
             if ($this->userMapper->isValidUser($_POST["username"], $_POST["passwd"])) {
                 $_SESSION["currentuser"] = $_POST["username"];
-                $this->view->redirect("calendar", "index");
+                $this->view->redirect("user", "login");
             }else{
                 $errors = array();
                 $errors["general"] = "Username is not valid";
@@ -27,7 +27,7 @@ class USER_Controller extends BaseController {
             }
         }
         
-        $this->view->render("user", "login");    
+        $this->view->render("user", "login");
     }
 
     public function show(){
