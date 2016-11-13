@@ -10,6 +10,7 @@ $currentuser = $view->getVariable("currentusername");
 	<title><?= $view->getVariable("title", "no title") ?></title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<?= $view->getFragment("css") ?>
 	<?= $view->getFragment("javascript") ?>
@@ -26,7 +27,7 @@ $currentuser = $view->getVariable("currentusername");
 			    <span class="icon-bar"></span>
 			    <span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">IU Web</a>
+			<a class="navbar-brand" href="index.php">IU Web</a>
 		    </div>
 		    <div id="navbar" class="navbar-collapse collapse">
 			<?php if (isset($currentuser)): ?>

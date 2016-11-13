@@ -31,12 +31,12 @@ class USER_Controller extends BaseController {
     }
 
     public function show(){
-        $users = $this->UserMapper->fetch_all();
+        $users = $this->userMapper->fetch_all();
         $this->view->setVariable("users", $users);
-        $this->view->render("users", "show");
+        $this->view->render("user", "show");
     }
 
-    public function add(){
+    public function insert(){
         //checkPermissionsNeed
     
         $user = new User();
@@ -50,9 +50,9 @@ class USER_Controller extends BaseController {
                 $user->checkIsValidForCreate();
                 $this->userMapper->insert($user);
 	
-                $this->view->setFlash(sprintf(i18n("User \"%s\" successfully added."),$post ->getUsername()));
+                $this->view->setFlash(sprintf(i18n("User \"%s\" successfully added."),$user->getUsername()));
 	
-                $this->view->redirect("users", "show");
+                $this->view->redirect("user", "show");
 	
             }catch(ValidationException $ex) {      
                 $errors = $ex->getErrors();	
@@ -61,7 +61,7 @@ class USER_Controller extends BaseController {
         }
     
         $this->view->setVariable("user", $user);
-        $this->view->render("user", "add");
+        $this->view->render("user", "insert");
     }
 
 
@@ -84,10 +84,10 @@ class USER_Controller extends BaseController {
             $user->setProfile($_POST["profile"]);
       
             try {
-                $user->checkIsValidForUpdate();
+                $user->checkIsValidForCreate();
                 $this->userMapper->update($user);
                 
-                $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$post ->getUsername()));
+                $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
 	
                 $this->view->redirect("user", "show");	
 	
@@ -102,7 +102,7 @@ class USER_Controller extends BaseController {
     }
 
     public function delete() {
-        if (!isset($_POST["id"])) {
+        if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
         
@@ -117,7 +117,7 @@ class USER_Controller extends BaseController {
     
         $this->userMapper->delete($user);
     
-        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$post ->getUsername()));
+        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
         $this->view->redirect("user", "show");
     }
 

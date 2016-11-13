@@ -12,6 +12,7 @@ class UserMapper {
 
     public function fetch_all(){
         $sql = $this->db->prepare("SELECT * FROM users");
+        $sql->execute();
         $users_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 
         $users = array();
@@ -24,7 +25,7 @@ class UserMapper {
     }
 
     public function fetch($userID){
-        $sql = $this->db-prepare("SELECT * FROM users WHERE id=?");
+        $sql = $this->db->prepare("SELECT * FROM users WHERE id=?");
         $sql->execute(array($userID));
         $user = $sql->fetch(PDO::FETCH_ASSOC);
     
@@ -41,7 +42,7 @@ class UserMapper {
     }
 
     public function update(User $user){
-        $sql = $this->db-prepare("UPDATE users SET username=?, passwd=?, profile=? where id=?");
+        $sql = $this->db->prepare("UPDATE users SET username=?, passwd=?, profile=? where id=?");
         $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile(), $user->getID()));
     }
     

@@ -13,6 +13,6 @@ $errors = $view->getVariable("errors");
       <div class="container">
         <h1>Wellcome to IU Web</h1>
         <p>This is just shit by the moment.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="index.php?controller=user&action=show" role="button">Fetch Users here &raquo;</a></p>
       </div>
     </div>

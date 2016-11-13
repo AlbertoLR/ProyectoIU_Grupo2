@@ -36,11 +36,11 @@ class User {
         return $this->passwd;
     }
       
-    public function setPassword($passwd) {
+    public function setPasswd($passwd) {
         $this->passwd = $passwd;
     }
 
-    public function getProfile($profile){
+    public function getProfile(){
         return $this->profile;
     }
     
@@ -48,7 +48,7 @@ class User {
         $this->profile = $profile;
     }
     
-    public function checkIsValidForRegister() {
+    public function checkIsValidForCreate() {
         $errors = array();
         if (strlen($this->username) < 5) {
             $errors["username"] = "Username must be at least 5 characters length";
