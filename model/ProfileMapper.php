@@ -12,22 +12,38 @@ class ProfileMapper {
 
     public function fetch_all(){
         $sql = $this->db->prepare("SELECT * FROM profile");
-        return $sql->execute();
+        $sql->execute();
+        $profiles_db = $sql->fetcAll(PDO::FETCH_ASSOC);
+
+        $profiles = array();
+
+        foreach ($profiles_db as $profile) {
+            array_push($profiles, new Profile($profile["id"], $profile["profilename"]));
+        }
+
+        return $profiles;
     }
 
-    public function fetch(Profile $profile){
-        $sql = $this->db-prepare("SELECT * FROM profile WHERE id=?");
-        return $sql->execute(array($profile->getID()));
+    public function fetch($profileID){
+        $sql = $this->db->prepare("SELECT * FROM profile WHERE id=?");
+        $sql->execute(array($profileID));
+        $profile = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if ($user != NULL) {
+            return new Profile($profile["id"], $profile["profilename"]);
+        } else {
+            return NULL;
+        }
     }
-      
+    
     public function insert(Profile $profile) {
-        $sql = $this->db->prepare("INSERT INTO profile(name) values (?)");
-        $sql->execute(array($profile->name()));
+        $sql = $this->db->prepare("INSERT INTO profile(profilename) values (?)");
+        $sql->execute(array($profile->getProfileName()));
     }
 
     public function update(Profile $profile){
         $sql = $this->db-prepare("UPDATE profile SET name=? where id=?");
-        $sql->execute(array($profile->getName(), $profile->getID()));
+        $sql->execute(array($profile->getProfileName(), $profile->getID()));
     }
     
     public function delete(Profile $profile){
@@ -36,7 +52,7 @@ class ProfileMapper {
     }
 
     public function nameExists($name) {
-        $sql = $this->db->prepare("SELECT count(name) FROM profile where name=?");
+        $sql = $this->db->prepare("SELECT count(profilename) FROM profile where name=?");
         $sql->execute(array($name));
     
         if ($sql->fetchColumn() > 0) {   

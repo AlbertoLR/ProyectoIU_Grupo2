@@ -28,9 +28,9 @@ class Action {
         $this->actionName = $actionName;
     }
     
-    public function checkIsValidForRegister() {
+    public function checkIsValidForCreate() {
         $errors = array();
-        if (strlen($this->actionName) < 5) {
+        if (strlen($this->actionName) < 2) {
             $errors["actionname"] = "actionName must be at least 5 characters length";
 	
         }
@@ -38,3 +38,4 @@ class Action {
             throw new ValidationException($errors, "action is not valid");
         }
     } 
+}

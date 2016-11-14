@@ -7,7 +7,7 @@ require_once(__DIR__."/../controller/BaseController.php");
 
 class ACTION_Controller extends BaseController {
     
-    private $actionMapper;    
+    private $actionMapper;
   
     public function __construct() {
         parent::__construct();
@@ -65,7 +65,7 @@ class ACTION_Controller extends BaseController {
             $action->setActionName($_POST["actionname"]);
       
             try {
-                $user->checkIsValidForCreate();
+                $action->checkIsValidForCreate();
                 $this->actionMapper->update($action);                
                 $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully updated."), $action->getActionName()));
                 $this->view->redirect("action", "show");	
@@ -93,7 +93,7 @@ class ACTION_Controller extends BaseController {
             throw new Exception("no such action with id: ".$actionid);
         }
     
-        $this->actionMapper->delete($user);
+        $this->actionMapper->delete($action);
         $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully deleted."), $action->getActionName()));
         $this->view->redirect("action", "show");
     }

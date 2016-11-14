@@ -27,7 +27,6 @@ function loadController($controllerName) {
  
 function getControllerClassName($controllerName) {
     return strToUpper($controllerName)."_Controller";
-    //return strToUpper(substr($controllerName, 0, 1)).substr($controllerName, 1)."_Controller";
 }
 
 run();

@@ -1,5 +1,7 @@
 <?php
 
+//dni, nome, apelidos, data nacemento, enderezo, mail, conta bancaria, tipo de contrato, comentarios, documentos
+
 require_once(__DIR__."/../core/ValidationException.php");
 
 class User {

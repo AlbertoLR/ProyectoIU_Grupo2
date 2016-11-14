@@ -38,9 +38,9 @@ class Controller {
         $this->action = $action;
     }
     
-    public function checkIsValidForRegister() {
+    public function checkIsValidForCreate() {
         $errors = array();
-        if (strlen($this->controllerName) < 5) {
+        if (strlen($this->controllerName) < 3) {
             $errors["controllername"] = "controllerName must be at least 5 characters length";
 	
         }

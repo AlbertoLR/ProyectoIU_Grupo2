@@ -28,9 +28,9 @@ class Profile {
         $this->profileName = $profileName;
     }  
     
-    public function checkIsValidForRegister() {
+    public function checkIsValidForCreate() {
         $errors = array();
-        if (strlen($this->name) < 5) {
+        if (strlen($this->name) < 3) {
             $errors["profilename"] = "profileName must be at least 5 characters length";
 	
         }

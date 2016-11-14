@@ -12,21 +12,21 @@ class ActionMapper {
 
     public function fetch_all(){
         $sql = $this->db->prepare("SELECT * FROM action");
-        return $sql->execute();
-        $action_db = $sql->fetchAll(PDO::FETCH:ASSOC);
+        $sql->execute();
+        $actions_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 
         $actions = array();
 
-        foreach ($action_db as $action){
+        foreach ($actions_db as $action) {
             array_push($actions, new Action($action["id"], $action["actionname"]));
         }
 
         return $actions;
     }
 
-    public function fetch(Action $action){
-        $sql = $this->db-prepare("SELECT * FROM action WHERE id=?");
-        $sql->execute(array($action->getActionName(), $action->getID()));
+    public function fetch($actionID){
+        $sql = $this->db->prepare("SELECT * FROM action WHERE id=?");
+        $sql->execute(array($actionID));
         $action = $sql->fetch(PDO::FETCH_ASSOC);
 
         if($action != NULL) {
@@ -39,12 +39,12 @@ class ActionMapper {
       
     public function insert(Action $action) {
         $sql = $this->db->prepare("INSERT INTO action(actionname) values (?)");
-        $sql->execute(array($action->actionName()));
+        $sql->execute(array($action->getActionName()));
     }
 
     public function update(Action $action){
-        $sql = $this->db-prepare("UPDATE action SET actionname=? where id=?");
-        $sql->execute(array($action->getControllerName(), $action->getID()));
+        $sql = $this->db->prepare("UPDATE action SET actionname=? where id=?");
+        $sql->execute(array($action->getActionName(), $action->getID()));
     }
     
     public function delete(Action $action){
