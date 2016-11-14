@@ -18,7 +18,7 @@ class UserMapper {
         $users = array();
 
         foreach ($users_db as $user) {
-            array_push($users, new User($user["id"], $user["username"]));
+            array_push($users, new User($user["id"], $user["username"], NULL, $user["profile"]));
         }
         
         return $users;

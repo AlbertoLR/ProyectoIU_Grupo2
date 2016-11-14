@@ -18,14 +18,16 @@ $errors = $view->getVariable("errors");
         <tr>
           <th>#</th>
           <th>Username</th>
+          <th>Profile</th>
           <th style="width: 72px;"></th>
         </tr>
       </thead>
       <tbody>
 	  <?php foreach($users as $user){ ?>
           <tr>
-	  <td><?php echo $user->getID(); ?></td>
+	      <td><?php echo $user->getID(); ?></td>
           <td><?php echo $user->getUsername(); ?></td>
+          <td><?php echo $user->getProfile(); ?></td>
           <td>
               <a href="index.php?controller=user&action=update&id=<?php echo $user->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
               <a href="index.php?controller=user&action=delete&id=<?php echo $user->getID();  ?>" role="button" data-toggle="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
