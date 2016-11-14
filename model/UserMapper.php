@@ -30,7 +30,7 @@ class UserMapper {
         $user = $sql->fetch(PDO::FETCH_ASSOC);
     
         if($user != null) {
-            return new User($user["id"], $user["username"]);
+            return new User($user["id"], $user["username"], NULL, $user["profile"]);
         } else {
             return NULL;
         }
@@ -42,8 +42,14 @@ class UserMapper {
     }
 
     public function update(User $user){
-        $sql = $this->db->prepare("UPDATE users SET username=?, passwd=?, profile=? where id=?");
-        $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile(), $user->getID()));
+        if ($user->getPasswd() != NULL){
+            $sql = $this->db->prepare("UPDATE users SET username=?, passwd=?, profile=? where id=?");
+            $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile(), $user->getID()));
+        }
+        else{
+            $sql = $this->db->prepare("UPDATE users SET username=?, profile=? where id=?");
+            $sql->execute(array($user->getUsername(), $user->getProfile(), $user->getID()));
+        }
     }
     
     public function delete(User $user){

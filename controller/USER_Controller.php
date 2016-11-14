@@ -85,12 +85,9 @@ class USER_Controller extends BaseController {
       
             try {
                 $user->checkIsValidForCreate();
-                $this->userMapper->update($user);
-                
+                $this->userMapper->update($user);                
                 $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
-	
                 $this->view->redirect("user", "show");	
-	
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
@@ -116,7 +113,6 @@ class USER_Controller extends BaseController {
         }
     
         $this->userMapper->delete($user);
-    
         $this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
         $this->view->redirect("user", "show");
     }
