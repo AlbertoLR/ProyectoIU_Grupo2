@@ -42,11 +42,11 @@ class UserMapper {
     }
 
     public function update(User $user){
-        if ($user->getPasswd() != NULL){
+        if (!empty($user->getPasswd())) {
             $sql = $this->db->prepare("UPDATE users SET username=?, passwd=?, profile=? where id=?");
             $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile(), $user->getID()));
         }
-        else{
+        else {
             $sql = $this->db->prepare("UPDATE users SET username=?, profile=? where id=?");
             $sql->execute(array($user->getUsername(), $user->getProfile(), $user->getID()));
         }
