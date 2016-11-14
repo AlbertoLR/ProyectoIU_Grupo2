@@ -5,7 +5,7 @@ require_once(__DIR__."/../model/Profile.php");
 require_once(__DIR__."/../model/ProfileMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
-class ACTION_Controller extends BaseController {
+class PROFILE_Controller extends BaseController {
     
     private $profileMapper;
   
