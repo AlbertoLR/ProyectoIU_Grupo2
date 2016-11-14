@@ -4,8 +4,8 @@ require_once(__DIR__."/../core/ValidationException.php");
 
 class Action {
 
-    private $id;
     private $actionName;
+    private $id;
   
     public function __construct($id=NULL, $actionName=NULL) {
         $this->id = $id;
@@ -15,11 +15,11 @@ class Action {
     public function getID() {
         return $this->id;
     }
-    
+
     public function setID($id) {
         $this->id = $id;
     }
-  
+    
     public function getActionName() {
         return $this->actionName;
     }

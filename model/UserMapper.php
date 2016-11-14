@@ -29,7 +29,7 @@ class UserMapper {
         $sql->execute(array($userID));
         $user = $sql->fetch(PDO::FETCH_ASSOC);
     
-        if($user != null) {
+        if($user != NULL) {
             return new User($user["id"], $user["username"], NULL, $user["profile"]);
         } else {
             return NULL;
