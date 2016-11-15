@@ -16,7 +16,8 @@ class BaseController {
         }
     
         if(isset($_SESSION["currentuser"])) {  
-            $this->currentUser = new User($_SESSION["currentuser"]);      
+            $this->currentUser = new User();
+            $this->currentUser->setUsername($_SESSION["currentuser"]);
             $this->view->setVariable("currentusername", 
                                      $this->currentUser->getUsername());
         }     
