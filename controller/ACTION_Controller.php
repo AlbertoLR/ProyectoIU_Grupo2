@@ -21,6 +21,22 @@ class ACTION_Controller extends BaseController {
         $this->view->render("action", "show");
     }
 
+    public function showone(){
+        if (!isset($_REQUEST["id"])) {
+            throw new Exception("An action id is mandatory");
+        }
+
+        $actionid = $_REQUEST["id"];
+        $action = $this->actionMapper->fetch($actionid);
+        
+        if ($action == NULL) {
+            throw new Exception("no such action with id: ".$actionid);
+        }
+
+        $this->view->setVariable("action", $action);
+        $this->view->render("action", "showone");
+    }
+
     public function insert(){
         //checkPermissionsNeed
     
@@ -30,12 +46,17 @@ class ACTION_Controller extends BaseController {
             $action->setActionName($_POST["actionname"]);
 			 
             try {
-                $action->checkIsValidForCreate();
-                $this->actionMapper->insert($action);
+                if (!$this->actionMapper->nameExists($_POST["actionname"])){
+                    $action->checkIsValidForCreate();
+                    $this->actionMapper->insert($action);
 	
-                $this->view->setFlash(sprintf(i18n("User \"%s\" successfully added."), $action->getActionName()));
-	
-                $this->view->redirect("action", "show");
+                    $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully added."), $action->getActionName()));
+                    $this->view->redirect("action", "show");
+                } else {
+                    $errors = array();
+	                $errors["general"] = "Action already exists";
+	                $this->view->setVariable("errors", $errors);
+                }
 	
             }catch(ValidationException $ex) {      
                 $errors = $ex->getErrors();	
@@ -65,10 +86,16 @@ class ACTION_Controller extends BaseController {
             $action->setActionName($_POST["actionname"]);
       
             try {
-                $action->checkIsValidForCreate();
-                $this->actionMapper->update($action);                
-                $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully updated."), $action->getActionName()));
-                $this->view->redirect("action", "show");	
+                if (!$this->actionMapper->nameExists($_POST["actionname"])){
+                    $action->checkIsValidForCreate();
+                    $this->actionMapper->update($action);                
+                    $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully updated."), $action->getActionName()));
+                    $this->view->redirect("action", "show");
+                } else {
+                    $errors = array();
+	                $errors["general"] = "Action already exists";
+	                $this->view->setVariable("errors", $errors);
+                }
             } catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
@@ -92,10 +119,16 @@ class ACTION_Controller extends BaseController {
         if ($action == NULL) {
             throw new Exception("no such action with id: ".$actionid);
         }
-    
-        $this->actionMapper->delete($action);
-        $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully deleted."), $action->getActionName()));
-        $this->view->redirect("action", "show");
+        
+        if (isset($_POST["submit"])) {
+            if ($_POST["submit"] == "yes"){
+                $this->actionMapper->delete($action);
+                $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully deleted."), $action->getActionName()));
+            }
+            $this->view->redirect("action", "show");
+        }
+        $this->view->setVariable("action", $action);
+        $this->view->render("action", "delete");
     }
   
 }

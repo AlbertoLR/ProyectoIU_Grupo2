@@ -11,7 +11,7 @@ class UserMapper {
     }
 
     public function fetch_all(){
-        $sql = $this->db->prepare("SELECT * FROM users");
+        $sql = $this->db->prepare("SELECT * FROM user");
         $sql->execute();
         $users_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -25,7 +25,7 @@ class UserMapper {
     }
 
     public function fetch($userID){
-        $sql = $this->db->prepare("SELECT * FROM users WHERE id=?");
+        $sql = $this->db->prepare("SELECT * FROM user WHERE id=?");
         $sql->execute(array($userID));
         $user = $sql->fetch(PDO::FETCH_ASSOC);
     
@@ -37,37 +37,42 @@ class UserMapper {
     }
       
     public function insert(User $user) {
-        $sql = $this->db->prepare("INSERT INTO users(username, passwd, profile) values (?,?,?)");
+        $sql = $this->db->prepare("INSERT INTO user(username, passwd, profile) values (?,?,?)");
         $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile()));
     }
 
     public function update(User $user){
         if (!empty($user->getPasswd())) {
-            $sql = $this->db->prepare("UPDATE users SET username=?, passwd=?, profile=? where id=?");
+            $sql = $this->db->prepare("UPDATE user SET username=?, passwd=?, profile=? where id=?");
             $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile(), $user->getID()));
         }
         else {
-            $sql = $this->db->prepare("UPDATE users SET username=?, profile=? where id=?");
+            $sql = $this->db->prepare("UPDATE user SET username=?, profile=? where id=?");
             $sql->execute(array($user->getUsername(), $user->getProfile(), $user->getID()));
         }
     }
     
     public function delete(User $user){
-        $sql = $this->db->prepare("DELETE FROM users where id=?");
+        $sql = $this->db->prepare("DELETE FROM user where id=?");
         $sql->execute(array($user->getID()));
     }
 
     public function usernameExists($username) {
-        $sql = $this->db->prepare("SELECT count(username) FROM users where username=?");
+        $sql = $this->db->prepare("SELECT count(username) FROM user where username=?");
         $sql->execute(array($username));
     
-        if ($sql->fetchColumn() > 0) {   
+        if ($sql->fetchColumn() > 0) {
             return true;
-        } 
+        }
     }
 
     public function isValidUser($username, $passwd) {
-        $sql = $this->db->prepare("SELECT count(username) FROM users where username=? and passwd=?");
+
+        if (empty($passwd)){
+            return false;
+        }
+        
+        $sql = $this->db->prepare("SELECT count(username) FROM user where username=? and passwd=?");
         $sql->execute(array($username, $passwd));
     
         if ($sql->fetchColumn() > 0) {
@@ -76,12 +81,12 @@ class UserMapper {
     }
 
     public function assignController(User $user, Controller $controller){
-        $sql = $this->db->prepare("INSERT INTO users_controller values(?,?)");
+        $sql = $this->db->prepare("INSERT INTO user_controller values(?,?)");
         $sql->execute(array($user->getID(), $controller->getID()));
     }
 
     public function unAssignController(User $user, Controller $controller){
-        $sql = $this->db->prepare("DELETE FROM users_controller where id=?");
+        $sql = $this->db->prepare("DELETE FROM user_controller where id=?");
         $sql->execute(array($user->getID().$controller->getID()));
     }
 }

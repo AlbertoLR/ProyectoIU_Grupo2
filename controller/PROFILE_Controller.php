@@ -21,22 +21,43 @@ class PROFILE_Controller extends BaseController {
         $this->view->render("profile", "show");
     }
 
+    public function showone(){
+        if (!isset($_REQUEST["id"])) {
+            throw new Exception("A profile id is mandatory");
+        }
+
+        $profileid = $_REQUEST["id"];
+        $profile = $this->profileMapper->fetch($profileid);
+        
+        if ($profile == NULL) {
+            throw new Exception("no such profile with id: ".$profileid);
+        }
+
+        $this->view->setVariable("profile", $profile);
+        $this->view->render("profile", "showone");
+    }
+
     public function insert(){
         //checkPermissionsNeed
         
         $profile = new Profile();
     
         if (isset($_POST["submit"])) { 
-            $action->setProfileName($_POST["profilename"]);
+            $profile->setProfileName($_POST["profilename"]);
 			 
             try {
-                $action->checkIsValidForCreate();
-                $this->profileMapper->insert($profile);
+                if (!$this->profileMapper->nameExists($_POST["profilename"])){
+                    $profile->checkIsValidForCreate();
+                    $this->profileMapper->insert($profile);
 	
-                $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully added."), $profile->getProfileName()));
+                    $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully added."), $profile->getProfileName()));
 	
-                $this->view->redirect("profile", "show");
-	
+                    $this->view->redirect("profile", "show");
+                } else {
+                    $errors = array();
+	                $errors["general"] = "Profile already exists";
+	                $this->view->setVariable("errors", $errors);
+                }
             }catch(ValidationException $ex) {     
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
@@ -64,10 +85,16 @@ class PROFILE_Controller extends BaseController {
             $profile->setProfileName($_POST["profilename"]);
       
             try {
+                if (!$this->profileMapper->nameExists($_POST["profilename"])){
                 $profile->checkIsValidForCreate();
                 $this->profileMapper->update($profile);                
                 $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully updated."), $profile->getProfileName()));
-                $this->view->redirect("profile", "show");	
+                $this->view->redirect("profile", "show");
+                } else {
+                    $errors = array();
+	                $errors["general"] = "Profile already exists";
+	                $this->view->setVariable("errors", $errors);
+                }
             } catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
@@ -91,9 +118,15 @@ class PROFILE_Controller extends BaseController {
         if ($profile == NULL) {
             throw new Exception("no such profile with id: ".$profileid);
         }
-    
-        $this->profileMapper->delete($profile);
-        $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully deleted."), $profile->getProfileName()));
-        $this->view->redirect("profile", "show");
+
+        if (isset($_POST["submit"])) {
+            if ($_POST["submit"] == "yes"){
+                $this->profileMapper->delete($profile);
+                $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully deleted."), $profile->getProfileName()));
+            }
+            $this->view->redirect("profile", "show");
+        }
+        $this->view->setVariable("profile", $profile);
+        $this->view->render("profile", "delete");
     }
 }

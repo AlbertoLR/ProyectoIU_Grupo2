@@ -52,7 +52,7 @@ class User {
     
     public function checkIsValidForCreate() {
         $errors = array();
-        if (strlen($this->username) < 5) {
+        if (strlen($this->username) < 4) {
             $errors["username"] = "Username must be at least 5 characters length";
 	
         }

@@ -27,11 +27,10 @@ $currentuser = $view->getVariable("currentusername");
 			    <span class="icon-bar"></span>
 			    <span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.php">IU Web</a>
+			<a class="navbar-brand" href="index.php">Moovett</a>
 		    </div>
 		    <div id="navbar" class="navbar-collapse collapse">
 			<?php if (isset($currentuser)): ?>
-			    <!--  <p><?= sprintf(i18n("Hello %s"), $currentuser) ?></p> -->
 			    <form class="navbar-form navbar-right" action="index.php?controller=user&amp;action=logout" method="POST">
 				<button type="submit" class="btn btn-success"><?= i18n("Logout") ?></button>
 			    </form>

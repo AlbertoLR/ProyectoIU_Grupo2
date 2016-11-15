@@ -27,8 +27,9 @@ class ControllerMapper {
     public function fetch($controllerID){
         $sql = $this->db->prepare("SELECT * FROM controller WHERE id=?");
         $sql->execute(array($controllerID));
+        $controller = $sql->fetch(PDO::FETCH_ASSOC);
         
-        if ($action != NULL) {
+        if ($controller != NULL) {
             return new Controller($controller["id"], $controller["controllername"], $controller["action"]);
         } else {
             return NULL;
@@ -41,7 +42,7 @@ class ControllerMapper {
     }
 
     public function update(Controller $controller) {
-        $sql = $this->db-prepare("UPDATE controller SET controllername=? action=? where id=?");
+        $sql = $this->db->prepare("UPDATE controller SET controllername=?, action=? where id=?");
         $sql->execute(array($controller->getControllerName(), $controller->getAction(), $controller->getID()));
     }
     
@@ -50,9 +51,9 @@ class ControllerMapper {
         $sql->execute(array($controller->getID()));
     }
 
-    public function nameExists($controllerName) {
-        $sql = $this->db->prepare("SELECT count(controllername) FROM controller where controllername=?");
-        $sql->execute(array($controllerName));
+    public function nameExists($controllerName, $action) {
+        $sql = $this->db->prepare("SELECT count(controllername) FROM controller where controllername=? and action=?");
+        $sql->execute(array($controllerName, $action));
     
         if ($sql->fetchColumn() > 0) {
             return true;

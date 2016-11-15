@@ -30,7 +30,7 @@ class Profile {
     
     public function checkIsValidForCreate() {
         $errors = array();
-        if (strlen($this->name) < 3) {
+        if (strlen($this->profileName) < 3) {
             $errors["profilename"] = "profileName must be at least 5 characters length";
 	
         }

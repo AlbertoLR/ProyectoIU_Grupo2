@@ -13,7 +13,7 @@ class ProfileMapper {
     public function fetch_all(){
         $sql = $this->db->prepare("SELECT * FROM profile");
         $sql->execute();
-        $profiles_db = $sql->fetcAll(PDO::FETCH_ASSOC);
+        $profiles_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 
         $profiles = array();
 
@@ -29,7 +29,7 @@ class ProfileMapper {
         $sql->execute(array($profileID));
         $profile = $sql->fetch(PDO::FETCH_ASSOC);
 
-        if ($user != NULL) {
+        if ($profile != NULL) {
             return new Profile($profile["id"], $profile["profilename"]);
         } else {
             return NULL;
@@ -52,7 +52,7 @@ class ProfileMapper {
     }
 
     public function nameExists($name) {
-        $sql = $this->db->prepare("SELECT count(profilename) FROM profile where name=?");
+        $sql = $this->db->prepare("SELECT count(profilename) FROM profile where profilename=?");
         $sql->execute(array($name));
     
         if ($sql->fetchColumn() > 0) {   

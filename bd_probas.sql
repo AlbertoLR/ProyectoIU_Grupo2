@@ -22,7 +22,7 @@ create table action (
 create table controller (
        id int auto_increment PRIMARY KEY,
        controllername varchar(25),
-       action varchar(25) references action(id)
+       action varchar(25) references action(actionname)
 );
 
 create table user_controller(
