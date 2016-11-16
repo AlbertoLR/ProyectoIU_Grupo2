@@ -13,6 +13,7 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
     <div class="container">
 	<a href="index.php?controller=user&amp;action=insert" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create User</a>
+    <a href="index.php?controller=userperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Permissions</a>
 <table class="table">
       <thead>
         <tr>

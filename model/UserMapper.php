@@ -79,14 +79,4 @@ class UserMapper {
             return true;
         }
     }
-
-    public function assignController(User $user, Controller $controller){
-        $sql = $this->db->prepare("INSERT INTO user_controller values(?,?)");
-        $sql->execute(array($user->getID(), $controller->getID()));
-    }
-
-    public function unAssignController(User $user, Controller $controller){
-        $sql = $this->db->prepare("DELETE FROM user_controller where id=?");
-        $sql->execute(array($user->getID().$controller->getID()));
-    }
 }

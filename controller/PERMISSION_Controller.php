@@ -60,7 +60,6 @@ class PERMISSION_Controller extends BaseController {
             }
         }
 
-        //$this->view->redirect("permission", "show");
         $this->show();
     }
 

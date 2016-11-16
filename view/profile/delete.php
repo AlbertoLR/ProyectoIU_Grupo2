@@ -14,8 +14,8 @@ $errors = $view->getVariable("errors");
     <div class="container">
         <h1><?= i18n("Delete Profile")." ".$profile->getProfileName()?></h1>
       <form action="index.php?controller=profile&amp;action=delete" method="POST">
-        <button type="submit" name="submit"class="btn btn-default"><?= i18n("Yes") ?></button>
-        <button type="submit" name="submit"class="btn btn-default"><?= i18n("No") ?></button>
+        <button type="submit" name="submit" value="yes" class="btn btn-default"><?= i18n("Yes") ?></button>
+        <button type="submit" name="submit" value="no" class="btn btn-default"><?= i18n("No") ?></button>
         <input type="hidden" name="id" value="<?= $profile->getID() ?>">
       </form>
     </div>

@@ -103,12 +103,17 @@ class USER_Controller extends BaseController {
         }
     
         if (isset($_POST["submit"])) {
-            $user->setUsername($_POST["username"]);
             $user->setPasswd($_POST["passwd"]);
             $user->setProfile($_POST["profile"]);
       
             try {
-                if (!$this->userMapper->usernameExists($user->getUsername())){
+                if ($user->getUsername() == $_POST["username"]){
+                    $user->checkIsValidForCreate();
+                    $this->userMapper->update($user);                
+                    $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
+                    $this->view->redirect("user", "show");
+                } else if (!$this->userMapper->usernameExists($_POST["username"])){
+                    $user->setUsername($_POST["username"]);
                     $user->checkIsValidForCreate();
                     $this->userMapper->update($user);                
                     $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
