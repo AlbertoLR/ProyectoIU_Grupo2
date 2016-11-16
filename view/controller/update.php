@@ -20,6 +20,6 @@ $errors = $view->getVariable("errors");
           <input type="hidden" name="id" value="<?= $controller->getID() ?>">
         </div>
         <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update Controller") ?></button>
-      </div>
-</form>
+        </div>
+      </form>
 </div>

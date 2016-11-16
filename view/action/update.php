@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $view->setVariable("title", "Update Action");
@@ -14,9 +14,12 @@ $errors = $view->getVariable("errors");
     <div class="container">
       <h1><?= i18n("Update Action")?></h1>
       <form action="index.php?controller=action&amp;action=update" method="POST">
-        <?= i18n("Action Name") ?>: <input type="text" name="actionname" value="<?php echo $action->getActionName(); ?>">
-      <input type="hidden" name="id" value="<?= $action->getID() ?>">
-      <input type="submit" name="submit" value="<?= i18n("Update Action") ?>">
-</form>
+        <div class="form-group">
+          <label><?= i18n("Action Name") ?>:</label>
+          <input type="text" name="actionname" class="form-control" value="<?php echo $action->getActionName(); ?>" required="required">
+          <input type="hidden" name="id" value="<?= $action->getID() ?>">
+        </div>
+        <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update Action") ?></button>
+      </form>
     </div>
 </div>
