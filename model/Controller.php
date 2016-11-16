@@ -6,7 +6,6 @@ class Controller {
 
     private $id;
     private $controllerName;
-    private $action;
   
     public function __construct($id=NULL, $controllerName=NULL, $action=NULL) {
         $this->id = $id;
@@ -29,19 +28,11 @@ class Controller {
     public function setControllerName($controllerName) {
         $this->controllerName = $controllerName;
     }
-
-    public function getAction() {
-        return $this->action;
-    }
-    
-    public function setAction($action) {
-        $this->action = $action;
-    }
     
     public function checkIsValidForCreate() {
         $errors = array();
         if (strlen($this->controllerName) < 3) {
-            $errors["controllername"] = "controllerName must be at least 5 characters length";
+            $errors["controllername"] = "controllerName must be at least 3 characters length";
 	
         }
         if (sizeof($errors)>0){

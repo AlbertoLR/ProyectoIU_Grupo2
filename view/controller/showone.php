@@ -15,6 +15,5 @@ $errors = $view->getVariable("errors");
         <h1><?= i18n("Controller")?></h1>
         ID: <?= $controller->getID() ?><br />
         Controller: <?= $controller->getControllerName() ?><br />
-        Action: <?= $controller->getAction() ?><br />
     </div>
 </div>

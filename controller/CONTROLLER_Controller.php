@@ -3,8 +3,6 @@ require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Controller.php");
 require_once(__DIR__."/../model/ControllerMapper.php");
-require_once(__DIR__."/../model/Action.php");
-require_once(__DIR__."/../model/ActionMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
 class CONTROLLER_Controller extends BaseController {
@@ -46,7 +44,6 @@ class CONTROLLER_Controller extends BaseController {
     
         if (isset($_POST["submit"])) { 
             $controller->setControllerName($_POST["controllername"]);
-            $controller->setAction($_POST["action"]);
             try {
                 if (!$this->controllerMapper->nameExists($_POST["controllername"], $_POST["action"])){
                     $controller->checkIsValidForCreate();
@@ -66,13 +63,9 @@ class CONTROLLER_Controller extends BaseController {
             }
         }
 
-        $actionMapper = new ActionMapper();
-        $actions = $actionMapper->fetch_all();
-        $this->view->setVariable("actions", $actions);
         $this->view->setVariable("controller", $controller);
         $this->view->render("controller", "insert");
     }
-
 
     public function update() {
         if (!isset($_REQUEST["id"])) {
@@ -89,10 +82,9 @@ class CONTROLLER_Controller extends BaseController {
     
         if (isset($_POST["submit"])) {
             $controller->setControllerName($_POST["controllername"]);
-            $controller->setAction($_POST["action"]);
       
             try {
-                if (!$this->controllerMapper->nameExists($_POST["controllername"], $_POST["action"])){
+                if (!$this->controllerMapper->nameExists($_POST["controllername"])){
                     $controller->checkIsValidForCreate();
                     $this->controllerMapper->update($controller);                
                     $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully updated."), $controller->getControllerName()));
@@ -108,9 +100,6 @@ class CONTROLLER_Controller extends BaseController {
             }
         }
 
-        $actionMapper = new ActionMapper();
-        $actions = $actionMapper->fetch_all();
-        $this->view->setVariable("actions", $actions);
         $this->view->setVariable("controller", $controller);
         $this->view->render("controller", "update");    
     }

@@ -1,7 +1,7 @@
 <?php  
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
-$controllers = array('user', 'profile', 'controller', 'action');
+$controllers = array('user', 'profile', 'controller', 'action', 'permission');
 $currentuser = $view->getVariable("currentusername");
 $view->setVariable("title", "Login");
 $errors = $view->getVariable("errors");

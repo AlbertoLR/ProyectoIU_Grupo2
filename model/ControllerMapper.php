@@ -18,7 +18,7 @@ class ControllerMapper {
         $controllers = array();
 
         foreach ($controllers_db as $controller) {
-            array_push($controllers, new Controller($controller["id"], $controller["controllername"], $controller["action"]));
+            array_push($controllers, new Controller($controller["id"], $controller["controllername"]));
         }
 
         return $controllers;
@@ -30,20 +30,20 @@ class ControllerMapper {
         $controller = $sql->fetch(PDO::FETCH_ASSOC);
         
         if ($controller != NULL) {
-            return new Controller($controller["id"], $controller["controllername"], $controller["action"]);
+            return new Controller($controller["id"], $controller["controllername"]);
         } else {
             return NULL;
         }
     }
       
     public function insert(Controller $controller) {
-        $sql = $this->db->prepare("INSERT INTO controller(controllername, action) values (?, ?)");
-        $sql->execute(array($controller->getControllerName(), $controller->getAction()));
+        $sql = $this->db->prepare("INSERT INTO controller(controllername) values (?)");
+        $sql->execute(array($controller->getControllerName()));
     }
 
     public function update(Controller $controller) {
-        $sql = $this->db->prepare("UPDATE controller SET controllername=?, action=? where id=?");
-        $sql->execute(array($controller->getControllerName(), $controller->getAction(), $controller->getID()));
+        $sql = $this->db->prepare("UPDATE controller SET controllername=? where id=?");
+        $sql->execute(array($controller->getControllerName(), $controller->getID()));
     }
     
     public function delete(Controller $controller) {
@@ -51,9 +51,9 @@ class ControllerMapper {
         $sql->execute(array($controller->getID()));
     }
 
-    public function nameExists($controllerName, $action) {
-        $sql = $this->db->prepare("SELECT count(controllername) FROM controller where controllername=? and action=?");
-        $sql->execute(array($controllerName, $action));
+    public function nameExists($controllerName) {
+        $sql = $this->db->prepare("SELECT count(controllername) FROM controller where controllername=?");
+        $sql->execute(array($controllerName));
     
         if ($sql->fetchColumn() > 0) {
             return true;

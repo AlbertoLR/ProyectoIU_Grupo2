@@ -18,7 +18,6 @@ $errors = $view->getVariable("errors");
         <tr>
           <th>#</th>
           <th>Controller Name</th>
-          <th>Action</th>
           <th style="width: 72px;"></th>
         </tr>
       </thead>
@@ -27,7 +26,6 @@ $errors = $view->getVariable("errors");
           <tr>
 	  <td><?php echo $controller->getID(); ?></td>
           <td><?php echo $controller->getControllerName(); ?></td>
-          <td><?php echo $controller->getAction(); ?></td>
           <td>
               <a href="index.php?controller=controller&action=showone&id=<?php echo $controller->getID();  ?>"><i class="fa fa-id-card" aria-hidden="true"></i></a>
               <a href="index.php?controller=controller&action=update&id=<?php echo $controller->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
