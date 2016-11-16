@@ -5,7 +5,7 @@ require_once(__DIR__."/../core/PDOConnection.php");
 class UserMapper {
 
     private $db;
-  
+
     public function __construct() {
         $this->db = PDOConnection::getInstance();
     }
@@ -20,7 +20,7 @@ class UserMapper {
         foreach ($users_db as $user) {
             array_push($users, new User($user["id"], $user["username"], NULL, $user["profile"]));
         }
-        
+
         return $users;
     }
 
@@ -28,21 +28,21 @@ class UserMapper {
         $sql = $this->db->prepare("SELECT * FROM user WHERE id=?");
         $sql->execute(array($userID));
         $user = $sql->fetch(PDO::FETCH_ASSOC);
-    
+
         if($user != NULL) {
             return new User($user["id"], $user["username"], NULL, $user["profile"]);
         } else {
             return NULL;
         }
     }
-      
+
     public function insert(User $user) {
         $sql = $this->db->prepare("INSERT INTO user(username, passwd, profile) values (?,?,?)");
         $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile()));
     }
 
     public function update(User $user){
-        if (!empty($user->getPasswd())) {
+        if ($user->getPasswd()) {
             $sql = $this->db->prepare("UPDATE user SET username=?, passwd=?, profile=? where id=?");
             $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile(), $user->getID()));
         }
@@ -51,7 +51,7 @@ class UserMapper {
             $sql->execute(array($user->getUsername(), $user->getProfile(), $user->getID()));
         }
     }
-    
+
     public function delete(User $user){
         $sql = $this->db->prepare("DELETE FROM user where id=?");
         $sql->execute(array($user->getID()));
@@ -60,7 +60,7 @@ class UserMapper {
     public function usernameExists($username) {
         $sql = $this->db->prepare("SELECT count(username) FROM user where username=?");
         $sql->execute(array($username));
-    
+
         if ($sql->fetchColumn() > 0) {
             return true;
         }
@@ -71,12 +71,12 @@ class UserMapper {
         if (empty($passwd)){
             return false;
         }
-        
+
         $sql = $this->db->prepare("SELECT count(username) FROM user where username=? and passwd=?");
         $sql->execute(array($username, $passwd));
-    
+
         if ($sql->fetchColumn() > 0) {
-            return true;        
+            return true;
         }
     }
 

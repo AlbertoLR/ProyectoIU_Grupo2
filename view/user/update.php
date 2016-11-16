@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $view->setVariable("title", "Update User");
@@ -14,22 +14,29 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
     <div class="container">
       <h1><?= i18n("Update User")?></h1>
-        <a href="index.php?controller=user&action=permissions" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Permissions</a><br />
+      <div class="form-group">
+        <a href="index.php?controller=user&amp;action=permissions" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Permissions</a>
+      </div>
       <form action="index.php?controller=user&amp;action=update" method="POST">
-        <?= i18n("Name") ?>: <input type="text" name="username" value="<?php echo $user->getUsername(); ?>">
-        <?= i18n("Password") ?>: <input type="password" name="passwd">
-        <?= i18n("Profile") ?>: <select name="profile">
-        <option value=""></option>
-        <?php foreach($profiles as $profile) {?>
-            <?php if ($profile->getProfileName() == $user->getProfile()): ?>
-            <option value="<?= $profile->getProfileName()?>" selected><?= $profile->getProfileName()?></option>
-            <?php else: ?>
-            <option value="<?= $profile->getProfileName()?>"><?= $profile->getProfileName()?></option>
-            <?php endif ?>
-        <?php }?>
-        </select>
-      <input type="hidden" name="id" value="<?= $user->getID() ?>">
-      <input type="submit" name="submit" value="<?= i18n("Update User") ?>">
-</form>
-    </div>
+        <div class="form-group">
+          <label><?= i18n("Name") ?>:</label>
+          <input type="text" name="username" class="form-control" value="<?php echo $user->getUsername(); ?>">
+          <label><?= i18n("Password") ?>:</label>
+          <input type="password" name="passwd" class="form-control">
+          <label><?= i18n("Profile") ?>:</label>
+          <select name="profile" class="form-control">
+            <option value="" ></option>
+              <?php foreach($profiles as $profile) {?>
+                  <?php if ($profile->getProfileName() == $user->getProfile()): ?>
+                  <option value="<?= $profile->getProfileName()?>" selected><?= $profile->getProfileName()?></option>
+                  <?php else: ?>
+                  <option value="<?= $profile->getProfileName()?>"><?= $profile->getProfileName()?></option>
+                  <?php endif ?>
+              <?php }?>
+          </select>
+        </div>
+        <input type="hidden" name="id" value="<?= $user->getID() ?>">
+        <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update Controller") ?></button>
+      </form>
+      </div>
 </div>

@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $view->setVariable("title", "Create Controller");
@@ -14,8 +14,11 @@ $errors = $view->getVariable("errors");
     <div class="container">
       <h1><?= i18n("Create Controller")?></h1>
       <form action="index.php?controller=controller&amp;action=insert" method="POST">
-	    <?= i18n("Name") ?>: <input type="text" name="controllername"><br />
-	    <input type="submit" name="submit" value="submit">
+        <div class="form-group">
+          <label><?= i18n("Name") ?>:</label>
+           <input type="text" name="controllername" class="form-control" required="required">
+        </div>
+          <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>
       </form>
     </div>
 </div>
