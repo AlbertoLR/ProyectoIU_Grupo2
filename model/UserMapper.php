@@ -18,7 +18,9 @@ class UserMapper {
         $users = array();
 
         foreach ($users_db as $user) {
-            array_push($users, new User($user["id"], $user["username"], NULL, $user["profile"]));
+            array_push($users, new User($user["id"], $user["profile"], $user["dni"], $user["username"], $user["name"],
+                                        $user["surname"],$user["fecha_nac"],$user["direccion"],$user["comentario"],
+                                        $user["num_cuenta"],$user["tipo_contrato"], $user["email"],$user["foto"],$user["activo"],NULL ));
         }
 
         return $users;
@@ -30,7 +32,9 @@ class UserMapper {
         $user = $sql->fetch(PDO::FETCH_ASSOC);
 
         if($user != NULL) {
-            return new User($user["id"], $user["username"], NULL, $user["profile"]);
+            return new User($user["id"], $user["profile"], $user["dni"], $user["username"], $user["name"],
+                            $user["surname"],$user["fecha_nac"],$user["direccion"],$user["comentario"],
+                            $user["num_cuenta"],$user["tipo_contrato"], $user["email"],$user["foto"],$user["activo"],NULL );
         } else {
             return NULL;
         }
@@ -38,7 +42,9 @@ class UserMapper {
 
     public function insert(User $user) {
         $sql = $this->db->prepare("INSERT INTO user(username, passwd, profile) values (?,?,?)");
-        $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile()));
+        $sql->execute(array($user->getUsername(),$user->getProfile(), $user->getDni(), $user->getUsername(), $user->getName(),
+                            $user->getSurname(), $user->getFechaNac(), $user->getDireccion(), $user->getComentario(), $user->getNumCuenta(),
+                            $user->getTipoContrato(), $user->getEmail(), $user->getFoto(), $user->getActivo(),$user->getPasswd()));
     }
 
     public function update(User $user){

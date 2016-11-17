@@ -15,12 +15,14 @@ $errors = $view->getVariable("errors");
 	<div class="container">
 	    <?php if (isset($currentuser)): ?>
 		<h1><?= sprintf(i18n("Welcome to Moovet %s"), $currentuser) ?></h1>
-              <p>Administer this site:</p>
-	      <?php foreach ($controllers as $controller) {?>
-                <div class="form-group">
-                 <a class="btn btn-primary btn-lg left-block" href="index.php?controller=<?php echo $controller ?>&amp;action=show" role="button">Administer <?php echo $controller ?>s  here &raquo;</a>
-                </div>
-              <?php }?>
+      <p>Administer this site:</p>
+    <div class="row">
+	    <?php foreach ($controllers as $controller) {?>
+        <div class="col-sm-4 form-group" >
+          <a class="btn btn-primary btn-lg btn-block" href="index.php?controller=<?php echo $controller ?>&amp;action=show" role="button">Administer <?php echo $controller ?>s  here &raquo;</a>
+        </div>
+      <?php }?>
+    </div>
 	    <?php else: ?>
 	      <h1><?= i18n("Welcome to Moovet") ?></h1>
               <p>Please Login</p>
