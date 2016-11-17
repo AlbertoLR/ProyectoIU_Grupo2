@@ -76,7 +76,7 @@ class User {
     }
 
     public function getName(){
-        return $this->profile;
+        return $this->name;
     }
 
     public function setName($name){

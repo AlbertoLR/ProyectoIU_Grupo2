@@ -41,20 +41,28 @@ class UserMapper {
     }
 
     public function insert(User $user) {
-        $sql = $this->db->prepare("INSERT INTO user(username, passwd, profile) values (?,?,?)");
-        $sql->execute(array($user->getUsername(),$user->getProfile(), $user->getDni(), $user->getUsername(), $user->getName(),
+        $sql = $this->db->prepare("INSERT INTO user(profile,dni,username,name,surname,fecha_nac,direccion,comentario,num_cuenta,tipo_contrato,email,foto,activo,passwd) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $sql->execute(array($user->getProfile(), $user->getDni(), $user->getUsername(), $user->getName(),
                             $user->getSurname(), $user->getFechaNac(), $user->getDireccion(), $user->getComentario(), $user->getNumCuenta(),
                             $user->getTipoContrato(), $user->getEmail(), $user->getFoto(), $user->getActivo(),$user->getPasswd()));
     }
 
     public function update(User $user){
         if ($user->getPasswd()) {
-            $sql = $this->db->prepare("UPDATE user SET username=?, passwd=?, profile=? where id=?");
-            $sql->execute(array($user->getUsername(), $user->getPasswd(), $user->getProfile(), $user->getID()));
+            $sql = $this->db->prepare("UPDATE user SET profile=?, dni=?, username=?, name=?, surname=?, fecha_nac=?,
+                                                       direccion=?, comentario=?, num_cuenta=?, tipo_contrato=?, email=?, foto=?,
+                                                       activo=?, passwd=? where id=?");
+            $sql->execute(array($user->getProfile(), $user->getDni(), $user->getUsername(), $user->getName(),
+                                $user->getSurname(), $user->getFechaNac(), $user->getDireccion(), $user->getComentario(), $user->getNumCuenta(),
+                                $user->getTipoContrato(), $user->getEmail(), $user->getFoto(), $user->getActivo(),$user->getPasswd(), $user->getID()));
         }
         else {
-            $sql = $this->db->prepare("UPDATE user SET username=?, profile=? where id=?");
-            $sql->execute(array($user->getUsername(), $user->getProfile(), $user->getID()));
+            $sql = $this->db->prepare("UPDATE user SET profile=?, dni=?, username=?, name=?, surname=?, fecha_nac=?,
+                                                       direccion=?, comentario=?, num_cuenta=?, tipo_contrato=?, email=?, foto=?,
+                                                       activo=? where id=?");
+            $sql->execute(array($user->getProfile(), $user->getDni(), $user->getUsername(), $user->getName(),
+                                $user->getSurname(), $user->getFechaNac(), $user->getDireccion(), $user->getComentario(), $user->getNumCuenta(),
+                                $user->getTipoContrato(), $user->getEmail(), $user->getFoto(), $user->getActivo(), $user->getID()));
         }
     }
 
@@ -66,6 +74,15 @@ class UserMapper {
     public function usernameExists($username) {
         $sql = $this->db->prepare("SELECT count(username) FROM user where username=?");
         $sql->execute(array($username));
+
+        if ($sql->fetchColumn() > 0) {
+            return true;
+        }
+    }
+
+    public function dniExists($dni) {
+        $sql = $this->db->prepare("SELECT count(dni) FROM user where dni=?");
+        $sql->execute(array($dni));
 
         if ($sql->fetchColumn() > 0) {
             return true;

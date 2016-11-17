@@ -8,15 +8,15 @@ require_once(__DIR__."/../model/ProfileMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
 class USER_Controller extends BaseController {
-    
-    private $userMapper;    
-  
+
+    private $userMapper;
+
     public function __construct() {
         parent::__construct();
         $this->userMapper = new UserMapper();
         $this->view->setLayout("default");
     }
- 
+
     public function login() {
         if (isset($_POST["username"])){
             if ($this->userMapper->isValidUser($_POST["username"], $_POST["passwd"])) {
@@ -28,7 +28,7 @@ class USER_Controller extends BaseController {
                 $this->view->setVariable("errors", $errors);
             }
         }
-        
+
         $this->view->render("user", "login");
     }
 
@@ -45,7 +45,7 @@ class USER_Controller extends BaseController {
 
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
-        
+
         if ($user == NULL) {
             throw new Exception("no such user with id: ".$userid);
         }
@@ -56,15 +56,36 @@ class USER_Controller extends BaseController {
 
     public function insert(){
         //checkPermissionsNeed
-    
+
         $user = new User();
-    
-        if (isset($_POST["submit"])) { 
-            $user->setUsername($_POST["username"]);
-            $user->setPasswd($_POST["passwd"]);
-            $user->setProfile($_POST["profile"]);
-			 
+
+        if (isset($_POST["submit"])) {
+
+          $image_name = $_FILES["foto"]["name"];
+          $image_type = $_FILES["foto"]["type"];
+          $image_size = $_FILES["foto"]["size"];
+          $folder = $_SERVER['DOCUMENT_ROOT'] . '/IUA/pictures/';
+
+          move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
+
+          $user->setUsername($_POST["username"]);
+          $user->setProfile($_POST["profile"]);
+          $user->setDni($_POST["dni"]);
+          $user->setUsername($_POST["username"]);
+          $user->setName($_POST["name"]);
+          $user->setSurname($_POST["surname"]);
+          $user->setFechaNac($_POST["fecha_nac"]);
+          $user->setDireccion($_POST["direccion"]);
+          $user->setComentario($_POST["comentario"]);
+          $user->setNumCuenta($_POST["num_cuenta"]);
+          $user->setTipoContrato($_POST["tipo_contrato"]);
+          $user->setEmail($_POST["email"]);
+          $user->setFoto($_FILES["foto"]["name"]);
+          $user->setActivo($_POST["activo"]);
+          $user->setPasswd($_POST["passwd"]);
+
             try {
+              if(!$this->userMapper->dniExists($_POST["dni"])){
                 if (!$this->userMapper->usernameExists($_POST["username"])){
                     $user->checkIsValidForCreate();
                     $this->userMapper->insert($user);
@@ -72,10 +93,15 @@ class USER_Controller extends BaseController {
                     $this->view->redirect("user", "show");
                 } else {
                     $errors = array();
-	                $errors["general"] = "Username already exists";
-	                $this->view->setVariable("errors", $errors);
+	                  $errors["general"] = "Username already exists";
+	                  $this->view->setVariable("errors", $errors);
                 }
-            }catch(ValidationException $ex) {      
+              } else {
+                $errors = array();
+                $errors["general"] = "DNI already exists";
+                $this->view->setVariable("errors", $errors);
+              }
+            }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
             }
@@ -97,32 +123,60 @@ class USER_Controller extends BaseController {
         //CheckPermissionsNeed
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
-    
+
         if ($user == NULL) {
             throw new Exception("no such user with id: ".$userid);
         }
-    
+
         if (isset($_POST["submit"])) {
-            $user->setPasswd($_POST["passwd"]);
-            $user->setProfile($_POST["profile"]);
-      
+
+          $image_name = $_FILES["foto"]["name"];
+          $image_type = $_FILES["foto"]["type"];
+          $image_size = $_FILES["foto"]["size"];
+          $folder = $_SERVER['DOCUMENT_ROOT'] . '/IUA/pictures/';
+
+          move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
+
+          $user->setProfile($_POST["profile"]);
+          $user->setDni($_POST["dni"]);
+          $user->setUsername($_POST["username"]);
+          $user->setName($_POST["name"]);
+          $user->setSurname($_POST["surname"]);
+          $user->setFechaNac($_POST["fecha_nac"]);
+          $user->setDireccion($_POST["direccion"]);
+          $user->setComentario($_POST["comentario"]);
+          $user->setNumCuenta($_POST["num_cuenta"]);
+          $user->setTipoContrato($_POST["tipo_contrato"]);
+          $user->setEmail($_POST["email"]);
+          $user->setFoto($_FILES["foto"]["name"]);
+          $user->setActivo($_POST["activo"]);
+          $user->setPasswd($_POST["passwd"]);
+
             try {
                 if ($user->getUsername() == $_POST["username"]){
                     $user->checkIsValidForCreate();
-                    $this->userMapper->update($user);                
-                    $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
-                    $this->view->redirect("user", "show");
-                } else if (!$this->userMapper->usernameExists($_POST["username"])){
-                    $user->setUsername($_POST["username"]);
-                    $user->checkIsValidForCreate();
-                    $this->userMapper->update($user);                
+                    $this->userMapper->update($user);
                     $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
                     $this->view->redirect("user", "show");
                 } else {
+                  if(!$this->userMapper->dniExists($_POST["dni"])){
+                     if (!$this->userMapper->usernameExists($_POST["username"])){
+                      $user->setUsername($_POST["username"]);
+                      $user->checkIsValidForCreate();
+                      $this->userMapper->update($user);
+                      $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
+                      $this->view->redirect("user", "show");
+                     } else {
+                        $errors = array();
+      	                $errors["general"] = "Username already exists";
+      	                $this->view->setVariable("errors", $errors);
+                    }
+                  } else{
                     $errors = array();
-	                $errors["general"] = "Username already exists";
-	                $this->view->setVariable("errors", $errors);
-                }
+                    $errors["general"] = "DNI already exists";
+                    $this->view->setVariable("errors", $errors);
+                  }
+              }
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
@@ -133,19 +187,19 @@ class USER_Controller extends BaseController {
         $profiles = $profileMapper->fetch_all();
         $this->view->setVariable("user", $user);
         $this->view->setVariable("profiles", $profiles);
-        $this->view->render("user", "update");    
+        $this->view->render("user", "update");
     }
 
     public function delete() {
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
-        
+
         //CheckPermissionNeed
-    
+
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
-    
+
         if ($user == NULL) {
             throw new Exception("no such user with id: ".$userid);
         }
@@ -165,5 +219,9 @@ class USER_Controller extends BaseController {
         session_destroy();
         $this->view->redirect("user", "login");
     }
-  
+
+    private function loadImage(){
+
+    }
+
 }
