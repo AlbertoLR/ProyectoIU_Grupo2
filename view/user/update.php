@@ -15,7 +15,6 @@ $errors = $view->getVariable("errors");
     <div class="container">
       <h1><?= i18n("Update User")?></h1>
       <div class="form-group">
-        <a href="index.php?controller=user&amp;action=permissions" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Permissions</a>
       </div>
       <form action="index.php?controller=user&amp;action=update" method="POST" enctype="multipart/form-data">
         <div class="form-group">

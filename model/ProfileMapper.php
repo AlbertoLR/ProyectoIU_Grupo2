@@ -59,14 +59,4 @@ class ProfileMapper {
             return true;
         } 
     }
-
-    public function assignController(Profile $profile, Controller $controller){
-        $sql = $this->db->prepare("INSERT INTO profile_controller values(?,?)");
-        $sql->execute(array($profile->getID(), $controller->getID()));
-    }
-
-    public function unAssignController(Profile $profile, Controller $controller){
-        $sql = $this->db->prepare("DELETE FROM profile_controller where id=?");
-        $sql->execute(array($profile->getID().$controller->getID()));
-    }
 }

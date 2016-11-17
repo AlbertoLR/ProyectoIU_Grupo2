@@ -14,7 +14,6 @@ $errors = $view->getVariable("errors");
     <div class="container">
         <h1><?= i18n("User")?></h1>
         <div class="form-group">
-          <a href="index.php?controller=user&amp;action=permissions" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Permissions</a>
         </div>
         <div class="row">
           <div>ID: <?= $user->getID() ?></div>

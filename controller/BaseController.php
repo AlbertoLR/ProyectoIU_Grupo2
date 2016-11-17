@@ -20,6 +20,10 @@ class BaseController {
             $this->currentUser->setUsername($_SESSION["currentuser"]);
             $this->view->setVariable("currentusername", 
                                      $this->currentUser->getUsername());
-        }     
+        }
+
+        if(isset($_SESSION["permissions"])){
+            $this->view->setVariable("permissions", $_SESSION["permissions"]);
+        }
     }
 }

@@ -53,6 +53,6 @@ class UserPermMapper {
     
         if ($sql->fetchColumn() > 0) {
             return true;
-        } 
+        }
     }
 }

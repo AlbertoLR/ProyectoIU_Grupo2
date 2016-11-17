@@ -21,6 +21,8 @@ class USER_Controller extends BaseController {
         if (isset($_POST["username"])){
             if ($this->userMapper->isValidUser($_POST["username"], $_POST["passwd"])) {
                 $_SESSION["currentuser"] = $_POST["username"];
+                $user = $this->userMapper->fetch_by_username($_POST["username"]);
+                $_SESSION["permissions"] = $this->getPermissions($user);
                 $this->view->redirect("user", "login");
             }else{
                 $errors = array();
@@ -220,8 +222,41 @@ class USER_Controller extends BaseController {
         $this->view->redirect("user", "login");
     }
 
-    private function loadImage(){
+    private function loadImage() {
 
+    }
+
+    private function getPermissions(User $user) {
+        $permissions_data = $this->userMapper->getPermissions($user);
+        $profile_permissions_data = $this->userMapper->getProfilePermissions($user);
+        $permissions = array();
+
+        foreach ($permissions_data as $controller) {
+            if (!in_array($controller["controller"], $permissions)) {
+                $permissions[$controller["controller"]] = array();
+            }
+        }
+
+        foreach ($profile_permissions_data as $controller) {
+            if (!in_array($controller["controller"], $permissions)) {
+                $permissions[$controller["controller"]] = array();
+            }
+        }
+
+        foreach ($permissions_data as $permission){
+            if (!in_array($permission["action"], $permissions[$permission["controller"]])) {
+                array_push($permissions[$permission["controller"]], $permission["action"]);
+            }
+        }
+
+        foreach ($profile_permissions_data as $permission){
+            if (!in_array($permission["action"], $permissions[$permission["controller"]])) {
+                array_push($permissions[$permission["controller"]], $permission["action"]);
+            }
+        }
+
+        return $permissions;
+        
     }
 
 }

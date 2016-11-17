@@ -5,12 +5,12 @@ $controllers = array('user', 'profile', 'controller', 'action', 'permission');
 $currentuser = $view->getVariable("currentusername");
 $view->setVariable("title", "Login");
 $errors = $view->getVariable("errors");
+$permissions = $view->getVariable("permissions");
 ?>
 
 <?= isset($errors["general"])?$errors["general"]:"" ?>
 
 <?php $view->moveToDefaultFragment(); ?>
-
     <div class="jumbotron">
 	<div class="container">
 	    <?php if (isset($currentuser)): ?>

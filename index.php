@@ -3,19 +3,22 @@ define("DEFAULT_CONTROLLER", "user");
 define("DEFAULT_ACTION", "login");
 
 function run() {
+    try{
+        if (!isset($_GET["controller"])) {
+            $_GET["controller"] = DEFAULT_CONTROLLER; 
+        }
     
-    if (!isset($_GET["controller"])) {
-        $_GET["controller"] = DEFAULT_CONTROLLER; 
-    }
+        if (!isset($_GET["action"])) {
+            $_GET["action"] = DEFAULT_ACTION;
+        }
     
-    if (!isset($_GET["action"])) {
-        $_GET["action"] = DEFAULT_ACTION;
-    }
+        $controller = loadController($_GET["controller"]);
     
-    $controller = loadController($_GET["controller"]);
-    
-    $actionName = $_GET["action"];
-    $controller->$actionName();
+        $actionName = $_GET["action"];
+        $controller->$actionName();
+    } catch(Exception $ex) {
+        die($ex->getMessage());
+  }
 }
  
 function loadController($controllerName) {  

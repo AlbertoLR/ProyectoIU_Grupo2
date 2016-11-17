@@ -22,6 +22,15 @@ class ACTION_Controller extends BaseController {
     }
 
     public function showone(){
+        if (!array_key_exists("action", $_SESSION["permissions"])) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+
+        if (!in_array("showone", $_SESSION["permissions"]["action"])) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An action id is mandatory");
         }

@@ -34,6 +34,20 @@ class UserMapper {
         if($user != NULL) {
             return new User($user["id"], $user["profile"], $user["dni"], $user["username"], $user["name"],
                             $user["surname"],$user["fecha_nac"],$user["direccion"],$user["comentario"],
+                            $user["num_cuenta"],$user["tipo_contrato"], $user["email"],$user["foto"],$user["activo"],NULL);
+        } else {
+            return NULL;
+        }
+    }
+
+    public function fetch_by_username($username){
+        $sql = $this->db->prepare("SELECT * FROM user WHERE username=?");
+        $sql->execute(array($username));
+        $user = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if($user != NULL) {
+            return new User($user["id"], $user["profile"], $user["dni"], $user["username"], $user["name"],
+                            $user["surname"],$user["fecha_nac"],$user["direccion"],$user["comentario"],
                             $user["num_cuenta"],$user["tipo_contrato"], $user["email"],$user["foto"],$user["activo"],NULL );
         } else {
             return NULL;
@@ -101,5 +115,22 @@ class UserMapper {
         if ($sql->fetchColumn() > 0) {
             return true;
         }
+    }
+
+    public function getPermissions(User $user) {
+        $join = "SELECT permission.controller as controller, permission.action as action FROM user_perms, user, permission WHERE user_perms.user = user.id AND user_perms.permission = permission.id AND user.id = ?";
+        $sql = $this->db->prepare($join);
+        $sql->execute(array($user->getID()));
+        
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProfilePermissions(User $user) {
+        $join = "SELECT permission.controller as controller, permission.action as action FROM user, profile_perms, profile, permission WHERE profile_perms.profile = profile.id AND profile_perms.permission = permission.id AND user.profile = ?";
+        $sql = $this->db->prepare($join);
+        $sql->execute(array($user->getProfile()));
+        
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+        
     }
 }

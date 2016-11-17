@@ -16,6 +16,7 @@ class PROFILE_Controller extends BaseController {
     }
 
     public function show(){
+        
         $profiles = $this->profileMapper->fetch_all();
         $this->view->setVariable("profiles", $profiles);
         $this->view->render("profile", "show");
