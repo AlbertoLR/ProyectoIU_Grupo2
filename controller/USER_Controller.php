@@ -63,12 +63,24 @@ class USER_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
 
-          $image_name = $_FILES["foto"]["name"];
+		  $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
           $folder = $_SERVER['DOCUMENT_ROOT'] . '/IUA/pictures/';
 
-          move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
+          if($image_size < 100000000 ){ /*100MB*/
+            if($image_type == "image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif"){
+            move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
+            }else{
+              $errors = array();
+              $errors["general"] = "Only formats: jpg/jpeg/png/gif";
+              $this->view->setVariable("errors", $errors);
+            }
+          } else {
+          $errors = array();
+          $errors["general"] = "Image too large";
+          $this->view->setVariable("errors", $errors);
+        }
 
           $user->setUsername($_POST["username"]);
           $user->setProfile($_POST["profile"]);
@@ -132,12 +144,24 @@ class USER_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
 
-          $image_name = $_FILES["foto"]["name"];
+		  $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
           $folder = $_SERVER['DOCUMENT_ROOT'] . '/IUA/pictures/';
 
-          move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
+          if($image_size < 100000000 ){ /*100MB*/
+            if($image_type == "image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif"){
+            move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
+            }else{
+              $errors = array();
+              $errors["general"] = "Only formats: jpg/jpeg/png/gif";
+              $this->view->setVariable("errors", $errors);
+            }
+          } else {
+          $errors = array();
+          $errors["general"] = "Image too large";
+          $this->view->setVariable("errors", $errors);
+        }
 
           $user->setProfile($_POST["profile"]);
           $user->setDni($_POST["dni"]);
@@ -220,10 +244,6 @@ class USER_Controller extends BaseController {
     public function logout() {
         session_destroy();
         $this->view->redirect("user", "login");
-    }
-
-    private function loadImage() {
-
     }
 
     private function getPermissions(User $user) {
