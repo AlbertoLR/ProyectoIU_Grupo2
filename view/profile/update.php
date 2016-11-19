@@ -19,7 +19,7 @@ $errors = $view->getVariable("errors");
           <input type="text" name="profilename" class="form-control" value="<?php echo $profile->getProfileName(); ?>" required="required">
           <input type="hidden" name="id" value="<?= $profile->getID() ?>">
         </div>
-      <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update Profile") ?></button>
+        <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update Profile") ?></button>
       </form>
     </div>
 </div>

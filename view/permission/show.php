@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $view->setVariable("title", "Manage Permissions");
@@ -30,14 +30,14 @@ $errors = $view->getVariable("errors");
           <td><?php echo $permission->getController(); ?></td>
           <td><?php echo $permission->getAction(); ?></td>
           <td>
-              <a href="index.php?controller=permission&action=delete&id=<?php echo $permission->getID();  ?>" role="button" data-toggle="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+              <a href="index.php?controller=permission&action=delete&amp;id=<?php echo $permission->getID();  ?>" role="button" data-toggle="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
           </td>
         </tr>
 	<?php } ?>
       </tbody>
-</table><br />
+</table>
 
-        <form action="index.php?controller=permission&amp;action=insert" method="POST">
+        <form class="top-buffer" action="index.php?controller=permission&amp;action=insert" method="POST">
         Controller: <select name="controller">
         <option value="" selected></option>
         <?php foreach($controllers as $controller) {?>
@@ -51,8 +51,8 @@ $errors = $view->getVariable("errors");
             <option value="<?= $action->getActionName()?>"><?= $action->getActionName()?></option>
         <?php }?>
         </select>
-        
-	    <input type="submit" name="submit" value="submit">
+
+	       <button type="submit" name="submit" value="submit" class="btn btn-default"><?= i18n("Submit") ?></button>
         </form>
     </div>
 </div>

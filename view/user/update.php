@@ -73,10 +73,8 @@ $errors = $view->getVariable("errors");
           </select>
         </div>
         <div class="form-group">
-          <div><label><?= i18n("Image") ?>:</label></div>
-          <label class="btn btn-default btn-file">
-            Browse <input type="file" name="foto" style="display: none;">
-          </label>
+          <label><?= i18n("Image") ?>:</label>
+          <input type="file" name="foto">
         </div>
         <div class="form-group">
           <label><?= i18n("Comment") ?>:</label>

@@ -68,7 +68,11 @@ $errors = $view->getVariable("errors");
           </tr>
           <tr>
             <th>Activo:</th>
-            <td><?= $user->getActivo() ?></td>
+              <?php if($user->getActivo()){ ?>
+              <td>Yes</td>
+              <?php } else { ?>
+              <td>No</td>
+              <?php } ?>
           </tr>
           <tr class="active">
             <th class="col-md-2">Comentario:</th>

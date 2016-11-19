@@ -95,7 +95,12 @@ class USER_Controller extends BaseController {
           $user->setTipoContrato($_POST["tipo_contrato"]);
           $user->setEmail($_POST["email"]);
           $user->setFoto($_FILES["foto"]["name"]);
-          $user->setActivo($_POST["activo"]);
+          if($_POST["activo"] == Yes){
+            $user->setActivo(TRUE);
+          }
+          else{
+            $user->setActivo(FALSE);
+          }
           $user->setPasswd($_POST["passwd"]);
 
             try {
@@ -175,7 +180,12 @@ class USER_Controller extends BaseController {
           $user->setTipoContrato($_POST["tipo_contrato"]);
           $user->setEmail($_POST["email"]);
           $user->setFoto($_FILES["foto"]["name"]);
-          $user->setActivo($_POST["activo"]);
+          if($_POST["activo"] == Yes){
+            $user->setActivo(TRUE);
+          }
+          else{
+            $user->setActivo(FALSE);
+          }
           $user->setPasswd($_POST["passwd"]);
 
             try {
@@ -276,7 +286,7 @@ class USER_Controller extends BaseController {
         }
 
         return $permissions;
-        
+
     }
 
 }
