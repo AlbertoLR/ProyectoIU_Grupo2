@@ -17,11 +17,11 @@ $errors = $view->getVariable("errors");
         <form action="index.php?controller=user&amp;action=add" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label><?= i18n("DNI") ?>:</label>
-            <input type="text" name="dni" class="form-control"  minlength="9" maxlength="9" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" >
+            <input type="text" name="dni" class="form-control"  placeholder="ej: 00000000A" minlength="9" maxlength="9" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" >
           </div>
           <div class="form-group">
             <label><?= i18n("Username") ?>:</label>
-      	     <input type="text" name="username" class="form-control">
+      	     <input type="text" name="username" class="form-control" >
           </div>
           <div class="form-group">
             <label><?= i18n("Password") ?>:</label>
@@ -38,11 +38,11 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Name") ?>:</label>
-             <input type="text" name="name" class="form-control">
+             <input type="text" name="name" class="form-control" pattern="[a-zA-Z]+" placeholder="ej: Juan">
           </div>
           <div class="form-group">
             <label><?= i18n("Surname") ?>:</label>
-             <input type="text" name="surname" class="form-control">
+             <input type="text" name="surname" class="form-control" placeholder="ej: Fernández López" pattern="[a-zA-Z]+">
           </div>
           <div class="form-group">
             <label><?= i18n("Birthdate") ?>:</label>
@@ -50,11 +50,11 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Adress") ?>:</label>
-             <input type="text" name="direccion" class="form-control">
+             <input type="text" name="direccion" class="form-control" placeholder="ej: Avenida de la Astronomía, 24, 28830, San Fernando de Henares, Madrid-ESPAÑA ">
           </div>
           <div class="form-group">
             <label><?= i18n("Bank account") ?>:</label>
-             <input type="text" name="num_cuenta" class="form-control">
+             <input type="text" name="num_cuenta" class="form-control" placeholder="ej: ES0000000000000000000000" minlength="24" maxlength="24" pattern="(ES[0-9]{22})" >
           </div>
           <div class="form-group">
             <label><?= i18n("Contract") ?>:</label>
@@ -67,7 +67,7 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Email") ?>:</label>
-             <input type="email" name="email" class="form-control">
+             <input type="email" name="email" class="form-control" placeholder="ej: moovett@moovett.es">
           </div>
           <div class="form-group">
             <label><?= i18n("Operating") ?>:</label>
