@@ -38,7 +38,7 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Name") ?>:</label>
-             <input type="text" name="name" class="form-control" pattern="[a-zA-Z]+" placeholder="ej: Juan">
+             <input type="text" name="name" class="form-control"  placeholder="ej: Juan" pattern="[a-zA-Z]+">
           </div>
           <div class="form-group">
             <label><?= i18n("Surname") ?>:</label>

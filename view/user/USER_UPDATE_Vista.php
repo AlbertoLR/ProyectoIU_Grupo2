@@ -39,11 +39,11 @@ $errors = $view->getVariable("errors");
         </div>
         <div class="form-group">
           <label><?= i18n("Name") ?>:</label>
-           <input type="text" name="name" class="form-control" value="<?= $user->getName()?>">
+           <input type="text" name="name" class="form-control" value="<?= $user->getName()?>" pattern="[a-zA-Z]+">
         </div>
         <div class="form-group">
           <label><?= i18n("Surname") ?>:</label>
-           <input type="text" name="surname" class="form-control" value="<?= $user->getSurname()?>">
+           <input type="text" name="surname" class="form-control" value="<?= $user->getSurname()?>" pattern="[a-zA-Z]+"> 
         </div>
         <div class="form-group">
           <label><?= i18n("Birthdate") ?>:</label>
@@ -55,7 +55,7 @@ $errors = $view->getVariable("errors");
         </div>
         <div class="form-group">
           <label><?= i18n("Bank account") ?>:</label>
-           <input type="text" name="num_cuenta" class="form-control" value="<?= $user->getNumCuenta()?>">
+           <input type="text" name="num_cuenta" class="form-control" value="<?= $user->getNumCuenta()?>" minlength="24" maxlength="24" pattern="(ES[0-9]{22})">
         </div>
         <div class="form-group">
           <label><?= i18n("Contract") ?>:</label>
