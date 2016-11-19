@@ -25,7 +25,7 @@ $errors = $view->getVariable("errors");
         </tr>
       </thead>
       <tbody>
-	  <?php foreach($userperms as $userperm){ ?>
+	  <?php foreach($userperms as $userperm) { ?>
           <tr>
 	      <td><?php echo $userperm->getID(); ?></td>
           <td><?php echo $userperm->getUserName(); ?></td>

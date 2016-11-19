@@ -16,21 +16,22 @@ class ACTION_Controller extends BaseController {
     }
 
     public function show(){
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "show")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         $actions = $this->actionMapper->fetch_all();
         $this->view->setVariable("actions", $actions);
         $this->view->render("action", "ACTION_SHOW_Vista");
     }
 
     public function showone(){
-        if (!array_key_exists("action", $_SESSION["permissions"])) {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "showone")) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
-
-        if (!in_array("showone", $_SESSION["permissions"]["action"])) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An action id is mandatory");
         }
@@ -42,12 +43,18 @@ class ACTION_Controller extends BaseController {
             throw new Exception("no such action with id: ".$actionid);
         }
 
+        $errors = array();
+        $errors["general"] = var_dump($this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "showone"));
+        $this->view->setVariable("errors", $errors);
         $this->view->setVariable("action", $action);
         $this->view->render("action", "ACTION_SHOWONE_Vista");
     }
 
     public function add(){
-        //checkPermissionsNeed
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "add")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
     
         $action = new Action();
     
@@ -79,11 +86,15 @@ class ACTION_Controller extends BaseController {
 
 
     public function update() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "update")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An action id is mandatory");
         }
 
-        //CheckPermissionsNeed
         $actionid = $_REQUEST["id"];
         $action = $this->actionMapper->fetch($actionid);
     
@@ -116,12 +127,15 @@ class ACTION_Controller extends BaseController {
     }
 
     public function delete() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "delete")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
-        
-        //CheckPermissionNeed
-    
+            
         $actionid = $_REQUEST["id"];
         $action = $this->actionMapper->fetch($actionid);
     

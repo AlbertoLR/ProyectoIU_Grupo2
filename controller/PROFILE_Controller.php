@@ -16,6 +16,10 @@ class PROFILE_Controller extends BaseController {
     }
 
     public function show(){
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profile", "show")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
         
         $profiles = $this->profileMapper->fetch_all();
         $this->view->setVariable("profiles", $profiles);
@@ -23,6 +27,11 @@ class PROFILE_Controller extends BaseController {
     }
 
     public function showone(){
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profile", "showone")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("A profile id is mandatory");
         }
@@ -39,7 +48,10 @@ class PROFILE_Controller extends BaseController {
     }
 
     public function add(){
-        //checkPermissionsNeed
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profile", "add")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
         
         $profile = new Profile();
     
@@ -70,11 +82,15 @@ class PROFILE_Controller extends BaseController {
     }
 
     public function update() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profile", "update")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("A profile id is mandatory");
         }
 
-        //CheckPermissionsNeed
         $profileid = $_REQUEST["id"];
         $profile = $this->profileMapper->fetch($profileid);
     
@@ -107,11 +123,14 @@ class PROFILE_Controller extends BaseController {
     }
 
     public function delete() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profile", "delete")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
-        
-        //CheckPermissionNeed
     
         $profileid = $_REQUEST["id"];
         $profile = $this->profileMapper->fetch($profileid);

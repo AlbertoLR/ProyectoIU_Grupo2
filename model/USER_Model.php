@@ -116,21 +116,5 @@ class USER_Model {
             return true;
         }
     }
-
-    public function getPermissions(User $user) {
-        $join = "SELECT permission.controller as controller, permission.action as action FROM user_perms, user, permission WHERE user_perms.user = user.id AND user_perms.permission = permission.id AND user.id = ?";
-        $sql = $this->db->prepare($join);
-        $sql->execute(array($user->getID()));
-        
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getProfilePermissions(User $user) {
-        $join = "SELECT permission.controller as controller, permission.action as action FROM user, profile_perms, profile, permission WHERE profile_perms.profile = profile.id AND profile_perms.permission = permission.id AND user.profile = ?";
-        $sql = $this->db->prepare($join);
-        $sql->execute(array($user->getProfile()));
-        
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-        
-    }
+    
 }

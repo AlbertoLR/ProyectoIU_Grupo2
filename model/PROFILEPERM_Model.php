@@ -55,4 +55,5 @@ class PROFILEPERM_Model {
             return true;
         } 
     }
+    
 }

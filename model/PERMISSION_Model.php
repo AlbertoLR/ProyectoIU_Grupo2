@@ -54,4 +54,33 @@ class PERMISSION_Model {
             return true;
         } 
     }
+
+    public function check($userid, $profile, $controllername, $actionname) {
+        return ($this->checkUserPerms($userid, $controllername, $actionname) || $this->checkProfilePerms($profile, $controllername, $actionname));
+    }
+
+    private function checkUserPerms($userid, $controllername, $actionname) {
+        $join = "SELECT count(p.id) from permission as p, user_perms as u WHERE p.id=u.permission AND u.user=? AND p.controller=? AND p.action=?";
+        $sql = $this->db->prepare($join);
+        $sql->execute(array($userid, $controllername, $actionname));
+    
+        if ($sql->fetchColumn() > 0) {
+            return true;
+        }
+
+        return false;
+        
+    }
+    
+    private function checkProfilePerms($profile, $controllername, $actionname) {
+        $join = "SELECT count(p.id) from permission as p, profile_perms as pp, profile as pr WHERE p.id=pp.permission AND pp.profile=pr.id AND pr.profilename=? AND p.controller=? AND p.action=?";
+        $sql = $this->db->prepare($join);
+        $sql->execute(array($profile, $controllername, $actionname));
+    
+        if ($sql->fetchColumn() > 0) {
+            return true;
+        }
+
+        return false;
+    }
 }

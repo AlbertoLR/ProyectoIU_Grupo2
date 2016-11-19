@@ -31,6 +31,11 @@ class PERMISSION_Controller extends BaseController {
     }
 
     public function show(){
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "permission", "show")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         $permissions = $this->permissionMapper->fetch_all();
         $controllers = $this->controllerMapper->fetch_all();
         $actions = $this->actionMapper->fetch_all();
@@ -41,7 +46,10 @@ class PERMISSION_Controller extends BaseController {
     }
 
     public function add(){
-        //checkPermissionsNeed
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "permission", "add")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
     
         $permission = new Permission();
     
@@ -71,11 +79,14 @@ class PERMISSION_Controller extends BaseController {
     }
 
     public function delete() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "permission", "delete")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
-        
-        //CheckPermissionNeed
     
         $permissionid = $_REQUEST["id"];
         $permission = $this->permissionMapper->fetch($permissionid);

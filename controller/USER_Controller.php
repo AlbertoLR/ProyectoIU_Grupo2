@@ -20,9 +20,10 @@ class USER_Controller extends BaseController {
     public function login() {
         if (isset($_POST["username"])){
             if ($this->userMapper->isValidUser($_POST["username"], $_POST["passwd"])) {
-                $_SESSION["currentuser"] = $_POST["username"];
                 $user = $this->userMapper->fetch_by_username($_POST["username"]);
-                $_SESSION["permissions"] = $this->getPermissions($user);
+                $_SESSION["currentuser"] = $user->getUsername();
+                $_SESSION["currentuserid"] = $user->getID();
+                $_SESSION["currentuserprofile"] = $user->getProfile();
                 $this->view->redirect("user", "login");
             }else{
                 $errors = array();
@@ -35,12 +36,22 @@ class USER_Controller extends BaseController {
     }
 
     public function show(){
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "show")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         $users = $this->userMapper->fetch_all();
         $this->view->setVariable("users", $users);
         $this->view->render("user", "USER_SHOW_Vista");
     }
 
     public function showone(){
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "showone")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An user id is mandatory");
         }
@@ -57,7 +68,10 @@ class USER_Controller extends BaseController {
     }
 
     public function add(){
-        //checkPermissionsNeed
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "add")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
 
         $user = new User();
 
@@ -135,11 +149,15 @@ class USER_Controller extends BaseController {
 
 
     public function update() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "update")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An user id is mandatory");
         }
 
-        //CheckPermissionsNeed
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
 
@@ -227,6 +245,11 @@ class USER_Controller extends BaseController {
     }
 
     public function delete() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "delete")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
@@ -254,39 +277,6 @@ class USER_Controller extends BaseController {
     public function logout() {
         session_destroy();
         $this->view->redirect("user", "login");
-    }
-
-    private function getPermissions(User $user) {
-        $permissions_data = $this->userMapper->getPermissions($user);
-        $profile_permissions_data = $this->userMapper->getProfilePermissions($user);
-        $permissions = array();
-
-        foreach ($permissions_data as $controller) {
-            if (!in_array($controller["controller"], $permissions)) {
-                $permissions[$controller["controller"]] = array();
-            }
-        }
-
-        foreach ($profile_permissions_data as $controller) {
-            if (!in_array($controller["controller"], $permissions)) {
-                $permissions[$controller["controller"]] = array();
-            }
-        }
-
-        foreach ($permissions_data as $permission){
-            if (!in_array($permission["action"], $permissions[$permission["controller"]])) {
-                array_push($permissions[$permission["controller"]], $permission["action"]);
-            }
-        }
-
-        foreach ($profile_permissions_data as $permission){
-            if (!in_array($permission["action"], $permissions[$permission["controller"]])) {
-                array_push($permissions[$permission["controller"]], $permission["action"]);
-            }
-        }
-
-        return $permissions;
-
     }
 
 }
