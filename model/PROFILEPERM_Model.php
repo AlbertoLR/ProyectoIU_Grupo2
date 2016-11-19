@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
-class ProfilePermMapper {
+class PROFILEPERM_Model {
 
     private $db;
   

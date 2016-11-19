@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
-class UserMapper {
+class USER_Model {
 
     private $db;
 

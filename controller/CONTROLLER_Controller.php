@@ -2,7 +2,7 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Controller.php");
-require_once(__DIR__."/../model/ControllerMapper.php");
+require_once(__DIR__."/../model/CONTROLLER_Model.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
 class CONTROLLER_Controller extends BaseController {
@@ -11,14 +11,14 @@ class CONTROLLER_Controller extends BaseController {
   
     public function __construct() {
         parent::__construct();
-        $this->controllerMapper = new ControllerMapper();
+        $this->controllerMapper = new CONTROLLER_Model();
         $this->view->setLayout("default");
     }
 
     public function show(){
         $controllers = $this->controllerMapper->fetch_all();
         $this->view->setVariable("controllers", $controllers);
-        $this->view->render("controller", "show");
+        $this->view->render("controller", "CONTROLLER_SHOW_Vista");
     }
 
     public function showone(){
@@ -34,10 +34,10 @@ class CONTROLLER_Controller extends BaseController {
         }
 
         $this->view->setVariable("controller", $controller);
-        $this->view->render("controller", "showone");
+        $this->view->render("controller", "CONTROLLER_SHOWONE_Vista");
     }
 
-    public function insert(){
+    public function add(){
         //checkPermissionsNeed
     
         $controller = new Controller();
@@ -51,7 +51,7 @@ class CONTROLLER_Controller extends BaseController {
 	
                     $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully added."), $controller->getControllerName()));
 	
-                    $this->view->redirect("controller", "show");
+                    $this->view->redirect("controller", "CONTROLLER_SHOW_Vista");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Controller already exists";
@@ -64,7 +64,7 @@ class CONTROLLER_Controller extends BaseController {
         }
 
         $this->view->setVariable("controller", $controller);
-        $this->view->render("controller", "insert");
+        $this->view->render("controller", "CONTROLLER_ADD_Vista");
     }
 
     public function update() {
@@ -88,7 +88,7 @@ class CONTROLLER_Controller extends BaseController {
                     $controller->checkIsValidForCreate();
                     $this->controllerMapper->update($controller);                
                     $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully updated."), $controller->getControllerName()));
-                    $this->view->redirect("controller", "show");
+                    $this->view->redirect("controller", "CONTROLLER_SHOW_Vista");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Controller already exists";
@@ -101,7 +101,7 @@ class CONTROLLER_Controller extends BaseController {
         }
 
         $this->view->setVariable("controller", $controller);
-        $this->view->render("controller", "update");    
+        $this->view->render("controller", "CONTROLLER_UPDATE_Vista");    
     }
 
     public function delete() {
@@ -123,10 +123,10 @@ class CONTROLLER_Controller extends BaseController {
                 $this->controllerMapper->delete($controller);
                 $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully deleted."), $controller->getControllerName()));
             }
-            $this->view->redirect("controller", "show");
+            $this->view->redirect("controller", "CONTROLLER_SHOW_Vista");
         }
         $this->view->setVariable("controller", $controller);
-        $this->view->render("controller", "delete");
+        $this->view->render("controller", "CONTROLLER_DELETE_Vista");
     }
   
 }

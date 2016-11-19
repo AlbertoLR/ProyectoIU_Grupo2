@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
-class PermissionMapper {
+class PERMISSION_Model {
 
     private $db;
   

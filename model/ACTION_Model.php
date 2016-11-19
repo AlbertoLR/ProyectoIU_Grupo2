@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
-class ActionMapper {
+class ACTION_Model {
 
     private $db;
   

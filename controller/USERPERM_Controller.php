@@ -2,13 +2,19 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../model/UserMapper.php");
+require_once(__DIR__."/../model/USER_Model.php");
 require_once(__DIR__."/../model/Permission.php");
-require_once(__DIR__."/../model/PermissionMapper.php");
+require_once(__DIR__."/../model/PERMISSION_Model.php");
 require_once(__DIR__."/../model/UserPerm.php");
-require_once(__DIR__."/../model/UserPermMapper.php");
+require_once(__DIR__."/../model/USERPERM_Model.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
+
+/**
+ * Esta clase relaciona as entidades User e Permission.
+ * Esta relacion da lugar a unha entidade N:M que chamamos UserPerm.
+ * Esta taboa relaciona un usuario con permisos.
+ */
 class USERPERM_Controller extends BaseController {
     
     private $userMapper;
@@ -17,9 +23,9 @@ class USERPERM_Controller extends BaseController {
   
     public function __construct() {
         parent::__construct();
-        $this->userMapper = new UserMapper();
-        $this->permissionMapper = new PermissionMapper();
-        $this->userPermMapper = new UserPermMapper();
+        $this->userMapper = new USER_Model();
+        $this->permissionMapper = new PERMISSION_Model();
+        $this->userPermMapper = new USERPERM_Model();
         $this->view->setLayout("default");
     }
 
@@ -30,10 +36,10 @@ class USERPERM_Controller extends BaseController {
         $this->view->setVariable("users", $users);
         $this->view->setVariable("permissions", $permissions);
         $this->view->setVariable("userperms", $userperms);
-        $this->view->render("userperm", "show");
+        $this->view->render("userperm", "USERPERM_SHOW_Vista");
     }
 
-    public function insert(){
+    public function add(){
         //checkPermissionsNeed
     
         $userperm = new UserPerm();
@@ -48,7 +54,7 @@ class USERPERM_Controller extends BaseController {
 	
                     $this->view->setFlash(sprintf(i18n("User Permission \"%s\" \"%s\" successfully added."), $userperm->getUser(), $userperm->getPermission()));
 	
-                    $this->view->redirect("userperm", "show");
+                    $this->view->redirect("userperm", "USERPERM_SHOW_Vista");
                 } else {
                     $errors = array();
 	                $errors["general"] = "UserPerm already exists";
@@ -82,9 +88,9 @@ class USERPERM_Controller extends BaseController {
                 $this->userPermMapper->delete($userperm);
                 $this->view->setFlash(sprintf(i18n("UserPerm \"%s\" \"%s\" successfully deleted."), $userperm->getUser(), $userperm->getPermission()));
             }
-            $this->view->redirect("userperm", "show");
+            $this->view->redirect("userperm", "USERPERM_SHOW_Vista");
         }
         $this->view->setVariable("userperm", $userperm);
-        $this->view->render("userperm", "delete");
+        $this->view->render("userperm", "USERPERM_SHOW_Vista");
     }
 }

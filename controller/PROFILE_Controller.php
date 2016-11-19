@@ -2,7 +2,7 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Profile.php");
-require_once(__DIR__."/../model/ProfileMapper.php");
+require_once(__DIR__."/../model/PROFILE_Model.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
 class PROFILE_Controller extends BaseController {
@@ -11,7 +11,7 @@ class PROFILE_Controller extends BaseController {
   
     public function __construct() {
         parent::__construct();
-        $this->profileMapper = new ProfileMapper();
+        $this->profileMapper = new PROFILE_Model();
         $this->view->setLayout("default");
     }
 
@@ -19,7 +19,7 @@ class PROFILE_Controller extends BaseController {
         
         $profiles = $this->profileMapper->fetch_all();
         $this->view->setVariable("profiles", $profiles);
-        $this->view->render("profile", "show");
+        $this->view->render("profile", "PROFILE_SHOW_Vista");
     }
 
     public function showone(){
@@ -35,10 +35,10 @@ class PROFILE_Controller extends BaseController {
         }
 
         $this->view->setVariable("profile", $profile);
-        $this->view->render("profile", "showone");
+        $this->view->render("profile", "PROFILE_SHOWONE_Vista");
     }
 
-    public function insert(){
+    public function add(){
         //checkPermissionsNeed
         
         $profile = new Profile();
@@ -53,7 +53,7 @@ class PROFILE_Controller extends BaseController {
 	
                     $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully added."), $profile->getProfileName()));
 	
-                    $this->view->redirect("profile", "show");
+                    $this->view->redirect("profile", "PROFILE_SHOW_Vista");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Profile already exists";
@@ -66,7 +66,7 @@ class PROFILE_Controller extends BaseController {
         }
     
         $this->view->setVariable("profile", $profile);
-        $this->view->render("profile", "insert");
+        $this->view->render("profile", "PROFILE_ADD_Vista");
     }
 
     public function update() {
@@ -90,7 +90,7 @@ class PROFILE_Controller extends BaseController {
                 $profile->checkIsValidForCreate();
                 $this->profileMapper->update($profile);                
                 $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully updated."), $profile->getProfileName()));
-                $this->view->redirect("profile", "show");
+                $this->view->redirect("profile", "PROFILE_SHOW_Vista");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Profile already exists";
@@ -103,7 +103,7 @@ class PROFILE_Controller extends BaseController {
         }
     
         $this->view->setVariable("profile", $profile);
-        $this->view->render("profile", "update");    
+        $this->view->render("profile", "PROFILE_UPDATE_Vista");    
     }
 
     public function delete() {
@@ -125,9 +125,9 @@ class PROFILE_Controller extends BaseController {
                 $this->profileMapper->delete($profile);
                 $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully deleted."), $profile->getProfileName()));
             }
-            $this->view->redirect("profile", "show");
+            $this->view->redirect("profile", "PROFILE_SHOW_Vista");
         }
         $this->view->setVariable("profile", $profile);
-        $this->view->render("profile", "delete");
+        $this->view->render("profile", "PROFILE_DELETE_Vista");
     }
 }

@@ -2,13 +2,20 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Controller.php");
-require_once(__DIR__."/../model/ControllerMapper.php");
+require_once(__DIR__."/../model/CONTROLLER_Model.php");
 require_once(__DIR__."/../model/Action.php");
-require_once(__DIR__."/../model/ActionMapper.php");
+require_once(__DIR__."/../model/ACTION_Model.php");
 require_once(__DIR__."/../model/Permission.php");
-require_once(__DIR__."/../model/PermissionMapper.php");
+require_once(__DIR__."/../model/PERMISSION_Model.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
+
+/**
+ * Esta clase relaciona as entidades Controller e Action.
+ * Esta relacion da lugar a unha entidade N:M que chamamos Permissions.
+ * Estes permisos sobre accions de controlador serán os que se asignaran
+ * a usuarios e perfis de usuario.
+ */
 class PERMISSION_Controller extends BaseController {
     
     private $controllerMapper;
@@ -17,9 +24,9 @@ class PERMISSION_Controller extends BaseController {
   
     public function __construct() {
         parent::__construct();
-        $this->controllerMapper = new ControllerMapper();
-        $this->actionMapper = new ActionMapper();
-        $this->permissionMapper = new PermissionMapper();
+        $this->controllerMapper = new CONTROLLER_Model();
+        $this->actionMapper = new ACTION_Model();
+        $this->permissionMapper = new PERMISSION_Model();
         $this->view->setLayout("default");
     }
 
@@ -30,10 +37,10 @@ class PERMISSION_Controller extends BaseController {
         $this->view->setVariable("permissions", $permissions);
         $this->view->setVariable("controllers", $controllers);
         $this->view->setVariable("actions", $actions);
-        $this->view->render("permission", "show");
+        $this->view->render("permission", "PERMISSION_SHOW_Vista");
     }
 
-    public function insert(){
+    public function add(){
         //checkPermissionsNeed
     
         $permission = new Permission();
@@ -48,7 +55,7 @@ class PERMISSION_Controller extends BaseController {
 	
                     $this->view->setFlash(sprintf(i18n("Permission \"%s\" \"%s\" successfully added."), $permission->getController(), $permission->getAction()));
 	
-                    $this->view->redirect("permission", "show");
+                    $this->view->redirect("permission", "PERMISSION_SHOW_Vista");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Permission already exists";
@@ -82,10 +89,10 @@ class PERMISSION_Controller extends BaseController {
                 $this->permissionMapper->delete($permission);
                 $this->view->setFlash(sprintf(i18n("Permission \"%s\" \"%s\" successfully deleted."), $permission->getController(), $permission->getAction()));
             }
-            $this->view->redirect("permission", "show");
+            $this->view->redirect("permission", "PERMISSION_SHOW_Vista");
         }
         $this->view->setVariable("permission", $permission);
-        $this->view->render("permission", "delete");
+        $this->view->render("permission", "PERMISSION_DELETE_Vista");
     }
   
 }

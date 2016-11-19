@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
-class ControllerMapper {
+class CONTROLLER_Model {
 
     private $db;
   

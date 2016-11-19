@@ -2,9 +2,9 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../model/UserMapper.php");
+require_once(__DIR__."/../model/USER_Model.php");
 require_once(__DIR__."/../model/Profile.php");
-require_once(__DIR__."/../model/ProfileMapper.php");
+require_once(__DIR__."/../model/PROFILE_Model.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
 class USER_Controller extends BaseController {
@@ -13,7 +13,7 @@ class USER_Controller extends BaseController {
 
     public function __construct() {
         parent::__construct();
-        $this->userMapper = new UserMapper();
+        $this->userMapper = new USER_Model();
         $this->view->setLayout("default");
     }
 
@@ -23,7 +23,7 @@ class USER_Controller extends BaseController {
                 $_SESSION["currentuser"] = $_POST["username"];
                 $user = $this->userMapper->fetch_by_username($_POST["username"]);
                 $_SESSION["permissions"] = $this->getPermissions($user);
-                $this->view->redirect("user", "login");
+                $this->view->redirect("user", "USER_LOGIN_Vista");
             }else{
                 $errors = array();
                 $errors["general"] = "Username is not valid";
@@ -31,13 +31,13 @@ class USER_Controller extends BaseController {
             }
         }
 
-        $this->view->render("user", "login");
+        $this->view->render("user", "USER_LOGIN_Vista");
     }
 
     public function show(){
         $users = $this->userMapper->fetch_all();
         $this->view->setVariable("users", $users);
-        $this->view->render("user", "show");
+        $this->view->render("user", "USER_SHOW_Vista");
     }
 
     public function showone(){
@@ -53,10 +53,10 @@ class USER_Controller extends BaseController {
         }
 
         $this->view->setVariable("user", $user);
-        $this->view->render("user", "showone");
+        $this->view->render("user", "USER_SHOWONE_Vista");
     }
 
-    public function insert(){
+    public function add(){
         //checkPermissionsNeed
 
         $user = new User();
@@ -109,7 +109,7 @@ class USER_Controller extends BaseController {
                     $user->checkIsValidForCreate();
                     $this->userMapper->insert($user);
                     $this->view->setFlash(sprintf(i18n("User \"%s\" successfully added."),$user->getUsername()));
-                    $this->view->redirect("user", "show");
+                    $this->view->redirect("user", "USER_SHOW_Vista");
                 } else {
                     $errors = array();
 	                  $errors["general"] = "Username already exists";
@@ -126,11 +126,11 @@ class USER_Controller extends BaseController {
             }
         }
 
-        $profileMapper = new ProfileMapper();
+        $profileMapper = new PROFILE_Model();
         $profiles = $profileMapper->fetch_all();
         $this->view->setVariable("user", $user);
         $this->view->setVariable("profiles", $profiles);
-        $this->view->render("user", "insert");
+        $this->view->render("user", "USER_ADD_Vista");
     }
 
 
@@ -193,7 +193,7 @@ class USER_Controller extends BaseController {
                     $user->checkIsValidForCreate();
                     $this->userMapper->update($user);
                     $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
-                    $this->view->redirect("user", "show");
+                    $this->view->redirect("user", "USER_SHOW_Vista");
                 } else {
                   if(!$this->userMapper->dniExists($_POST["dni"])){
                      if (!$this->userMapper->usernameExists($_POST["username"])){
@@ -201,7 +201,7 @@ class USER_Controller extends BaseController {
                       $user->checkIsValidForCreate();
                       $this->userMapper->update($user);
                       $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
-                      $this->view->redirect("user", "show");
+                      $this->view->redirect("user", "USER_SHOW_Vista");
                      } else {
                         $errors = array();
       	                $errors["general"] = "Username already exists";
@@ -219,11 +219,11 @@ class USER_Controller extends BaseController {
             }
         }
 
-        $profileMapper = new ProfileMapper();
+        $profileMapper = new PROFILE_Model();
         $profiles = $profileMapper->fetch_all();
         $this->view->setVariable("user", $user);
         $this->view->setVariable("profiles", $profiles);
-        $this->view->render("user", "update");
+        $this->view->render("user", "USER_UPDATE_Vista");
     }
 
     public function delete() {
@@ -245,15 +245,15 @@ class USER_Controller extends BaseController {
                 $this->userMapper->delete($user);
                 $this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
             }
-            $this->view->redirect("user", "show");
+            $this->view->redirect("user", "USER_SHOW_Vista");
         }
         $this->view->setVariable("user", $user);
-        $this->view->render("user", "delete");
+        $this->view->render("user", "USER_DELETE_Vista");
     }
 
     public function logout() {
         session_destroy();
-        $this->view->redirect("user", "login");
+        $this->view->redirect("user", "USER_LOGIN_Vista");
     }
 
     private function getPermissions(User $user) {

@@ -2,13 +2,19 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Profile.php");
-require_once(__DIR__."/../model/ProfileMapper.php");
+require_once(__DIR__."/../model/PROFILE_Model.php");
 require_once(__DIR__."/../model/Permission.php");
-require_once(__DIR__."/../model/PermissionMapper.php");
+require_once(__DIR__."/../model/PERMISSION_Model.php");
 require_once(__DIR__."/../model/ProfilePerm.php");
-require_once(__DIR__."/../model/ProfilePermMapper.php");
+require_once(__DIR__."/../model/PROFILEPERM_Model.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
+
+/**
+ * Esta clase relaciona as entidades Profile e Permission.
+ * Esta relacion da lugar a unha entidade N:M que chamamos ProfilePerm.
+ * Esta taboa relacion perfil con permisos.
+ */
 class PROFILEPERM_Controller extends BaseController {
     
     private $profileMapper;
@@ -17,9 +23,9 @@ class PROFILEPERM_Controller extends BaseController {
   
     public function __construct() {
         parent::__construct();
-        $this->profileMapper = new ProfileMapper();
-        $this->permissionMapper = new PermissionMapper();
-        $this->profilePermMapper = new ProfilePermMapper();
+        $this->profileMapper = new PROFILE_Model();
+        $this->permissionMapper = new PERMISSION_Model();
+        $this->profilePermMapper = new PROFILEPERM_Model();
         $this->view->setLayout("default");
     }
 
@@ -30,10 +36,10 @@ class PROFILEPERM_Controller extends BaseController {
         $this->view->setVariable("profiles", $profiles);
         $this->view->setVariable("permissions", $permissions);
         $this->view->setVariable("profileperms", $profileperms);
-        $this->view->render("profileperm", "show");
+        $this->view->render("profileperm", "PROFILEPERM_SHOW_Vista");
     }
 
-    public function insert(){
+    public function add(){
         //checkPermissionsNeed
     
         $profileperm = new ProfilePerm();
@@ -47,7 +53,7 @@ class PROFILEPERM_Controller extends BaseController {
                     
                     $this->view->setFlash(sprintf(i18n("Profile Permission \"%s\" \"%s\" successfully added."), $profileperm->getProfile(), $profileperm->getPermission()));
 	
-                    $this->view->redirect("profileperm", "show");
+                    $this->view->redirect("profileperm", "PROFILEPERM_SHOW_Vista");
                 } else {
                     $errors = array();
 	                $errors["general"] = "ProfilePerm already exists";
@@ -81,9 +87,9 @@ class PROFILEPERM_Controller extends BaseController {
                 $this->profilePermMapper->delete($profileperm);
                 $this->view->setFlash(sprintf(i18n("profilePerm \"%s\" \"%s\" successfully deleted."), $profileperm->getProfile(), $profileperm->getPermission()));
             }
-            $this->view->redirect("profileperm", "show");
+            $this->view->redirect("profileperm", "PROFILEPERM_SHOW_Vista");
         }
         $this->view->setVariable("profileperm", $profileperm);
-        $this->view->render("profileperm", "delete");
+        $this->view->render("profileperm", "PROFILEPERM_DELETE_Vista");
     }
 }
