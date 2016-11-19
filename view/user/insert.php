@@ -58,7 +58,12 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Contract") ?>:</label>
-             <input type="text" name="tipo_contrato" class="form-control">
+            <select name="tipo_contrato" class="form-control">
+              <option value="Indefinido">Indefinido</option>
+              <option value="Temporal">Temporal</option>
+              <option value="Para la formacion y el aprendizaje">Para la formación y el aprendizaje</option>
+              <option value="Practicas">Prácticas</option>
+            </select>
           </div>
           <div class="form-group">
             <label><?= i18n("Email") ?>:</label>
