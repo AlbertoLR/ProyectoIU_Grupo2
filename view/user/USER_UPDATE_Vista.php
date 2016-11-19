@@ -55,7 +55,7 @@ $errors = $view->getVariable("errors");
         </div>
         <div class="form-group">
           <label><?= i18n("Bank account") ?>:</label>
-           <input type="text" name="num_cuenta" class="form-control" value="<?= $user->getNumCuenta()?>">
+           <input type="text" name="num_cuenta" class="form-control" value="<?= $user->getNumCuenta()?>" minlength="24" maxlength="24" pattern="(ES[0-9]{22})" >
         </div>
         <div class="form-group">
           <label><?= i18n("Contract") ?>:</label>
