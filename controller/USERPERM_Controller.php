@@ -54,7 +54,7 @@ class USERPERM_Controller extends BaseController {
 	
                     $this->view->setFlash(sprintf(i18n("User Permission \"%s\" \"%s\" successfully added."), $userperm->getUser(), $userperm->getPermission()));
 	
-                    $this->view->redirect("userperm", "USERPERM_SHOW_Vista");
+                    $this->view->redirect("userperm", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "UserPerm already exists";
@@ -88,7 +88,7 @@ class USERPERM_Controller extends BaseController {
                 $this->userPermMapper->delete($userperm);
                 $this->view->setFlash(sprintf(i18n("UserPerm \"%s\" \"%s\" successfully deleted."), $userperm->getUser(), $userperm->getPermission()));
             }
-            $this->view->redirect("userperm", "USERPERM_SHOW_Vista");
+            $this->view->redirect("userperm", "show");
         }
         $this->view->setVariable("userperm", $userperm);
         $this->view->render("userperm", "USERPERM_SHOW_Vista");

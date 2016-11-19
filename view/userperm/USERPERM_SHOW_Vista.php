@@ -39,7 +39,7 @@ $errors = $view->getVariable("errors");
       </tbody>
 </table><br />
 
-        <form action="index.php?controller=userperm&amp;action=insert" method="POST">
+        <form action="index.php?controller=userperm&amp;action=add" method="POST">
         User: <select name="user">
         <option value="" selected></option>
         <?php foreach($users as $user) {?>

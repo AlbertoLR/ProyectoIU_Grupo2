@@ -14,7 +14,7 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
     <div class="container">
       <h1><?= i18n("Create User")?></h1>
-        <form action="index.php?controller=user&amp;action=insert" method="POST" enctype="multipart/form-data">
+        <form action="index.php?controller=user&amp;action=add" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label><?= i18n("DNI") ?>:</label>
             <input type="text" name="dni" class="form-control"  minlength="9" maxlength="9" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" >

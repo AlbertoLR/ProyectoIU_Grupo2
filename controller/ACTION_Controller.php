@@ -24,12 +24,12 @@ class ACTION_Controller extends BaseController {
     public function showone(){
         if (!array_key_exists("action", $_SESSION["permissions"])) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "USER_LOGIN_Vista");
+            $this->view->redirect("user", "login");
         }
 
         if (!in_array("showone", $_SESSION["permissions"]["action"])) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "USER_LOGIN_Vista");
+            $this->view->redirect("user", "login");
         }
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An action id is mandatory");
@@ -60,7 +60,7 @@ class ACTION_Controller extends BaseController {
                     $this->actionMapper->insert($action);
 	
                     $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully added."), $action->getActionName()));
-                    $this->view->redirect("action", "ACTION_SHOW_Vista");
+                    $this->view->redirect("action", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Action already exists";
@@ -99,7 +99,7 @@ class ACTION_Controller extends BaseController {
                     $action->checkIsValidForCreate();
                     $this->actionMapper->update($action);                
                     $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully updated."), $action->getActionName()));
-                    $this->view->redirect("action", "ACTION_SHOW_Vista");
+                    $this->view->redirect("action", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Action already exists";
@@ -134,7 +134,7 @@ class ACTION_Controller extends BaseController {
                 $this->actionMapper->delete($action);
                 $this->view->setFlash(sprintf(i18n("Action \"%s\" successfully deleted."), $action->getActionName()));
             }
-            $this->view->redirect("action", "ACTION_SHOW_Vista");
+            $this->view->redirect("action", "show");
         }
         $this->view->setVariable("action", $action);
         $this->view->render("action", "ACTION_DELETE_Vista");

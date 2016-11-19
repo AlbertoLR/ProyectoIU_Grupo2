@@ -37,7 +37,7 @@ $errors = $view->getVariable("errors");
       </tbody>
 </table>
 
-        <form class="top-buffer" action="index.php?controller=permission&amp;action=insert" method="POST">
+        <form class="top-buffer" action="index.php?controller=permission&amp;action=add" method="POST">
         Controller: <select name="controller">
         <option value="" selected></option>
         <?php foreach($controllers as $controller) {?>

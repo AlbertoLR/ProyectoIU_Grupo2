@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
-class USERRPERM_Model {
+class USERPERM_Model {
 
     private $db;
   

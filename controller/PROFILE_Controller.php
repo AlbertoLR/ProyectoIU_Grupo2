@@ -53,7 +53,7 @@ class PROFILE_Controller extends BaseController {
 	
                     $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully added."), $profile->getProfileName()));
 	
-                    $this->view->redirect("profile", "PROFILE_SHOW_Vista");
+                    $this->view->redirect("profile", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Profile already exists";
@@ -90,7 +90,7 @@ class PROFILE_Controller extends BaseController {
                 $profile->checkIsValidForCreate();
                 $this->profileMapper->update($profile);                
                 $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully updated."), $profile->getProfileName()));
-                $this->view->redirect("profile", "PROFILE_SHOW_Vista");
+                $this->view->redirect("profile", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Profile already exists";
@@ -125,7 +125,7 @@ class PROFILE_Controller extends BaseController {
                 $this->profileMapper->delete($profile);
                 $this->view->setFlash(sprintf(i18n("Profile \"%s\" successfully deleted."), $profile->getProfileName()));
             }
-            $this->view->redirect("profile", "PROFILE_SHOW_Vista");
+            $this->view->redirect("profile", "show");
         }
         $this->view->setVariable("profile", $profile);
         $this->view->render("profile", "PROFILE_DELETE_Vista");

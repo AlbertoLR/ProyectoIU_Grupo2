@@ -38,7 +38,7 @@ $errors = $view->getVariable("errors");
 	<?php } ?>
       </tbody>
 </table>
-        <form class="top-buffer" action="index.php?controller=profileperm&amp;action=insert" method="POST">
+        <form class="top-buffer" action="index.php?controller=profileperm&amp;action=add" method="POST">
         Profile: <select name="profile">
         <option value="" selected></option>
         <?php foreach($profiles as $profile) {?>

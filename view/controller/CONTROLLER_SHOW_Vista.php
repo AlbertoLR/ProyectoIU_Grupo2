@@ -12,7 +12,7 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
-	<a href="index.php?controller=controller&action=insert" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create Controller</a>
+	<a href="index.php?controller=controller&action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create Controller</a>
 <table class="table">
       <thead>
         <tr>

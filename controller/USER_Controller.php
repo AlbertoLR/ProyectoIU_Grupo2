@@ -23,7 +23,7 @@ class USER_Controller extends BaseController {
                 $_SESSION["currentuser"] = $_POST["username"];
                 $user = $this->userMapper->fetch_by_username($_POST["username"]);
                 $_SESSION["permissions"] = $this->getPermissions($user);
-                $this->view->redirect("user", "USER_LOGIN_Vista");
+                $this->view->redirect("user", "login");
             }else{
                 $errors = array();
                 $errors["general"] = "Username is not valid";
@@ -109,7 +109,7 @@ class USER_Controller extends BaseController {
                     $user->checkIsValidForCreate();
                     $this->userMapper->insert($user);
                     $this->view->setFlash(sprintf(i18n("User \"%s\" successfully added."),$user->getUsername()));
-                    $this->view->redirect("user", "USER_SHOW_Vista");
+                    $this->view->redirect("user", "show");
                 } else {
                     $errors = array();
 	                  $errors["general"] = "Username already exists";
@@ -193,7 +193,7 @@ class USER_Controller extends BaseController {
                     $user->checkIsValidForCreate();
                     $this->userMapper->update($user);
                     $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
-                    $this->view->redirect("user", "USER_SHOW_Vista");
+                    $this->view->redirect("user", "show");
                 } else {
                   if(!$this->userMapper->dniExists($_POST["dni"])){
                      if (!$this->userMapper->usernameExists($_POST["username"])){
@@ -201,7 +201,7 @@ class USER_Controller extends BaseController {
                       $user->checkIsValidForCreate();
                       $this->userMapper->update($user);
                       $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
-                      $this->view->redirect("user", "USER_SHOW_Vista");
+                      $this->view->redirect("user", "show");
                      } else {
                         $errors = array();
       	                $errors["general"] = "Username already exists";
@@ -245,7 +245,7 @@ class USER_Controller extends BaseController {
                 $this->userMapper->delete($user);
                 $this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
             }
-            $this->view->redirect("user", "USER_SHOW_Vista");
+            $this->view->redirect("user", "show");
         }
         $this->view->setVariable("user", $user);
         $this->view->render("user", "USER_DELETE_Vista");
@@ -253,7 +253,7 @@ class USER_Controller extends BaseController {
 
     public function logout() {
         session_destroy();
-        $this->view->redirect("user", "USER_LOGIN_Vista");
+        $this->view->redirect("user", "login");
     }
 
     private function getPermissions(User $user) {

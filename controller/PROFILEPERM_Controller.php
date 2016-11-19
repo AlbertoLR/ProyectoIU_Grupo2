@@ -53,7 +53,7 @@ class PROFILEPERM_Controller extends BaseController {
                     
                     $this->view->setFlash(sprintf(i18n("Profile Permission \"%s\" \"%s\" successfully added."), $profileperm->getProfile(), $profileperm->getPermission()));
 	
-                    $this->view->redirect("profileperm", "PROFILEPERM_SHOW_Vista");
+                    $this->view->redirect("profileperm", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "ProfilePerm already exists";
@@ -87,7 +87,7 @@ class PROFILEPERM_Controller extends BaseController {
                 $this->profilePermMapper->delete($profileperm);
                 $this->view->setFlash(sprintf(i18n("profilePerm \"%s\" \"%s\" successfully deleted."), $profileperm->getProfile(), $profileperm->getPermission()));
             }
-            $this->view->redirect("profileperm", "PROFILEPERM_SHOW_Vista");
+            $this->view->redirect("profileperm", "show");
         }
         $this->view->setVariable("profileperm", $profileperm);
         $this->view->render("profileperm", "PROFILEPERM_DELETE_Vista");

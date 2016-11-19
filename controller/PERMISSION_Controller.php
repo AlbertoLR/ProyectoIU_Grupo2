@@ -55,7 +55,7 @@ class PERMISSION_Controller extends BaseController {
 	
                     $this->view->setFlash(sprintf(i18n("Permission \"%s\" \"%s\" successfully added."), $permission->getController(), $permission->getAction()));
 	
-                    $this->view->redirect("permission", "PERMISSION_SHOW_Vista");
+                    $this->view->redirect("permission", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Permission already exists";
@@ -89,7 +89,7 @@ class PERMISSION_Controller extends BaseController {
                 $this->permissionMapper->delete($permission);
                 $this->view->setFlash(sprintf(i18n("Permission \"%s\" \"%s\" successfully deleted."), $permission->getController(), $permission->getAction()));
             }
-            $this->view->redirect("permission", "PERMISSION_SHOW_Vista");
+            $this->view->redirect("permission", "show");
         }
         $this->view->setVariable("permission", $permission);
         $this->view->render("permission", "PERMISSION_DELETE_Vista");

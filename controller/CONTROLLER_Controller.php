@@ -51,7 +51,7 @@ class CONTROLLER_Controller extends BaseController {
 	
                     $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully added."), $controller->getControllerName()));
 	
-                    $this->view->redirect("controller", "CONTROLLER_SHOW_Vista");
+                    $this->view->redirect("controller", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Controller already exists";
@@ -88,7 +88,7 @@ class CONTROLLER_Controller extends BaseController {
                     $controller->checkIsValidForCreate();
                     $this->controllerMapper->update($controller);                
                     $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully updated."), $controller->getControllerName()));
-                    $this->view->redirect("controller", "CONTROLLER_SHOW_Vista");
+                    $this->view->redirect("controller", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "Controller already exists";
@@ -123,7 +123,7 @@ class CONTROLLER_Controller extends BaseController {
                 $this->controllerMapper->delete($controller);
                 $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully deleted."), $controller->getControllerName()));
             }
-            $this->view->redirect("controller", "CONTROLLER_SHOW_Vista");
+            $this->view->redirect("controller", "show");
         }
         $this->view->setVariable("controller", $controller);
         $this->view->render("controller", "CONTROLLER_DELETE_Vista");
