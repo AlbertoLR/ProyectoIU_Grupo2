@@ -21,10 +21,12 @@ $errors = $view->getVariable("errors");
     <a href="index.php?controller=userperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Permissions</a>
     <a href="index.php?controller=user&amp;action=showdeleted" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> View Deleted Users</a>
     <form action="index.php?controller=user&amp;action=showone" method="POST">
-	<input type="text" name="id" class="typeahead tt-query" autocomplete="off" spellcheck="false">
+    <div class=" tt-dropdown-menu .tt-menu form-group top-buffer">
+	   Search: <input type="text" name="id" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false">
+    <div>
     </form>
-        
-<table class="table">
+
+<table class="table top-buffer">
       <thead>
         <tr>
           <th>#</th>
