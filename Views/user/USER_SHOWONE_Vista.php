@@ -14,9 +14,9 @@ $errors = $view->getVariable("errors");
     <div class="container">
   	  <div class="row">
           <?php if($user->getFoto()){?>
-            <div class="col-sm-4 col-sm-push-8"><img src="/pictures/<?= $user->getFoto()?>" alt="<?= $user->getFoto()?>" width="100px" height="100px" /></div>
+            <div class="col-sm-4 col-sm-push-8"><img src=<?= basename(__FILE__)."../../pictures/".$user->getFoto() ?> alt="<?= $user->getFoto()?>" width="100px" height="100px" /></div>
           <?php } else { ?>
-            <div class="col-sm-4 col-sm-push-8"><img src="/pictures/profile_image.png" alt="default_image" width="100px" height="100px" /></div>
+            <div class="col-sm-4 col-sm-push-8"><img src=<?= basename(__FILE__)."../../pictures/profile_image.png" ?> alt="default_image" width="100px" height="100px" /></div>
           <?php } ?>
       <div class="col-sm-8 col-sm-pull-4"><h1><?= i18n("User")?></h1></div>
       </div>
