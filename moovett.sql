@@ -1281,7 +1281,9 @@ INSERT INTO `controller` (`id`, `controllername`) VALUES
 (3, 'permission'),
 (4, 'profile'),
 (1, 'user'),
-(6, 'userperm');
+(6, 'userperm'),
+(7, 'profileperm');
+
 
 --
 -- Dumping data for table `permission`
@@ -1317,7 +1319,12 @@ INSERT INTO `permission` (`id`, `controller`, `action`) VALUES
 (27, 'userperm', 'delete'),
 (28, 'userperm', 'show'),
 (29, 'userperm', 'showone'),
-(30, 'userperm', 'edit');
+(30, 'userperm', 'edit'),
+(31, 'profileperm', 'add'),
+(32, 'profileperm', 'delete'),
+(33, 'profileperm', 'show'),
+(34, 'profileperm', 'showone'),
+(35, 'profileperm', 'edit');
 
 --
 -- Dumping data for table `cliente`
@@ -1502,36 +1509,7 @@ INSERT INTO `aplica` (`descuento_id`,`actividad_id`) VALUES (1, 1),(2,2);
 --
 
 INSERT INTO `user_perms` (`id`, `user`, `permission`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 4),
-(5, 1, 5),
-(6, 1, 6),
-(7, 1, 7),
-(8, 1, 8),
-(9, 1, 9),
-(10, 1, 10),
-(11, 1, 11),
-(12, 1, 12),
-(13, 1, 13),
-(14, 1, 14),
-(15, 1, 15),
-(16, 1, 16),
-(17, 1, 17),
-(18, 1, 18),
-(19, 1, 19),
-(20, 1, 20),
-(21, 1, 21),
-(22, 1, 22),
-(23, 1, 23),
-(24, 1, 24),
-(25, 1, 25),
-(26, 1, 26),
-(27, 1, 27),
-(28, 1, 28),
-(29, 1, 29),
-(30, 1, 30);
+(1, 1, 1);
 
 --
 -- Dumping data for table `profile_perms`
@@ -1567,7 +1545,12 @@ INSERT INTO `profile_perms` (`id`, `profile`, `permission`) VALUES
 (27, 1, 27),
 (28, 1, 28),
 (29, 1, 29),
-(30, 1, 30);
+(30, 1, 30),
+(31, 1, 31),
+(32, 1, 32),
+(33, 1, 33),
+(34, 1, 34),
+(35, 1, 35);
 
 
 
