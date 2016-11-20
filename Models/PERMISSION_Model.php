@@ -55,6 +55,9 @@ class PERMISSION_Model {
         } 
     }
 
+    /**
+     * Checkea se o usuario ou o perfil asociado teñen permisos para realizar un accion dun determinado controlador
+     */
     public function check($userid, $profile, $controllername, $actionname) {
         return ($this->checkUserPerms($userid, $controllername, $actionname) || $this->checkProfilePerms($profile, $controllername, $actionname));
     }
