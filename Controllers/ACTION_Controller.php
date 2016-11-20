@@ -85,7 +85,7 @@ class ACTION_Controller extends BaseController {
     public function edit() {
         if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "edit")) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            //$this->view->redirect("user", "login");
+            $this->view->redirect("user", "login");
         }
         
         if (!isset($_REQUEST["id"])) {
