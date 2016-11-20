@@ -24,7 +24,7 @@ function run() {
 function loadController($controllerName) {  
     $controllerClassName = getControllerClassName($controllerName);
   
-    require_once(__DIR__."/controller/".$controllerClassName.".php");  
+    require_once(__DIR__."/Controllers/".$controllerClassName.".php");  
     return new $controllerClassName();
 }
  

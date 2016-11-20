@@ -1,13 +1,13 @@
 <?php
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
-require_once(__DIR__."/../model/Controller.php");
-require_once(__DIR__."/../model/CONTROLLER_Model.php");
-require_once(__DIR__."/../model/Action.php");
-require_once(__DIR__."/../model/ACTION_Model.php");
-require_once(__DIR__."/../model/Permission.php");
-require_once(__DIR__."/../model/PERMISSION_Model.php");
-require_once(__DIR__."/../controller/BaseController.php");
+require_once(__DIR__."/../Models/Controller.php");
+require_once(__DIR__."/../Models/CONTROLLER_Model.php");
+require_once(__DIR__."/../Models/Action.php");
+require_once(__DIR__."/../Models/ACTION_Model.php");
+require_once(__DIR__."/../Models/Permission.php");
+require_once(__DIR__."/../Models/PERMISSION_Model.php");
+require_once(__DIR__."/../Controllers/BaseController.php");
 
 
 /**

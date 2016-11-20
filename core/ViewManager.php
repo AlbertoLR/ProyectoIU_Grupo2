@@ -73,7 +73,7 @@ class ViewManager {
     }
   
     public function render($controller, $viewname) {
-        include(__DIR__."/../view/$controller/$viewname.php");
+        include(__DIR__."/../Views/$controller/$viewname.php");
         $this->renderLayout();
     }
   
@@ -89,7 +89,7 @@ class ViewManager {
   
     private function renderLayout() {
         $this->moveToFragment("layout");
-        include(__DIR__."/../view/layouts/".$this->layout.".php");  
+        include(__DIR__."/../Views/layouts/".$this->layout.".php");  
         ob_flush();
     }
     

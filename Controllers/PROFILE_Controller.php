@@ -1,9 +1,9 @@
 <?php
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
-require_once(__DIR__."/../model/Profile.php");
-require_once(__DIR__."/../model/PROFILE_Model.php");
-require_once(__DIR__."/../controller/BaseController.php");
+require_once(__DIR__."/../Models/Profile.php");
+require_once(__DIR__."/../Models/PROFILE_Model.php");
+require_once(__DIR__."/../Controllers/BaseController.php");
 
 class PROFILE_Controller extends BaseController {
     
