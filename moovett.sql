@@ -1269,7 +1269,7 @@ INSERT INTO `action` (`id`, `actionname`) VALUES
 (5, 'delete'),
 (1, 'show'),
 (2, 'showone'),
-(4, 'update');
+(4, 'edit');
 
 --
 -- Dumping data for table `controller`
@@ -1292,32 +1292,32 @@ INSERT INTO `permission` (`id`, `controller`, `action`) VALUES
 (2, 'user', 'showone'),
 (3, 'user', 'add'),
 (4, 'user', 'delete'),
-(5, 'user', 'update'),
+(5, 'user', 'edit'),
 (6, 'controller', 'add'),
 (7, 'controller', 'delete'),
 (8, 'controller', 'show'),
 (9, 'controller', 'showone'),
-(10, 'controller', 'update'),
+(10, 'controller', 'edit'),
 (11, 'permission', 'add'),
 (12, 'permission', 'add'),
 (13, 'permission', 'show'),
 (14, 'permission', 'showone'),
-(15, 'permission', 'update'),
+(15, 'permission', 'edit'),
 (16, 'profile', 'add'),
 (17, 'profile', 'delete'),
 (18, 'profile', 'show'),
 (19, 'profile', 'showone'),
-(20, 'profile', 'update'),
+(20, 'profile', 'edit'),
 (21, 'action', 'add'),
 (22, 'action', 'delete'),
 (23, 'action', 'show'),
 (24, 'action', 'showone'),
-(25, 'action', 'update'),
+(25, 'action', 'edit'),
 (26, 'userperm', 'add'),
 (27, 'userperm', 'delete'),
 (28, 'userperm', 'show'),
 (29, 'userperm', 'showone'),
-(30, 'userperm', 'update');
+(30, 'userperm', 'edit');
 
 --
 -- Dumping data for table `cliente`
