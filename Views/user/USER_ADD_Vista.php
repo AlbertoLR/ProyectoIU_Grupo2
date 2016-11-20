@@ -40,11 +40,11 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
           </div>
           <div class="form-group">
             <label><?= i18n("Name") ?>:</label>
-             <input type="text" name="name" class="form-control"  placeholder="ej: Juan" pattern="[a-zA-Z]+">
+             <input type="text" name="name" class="form-control"  placeholder="ej: Juan" pattern="[a-zA-Z ]+" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
           </div>
           <div class="form-group">
             <label><?= i18n("Surname") ?>:</label>
-             <input type="text" name="surname" class="form-control" placeholder="ej: Fernández López" pattern="[a-zA-Z]+">
+             <input type="text" name="surname" class="form-control" placeholder="ej: Fernández López" pattern="[a-zA-Z ]+" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
           </div>
           <div class="form-group">
             <label><?= i18n("Birthdate") ?>:</label>

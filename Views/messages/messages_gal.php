@@ -1,5 +1,5 @@
 <?php
-  $i18n_messages = 
+  $i18n_messages =
   array(
     "Action" => "Accion",
     "Actions" => "Accions",

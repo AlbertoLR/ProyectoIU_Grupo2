@@ -1256,8 +1256,8 @@ INSERT INTO `profile` (`id`, `profilename`) VALUES
 --
 
 INSERT INTO `user` (`id`, `dni`, `username`, `name`, `surname`, `fecha_nac`, `direccion`, `comentario`, `num_cuenta`, `tipo_contrato`, `email`, `foto`, `activo`, `passwd`, `profile`) VALUES
-(1, '44849254q', 'test', 'josé ángel', 'ferro santiago', '2016-11-01', 'calle emilia pardo bazán 5,5ºd, ourense', 'un saludo', 'es648654684654', 'indefinido', 'jfsantiago2@gmail.com', '', 0, 'abc123.', 'admin'),
-(2, '44849299Y', 'jfsantiago2', 'Jose Angel', 'Ferro Santiago', '2016-12-24', 'Calle falsa 123, Ourense', '', 'ES9287423222928374923847', 'Indefinido', 'jfsantiago2@esei.uvigo.es', '', 1, 'abc123.', 'admin');
+(1, '44849254q', 'admin', 'administrador', 'administrador', '2016-11-01', 'calle emilia pardo bazán 5,5ºd, ourense', 'un saludo', 'es648654684654', 'indefinido', 'jfsantiago2@gmail.com', '', 1, 'admin', 'admin'),
+(2, '44849299Y', 'jfsantiago2', 'Javier', 'Fernández López', '2015-12-24', 'Calle falsa 123, Ourense', '', 'ES9287423222928374923847', 'Indefinido', 'jfsantiago2@esei.uvigo.es', '', 0, 'abc123.', 'admin');
 
 
 --
@@ -1553,7 +1553,11 @@ INSERT INTO `profile_perms` (`id`, `profile`, `permission`) VALUES
 (35, 1, 35);
 
 
-
+CREATE USER 'moovett'@'localhost' IDENTIFIED BY '***';GRANT ALL PRIVILEGES ON *.* TO 'moovett'@'localhost' 
+								  IDENTIFIED BY '***' WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+								  GRANT ALL PRIVILEGES ON `iu_web`.* TO 'moovett'@'localhost';
+								  
+								  
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

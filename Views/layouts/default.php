@@ -15,7 +15,7 @@ $currentuser = $view->getVariable("currentusername");
 	<?= $view->getFragment("css") ?>
 	<?= $view->getFragment("javascript") ?>
     </head>
-    <body>    
+    <body>
 	<!-- header -->
 	<header>
 	    <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -31,37 +31,43 @@ $currentuser = $view->getVariable("currentusername");
 		    </div>
 		    <div id="navbar" class="navbar-collapse collapse">
 			<?php if (isset($currentuser)): ?>
-			    <form class="navbar-form navbar-right" action="index.php?controller=user&amp;action=logout" method="POST">
+
+		    <form class="navbar-form navbar-right" action="index.php?controller=user&amp;action=logout" method="POST">
+          <?php
+            include(__DIR__."/language_select_element.php");
+          ?>
 				<button type="submit" class="btn btn-success"><?= i18n("Logout") ?></button>
 			    </form>
 			<?php else: ?>
 			    <form class="navbar-form navbar-right" action="index.php?controller=user&amp;action=login" method="POST">
+            <?php
+              include(__DIR__."/language_select_element.php");
+            ?>
 			    <div class="form-group">
-				<input type="text" placeholder="<?= i18n("Username")?>" class="form-control" name="username">
-			    </div>
-			    <div class="form-group">
-				<input type="password" placeholder="<?= i18n("Password")?>" class="form-control" name ="passwd">
-			    </div>
-			    <button type="submit" class="btn btn-success"><?= i18n("Login") ?></button>
+  				<input type="text" placeholder="<?= i18n("Username")?>" class="form-control" name="username">
+  			    </div>
+  			    <div class="form-group">
+  				<input type="password" placeholder="<?= i18n("Password")?>" class="form-control" name ="passwd">
+  			    </div>
+  			    <button type="submit" class="btn btn-success"><?= i18n("Login") ?></button>
+
 			</form>
 			<?php endif ?>
 		    </div><!--/.navbar-collapse -->
 		</div>
 	    </nav>
 	</header>
-	
+
 	<main>
 	    <div id="flash">
 		<?= $view->popFlash() ?>
 	    </div>
-	    
+
 	    <?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>
 	</main>
-	
+
 	<footer>
-	    <?php
-	    include(__DIR__."/language_select_element.php");
-	    ?>
+
 	</footer>
 
 	<!-- Bootstrap core JavaScript
