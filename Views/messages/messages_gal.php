@@ -27,8 +27,8 @@
     "Spanish" => "Español",
     "English" => "Inglés",
     "Galician" => "Galego",
-    "Welcome to Moovett %s" => "Benvenido a Moovett %s",
-    "Wellcome to Moovett" => "Benvenido a Moovett",
+    "Welcome to Moovett %s" => "Benvido a Moovett %s",
+    "Wellcome to Moovett" => "Benvido a Moovett",
     "Please Login" => "Por favor, entra",
     "Administer this site" => "Administra esta paxina",
     "List of Users" => "Listado de Usuarios",
@@ -68,5 +68,6 @@
     "Create Profile" => "Crear Perfil",
     "List of Actions" => "Listado de Accions",
     "Create Action" => "Crear Accions",
+    "Language" => "Idioma",
   )
 ?>

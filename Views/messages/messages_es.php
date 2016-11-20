@@ -68,5 +68,6 @@
     "Create Profile" => "Crear Perfil",
     "List of Actions" => "Listado de Acciones",
     "Create Action" => "Crear Acciones",
+    "Language" => "Idioma",
   )
 ?>
