@@ -16,7 +16,7 @@ $errors = $view->getVariable("errors");
       <form action="index.php?controller=controller&amp;action=add" method="POST">
         <div class="form-group">
           <label><?= i18n("Name") ?>:</label>
-           <input type="text" name="controllername" class="form-control" required="required">
+           <input type="text" name="controllername" class="form-control" minlength="2" required="required">
         </div>
           <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>
       </form>

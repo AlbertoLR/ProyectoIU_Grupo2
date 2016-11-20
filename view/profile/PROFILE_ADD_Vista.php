@@ -16,7 +16,7 @@ $errors = $view->getVariable("errors");
       <form action="index.php?controller=profile&amp;action=add" method="POST">
       <div class="form-group">
         <label for="usr"><?= i18n("Profile Name") ?>:</label>
-         <input type="text" name="profilename" class="form-control">
+         <input type="text" name="profilename" class="form-control" minlength="2" required="required">
       </div>
         <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>
       </form>

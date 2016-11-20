@@ -23,11 +23,11 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
           </div>
           <div class="form-group">
             <label><?= i18n("Username") ?>:</label>
-      	     <input type="text" name="username" class="form-control" >
+      	     <input type="text" name="username" class="form-control" minlength="5" maxlength="14">
           </div>
           <div class="form-group">
             <label><?= i18n("Password") ?>:</label>
-            <input type="password" name="passwd" class="form-control">
+            <input type="password" name="passwd" class="form-control" minlength="4" maxlength="14">
           </div>
           <div class="form-group">
             <label><?= i18n("Profile") ?>:</label>

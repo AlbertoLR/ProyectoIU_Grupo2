@@ -34,16 +34,6 @@ CREATE TABLE `action` (
   `actionname` varchar(25) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Dumping data for table `action`
---
-
-INSERT INTO `action` (`id`, `actionname`) VALUES
-(3, 'add'),
-(5, 'delete'),
-(1, 'show'),
-(2, 'showone'),
-(4, 'update');
 
 -- --------------------------------------------------------
 
@@ -62,6 +52,8 @@ CREATE TABLE `actividad` (
   `categoria_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
+
 -- --------------------------------------------------------
 
 --
@@ -72,14 +64,12 @@ DROP TABLE IF EXISTS `alerta`;
 CREATE TABLE `alerta` (
 `id` int(11) NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `id_sesion` int(11) DEFAULT NULL,
-  `dni` varchar(9) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `pago_id` int(11) NOT NULL,
-  `asistencia_id_cliente` int(11) NOT NULL,
-  `asistencia_id_sesion` int(11) NOT NULL,
-  `asistencia_sesion_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `pago_id` int(11) NULL,
+  `asistencia_id_cliente` int(11) NULL,
+  `asistencia_sesion_id` int(11) NULL,
+  `user_id` int(11) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -93,6 +83,7 @@ CREATE TABLE `aplica` (
   `actividad_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -102,10 +93,10 @@ CREATE TABLE `aplica` (
 DROP TABLE IF EXISTS `asistencia`;
 CREATE TABLE `asistencia` (
   `id_cliente` int(11) NOT NULL,
-  `id_sesion` int(11) NOT NULL,
   `asiste` tinyint(1) DEFAULT NULL,
   `sesion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -122,6 +113,7 @@ CREATE TABLE `caja` (
   `pago_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -133,6 +125,7 @@ CREATE TABLE `categoria` (
 `id` int(11) NOT NULL,
   `tipo` varchar(10) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -158,6 +151,7 @@ CREATE TABLE `cliente` (
   `familiar` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -174,6 +168,7 @@ CREATE TABLE `cliente_externo` (
   `email` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -186,17 +181,6 @@ CREATE TABLE `controller` (
   `controllername` varchar(25) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Dumping data for table `controller`
---
-
-INSERT INTO `controller` (`id`, `controllername`) VALUES
-(5, 'action'),
-(2, 'controller'),
-(3, 'permission'),
-(4, 'profile'),
-(1, 'user'),
-(6, 'userperm');
 
 -- --------------------------------------------------------
 
@@ -212,6 +196,7 @@ CREATE TABLE `descuento` (
   `categoria_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -225,9 +210,9 @@ CREATE TABLE `documento` (
   `id_inscripcion` int(11) DEFAULT NULL,
 `id` int(11) NOT NULL,
   `tipo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `contenido` mediumblob NOT NULL
+  `documento` varchar(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -239,8 +224,10 @@ DROP TABLE IF EXISTS `empleado_mira`;
 CREATE TABLE `empleado_mira` (
   `lesion_cliente_id_lesion` int(11) NOT NULL,
   `lesion_cliente_cliente_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `fecha_vista` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -253,6 +240,8 @@ CREATE TABLE `espacio` (
 `id` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+
 
 -- --------------------------------------------------------
 
@@ -268,6 +257,7 @@ CREATE TABLE `evento` (
   `espacio_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -280,6 +270,7 @@ CREATE TABLE `factura` (
   `fecha` date NOT NULL,
   `pago_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -295,6 +286,7 @@ CREATE TABLE `horario_temporada` (
   `nombre_temp` varchar(30) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -303,13 +295,13 @@ CREATE TABLE `horario_temporada` (
 
 DROP TABLE IF EXISTS `horas_posibles`;
 CREATE TABLE `horas_posibles` (
+  `id` int(11) NOT NULL,
   `dia` date NOT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fin` time NOT NULL,
-  `rango_horario_dia_s` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
-  `rango_horario_hora_apertura` time NOT NULL,
-  `rango_horario_hora_cierre` time NOT NULL
+  `rango_horario_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -326,6 +318,7 @@ CREATE TABLE `hora_fisio` (
   `hora_f` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -337,10 +330,13 @@ CREATE TABLE `inscripcion` (
 `id` int(11) NOT NULL,
   `fecha` date DEFAULT NULL,
   `particular_externo_id` int(11) DEFAULT NULL,
-  `evento_id` int(11) NOT NULL,
-  `reserva_id` int(11) NOT NULL,
-  `cliente_dni_c` varchar(9) COLLATE utf8_spanish_ci NOT NULL
+  `evento_id` int(11) NULL,
+  `reserva_id` int(11) NULL,
+  `cliente_dni_c` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
+  `id_actividad` int(11) NULL,
+  `id_descuento` int(11) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -351,9 +347,10 @@ CREATE TABLE `inscripcion` (
 DROP TABLE IF EXISTS `lesiones`;
 CREATE TABLE `lesiones` (
 `id` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `user_id` int(11) NOT NULL
+  `descripcion` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+
 
 -- --------------------------------------------------------
 
@@ -367,6 +364,7 @@ CREATE TABLE `lesion_cliente` (
   `cliente_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -378,6 +376,7 @@ CREATE TABLE `lesion_empleado` (
   `lesiones_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -394,6 +393,7 @@ CREATE TABLE `linea_factura` (
   `precio` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -407,6 +407,7 @@ CREATE TABLE `notificacion` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -418,11 +419,12 @@ CREATE TABLE `pago` (
 `id` int(11) NOT NULL,
   `metodo_pago` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `fecha` date NOT NULL,
-  `periodicidad` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `periodicidad` varchar(45) COLLATE utf8_spanish_ci NULL,
   `cantidad` smallint(6) NOT NULL,
-  `reserva_id` int(11) NOT NULL,
-  `inscripcion_id` int(11) NOT NULL
+  `reserva_id` int(11) NULL,
+  `inscripcion_id` int(11) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -438,6 +440,7 @@ CREATE TABLE `particular_externo` (
   `telefono` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -449,6 +452,7 @@ CREATE TABLE `percibe` (
   `user_id` int(11) NOT NULL,
   `alerta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -463,41 +467,6 @@ CREATE TABLE `permission` (
   `action` varchar(25) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Dumping data for table `permission`
---
-
-INSERT INTO `permission` (`id`, `controller`, `action`) VALUES
-(1, 'user', 'show'),
-(2, 'user', 'showone'),
-(3, 'user', 'add'),
-(4, 'user', 'delete'),
-(5, 'user', 'update'),
-(6, 'controller', 'add'),
-(7, 'controller', 'delete'),
-(8, 'controller', 'show'),
-(9, 'controller', 'showone'),
-(10, 'controller', 'update'),
-(11, 'permission', 'add'),
-(12, 'permission', 'add'),
-(13, 'permission', 'show'),
-(14, 'permission', 'showone'),
-(15, 'permission', 'update'),
-(16, 'profile', 'add'),
-(17, 'profile', 'delete'),
-(18, 'profile', 'show'),
-(19, 'profile', 'showone'),
-(20, 'profile', 'update'),
-(21, 'action', 'add'),
-(22, 'action', 'delete'),
-(23, 'action', 'show'),
-(24, 'action', 'showone'),
-(25, 'action', 'update'),
-(26, 'userperm', 'add'),
-(27, 'userperm', 'delete'),
-(28, 'userperm', 'show'),
-(29, 'userperm', 'showone'),
-(30, 'userperm', 'update');
 
 -- --------------------------------------------------------
 
@@ -511,12 +480,6 @@ CREATE TABLE `profile` (
   `profilename` varchar(25) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Dumping data for table `profile`
---
-
-INSERT INTO `profile` (`id`, `profilename`) VALUES
-(1, 'admin');
 
 -- --------------------------------------------------------
 
@@ -531,41 +494,6 @@ CREATE TABLE `profile_perms` (
   `permission` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Dumping data for table `profile_perms`
---
-
-INSERT INTO `profile_perms` (`id`, `profile`, `permission`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 11),
-(5, 1, 4),
-(6, 1, 5),
-(7, 1, 6),
-(8, 1, 7),
-(9, 1, 8),
-(10, 1, 9),
-(11, 1, 10),
-(12, 1, 12),
-(13, 1, 13),
-(14, 1, 14),
-(15, 1, 15),
-(16, 1, 16),
-(17, 1, 17),
-(18, 1, 18),
-(19, 1, 19),
-(20, 1, 20),
-(21, 1, 21),
-(22, 1, 22),
-(23, 1, 23),
-(24, 1, 24),
-(25, 1, 25),
-(26, 1, 26),
-(27, 1, 27),
-(28, 1, 28),
-(29, 1, 29),
-(30, 1, 30);
 
 -- --------------------------------------------------------
 
@@ -575,13 +503,13 @@ INSERT INTO `profile_perms` (`id`, `profile`, `permission`) VALUES
 
 DROP TABLE IF EXISTS `rango_horario`;
 CREATE TABLE `rango_horario` (
+  `id` int(11) NOT NULL,
   `dia_s` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `hora_apertura` time NOT NULL,
   `hora_cierre` time NOT NULL,
-  `horario_temporada_id` int(11) NOT NULL,
-  `horario_temporada_dia_inicio` date NOT NULL,
-  `horario_temporada_dia_fin` date NOT NULL
+  `horario_temporada_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -594,6 +522,7 @@ CREATE TABLE `recibe` (
   `notificacion_id` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -610,6 +539,7 @@ CREATE TABLE `recibo` (
   `pago_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -618,12 +548,13 @@ CREATE TABLE `recibo` (
 
 DROP TABLE IF EXISTS `reserva`;
 CREATE TABLE `reserva` (
-  `id_espacio` int(11) NOT NULL,
+  `id_espacio` int(11) NULL,
   `dni_c` varchar(9) COLLATE utf8_spanish_ci DEFAULT NULL,
 `id` int(11) NOT NULL,
   `precio_espacio` smallint(6) DEFAULT NULL,
   `precio_fisio` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -641,6 +572,7 @@ CREATE TABLE `servicio` (
   `cliente_externo_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+
 -- --------------------------------------------------------
 
 --
@@ -650,14 +582,13 @@ CREATE TABLE `servicio` (
 DROP TABLE IF EXISTS `sesion`;
 CREATE TABLE `sesion` (
 `id` int(11) NOT NULL,
-  `actividad_id` int(11) NOT NULL,
-  `horas_posibles_dia` date NOT NULL,
-  `horas_posibles_hora_inicio` time NOT NULL,
-  `horas_posibles_hora_fin` time NOT NULL,
-  `evento_id` int(11) NOT NULL,
+  `actividad_id` int(11),
+  `horas_posibles_id` int(11) NOT NULL,
+  `evento_id` int(11) NULL,
   `user_id` int(11) NOT NULL,
   `espacio_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 
 -- --------------------------------------------------------
 
@@ -684,13 +615,6 @@ CREATE TABLE `user` (
   `profile` varchar(25) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `dni`, `username`, `name`, `surname`, `fecha_nac`, `direccion`, `comentario`, `num_cuenta`, `tipo_contrato`, `email`, `foto`, `activo`, `passwd`, `profile`) VALUES
-(1, '44849254q', 'test', 'josé ángel', 'ferro santiago', '2016-11-01', 'calle emilia pardo bazán 5,5ºd, ourense', 'un saludo', 'es648654684654', 'indefinido', 'jfsantiago2@gmail.com', '', 0, 'abc123.', 'admin'),
-(2, '44849299Y', 'jfsantiago2', 'Jose Angel', 'Ferro Santiago', '2016-12-24', 'Calle falsa 123, Ourense', '', 'ES9287423222928374923847', 'Indefinido', 'jfsantiago2@esei.uvigo.es', '', 1, 'abc123.', 'admin');
 
 -- --------------------------------------------------------
 
@@ -705,41 +629,6 @@ CREATE TABLE `user_perms` (
   `permission` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Dumping data for table `user_perms`
---
-
-INSERT INTO `user_perms` (`id`, `user`, `permission`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 4),
-(5, 1, 5),
-(6, 1, 6),
-(7, 1, 7),
-(8, 1, 8),
-(9, 1, 9),
-(10, 1, 10),
-(11, 1, 11),
-(12, 1, 12),
-(13, 1, 13),
-(14, 1, 14),
-(15, 1, 15),
-(16, 1, 16),
-(17, 1, 17),
-(18, 1, 18),
-(19, 1, 19),
-(20, 1, 20),
-(21, 1, 21),
-(22, 1, 22),
-(23, 1, 23),
-(24, 1, 24),
-(25, 1, 25),
-(26, 1, 26),
-(27, 1, 27),
-(28, 1, 28),
-(29, 1, 29),
-(30, 1, 30);
 
 --
 -- Indexes for dumped tables
@@ -761,7 +650,7 @@ ALTER TABLE `actividad`
 -- Indexes for table `alerta`
 --
 ALTER TABLE `alerta`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_alerta_pago1_idx` (`pago_id`), ADD KEY `fk_alerta_asistencia1_idx` (`asistencia_id_cliente`,`asistencia_id_sesion`,`asistencia_sesion_id`), ADD KEY `fk_alerta_user1_idx` (`user_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_alerta_pago1_idx` (`pago_id`), ADD KEY `fk_alerta_asistencia1_idx` (`asistencia_id_cliente`,`asistencia_sesion_id`), ADD KEY `fk_alerta_user1_idx` (`user_id`);
 
 --
 -- Indexes for table `aplica`
@@ -773,7 +662,7 @@ ALTER TABLE `aplica`
 -- Indexes for table `asistencia`
 --
 ALTER TABLE `asistencia`
- ADD PRIMARY KEY (`id_cliente`,`id_sesion`,`sesion_id`), ADD KEY `fk_asistencia_sesion1_idx` (`sesion_id`);
+ ADD PRIMARY KEY (`id_cliente`,`sesion_id`), ADD KEY `fk_asistencia_sesion1_idx` (`sesion_id`);
 
 --
 -- Indexes for table `caja`
@@ -821,7 +710,7 @@ ALTER TABLE `documento`
 -- Indexes for table `empleado_mira`
 --
 ALTER TABLE `empleado_mira`
- ADD PRIMARY KEY (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`,`user_id`), ADD KEY `fk_empleado_mira_lesion_cliente1_idx` (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`), ADD KEY `fk_empleado_mira_user1_idx` (`user_id`);
+ ADD PRIMARY KEY (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`,`user_id`,`fecha_vista`), ADD KEY `fk_empleado_mira_lesion_cliente1_idx` (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`), ADD KEY `fk_empleado_mira_user1_idx` (`user_id`);
 
 --
 -- Indexes for table `espacio`
@@ -845,13 +734,13 @@ ALTER TABLE `factura`
 -- Indexes for table `horario_temporada`
 --
 ALTER TABLE `horario_temporada`
- ADD PRIMARY KEY (`id`,`dia_inicio`,`dia_fin`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `horas_posibles`
 --
 ALTER TABLE `horas_posibles`
- ADD PRIMARY KEY (`dia`,`hora_inicio`,`hora_fin`), ADD KEY `fk_horas_posibles_rango_horario1_idx` (`rango_horario_dia_s`,`rango_horario_hora_apertura`,`rango_horario_hora_cierre`);
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_horas_posibles_rango_horario1_idx` (`rango_horario_id`);
 
 --
 -- Indexes for table `hora_fisio`
@@ -863,25 +752,25 @@ ALTER TABLE `hora_fisio`
 -- Indexes for table `inscripcion`
 --
 ALTER TABLE `inscripcion`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_inscripcion_particular_externo1_idx` (`particular_externo_id`), ADD KEY `fk_inscripcion_evento1_idx` (`evento_id`), ADD KEY `fk_inscripcion_reserva1_idx` (`reserva_id`), ADD KEY `fk_inscripcion_cliente1_idx` (`cliente_dni_c`);
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_inscripcion_particular_externo1_idx` (`particular_externo_id`), ADD KEY `fk_inscripcion_evento1_idx` (`evento_id`), ADD KEY `fk_inscripcion_reserva1_idx` (`reserva_id`),ADD KEY `fk_inscripcion_actividad1_idx` (`id_actividad`),ADD KEY `fk_inscripcion_descuento1_idx` (`id_descuento`),ADD KEY `fk_inscripcion_cliente1_idx` (`cliente_dni_c`);
 
 --
 -- Indexes for table `lesiones`
 --
 ALTER TABLE `lesiones`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_lesiones_user1_idx` (`user_id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `lesion_cliente`
 --
 ALTER TABLE `lesion_cliente`
- ADD PRIMARY KEY (`id_lesion`,`cliente_id`), ADD KEY `fk_lesion_cliente_cliente1_idx` (`cliente_id`);
+ ADD PRIMARY KEY (`id_lesion`,`cliente_id`), ADD KEY `fk_lesion_cliente_cliente1_idx` (`cliente_id`),ADD KEY `fk_lesion_cliente_lesion1_idx` (`id_lesion`);
 
 --
 -- Indexes for table `lesion_empleado`
 --
 ALTER TABLE `lesion_empleado`
- ADD PRIMARY KEY (`user_id`,`lesiones_id`), ADD KEY `fk_lesion_empleado_lesiones1_idx` (`lesiones_id`);
+ ADD PRIMARY KEY (`user_id`,`lesiones_id`), ADD KEY `fk_lesion_empleado_lesiones1_idx` (`lesiones_id`),ADD KEY `fk_lesion_empleado_user1_idx` (`user_id`);
 
 --
 -- Indexes for table `linea_factura`
@@ -935,7 +824,7 @@ ALTER TABLE `profile_perms`
 -- Indexes for table `rango_horario`
 --
 ALTER TABLE `rango_horario`
- ADD PRIMARY KEY (`dia_s`,`hora_apertura`,`hora_cierre`), ADD KEY `fk_rango_horario_horario_temporada1_idx` (`horario_temporada_id`,`horario_temporada_dia_inicio`,`horario_temporada_dia_fin`);
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_rango_horario_horario_temporada1_idx` (`horario_temporada_id`);
 
 --
 -- Indexes for table `recibe`
@@ -953,7 +842,7 @@ ALTER TABLE `recibo`
 -- Indexes for table `reserva`
 --
 ALTER TABLE `reserva`
- ADD PRIMARY KEY (`id`), ADD KEY `id_espacio_idx` (`id_espacio`);
+ ADD PRIMARY KEY (`id`), ADD KEY `id_espacio_idx` (`id_espacio`),ADD KEY `fk_reserva_cliente1_idx` (`dni_c`);
 
 --
 -- Indexes for table `servicio`
@@ -965,8 +854,8 @@ ALTER TABLE `servicio`
 -- Indexes for table `sesion`
 --
 ALTER TABLE `sesion`
- ADD PRIMARY KEY (`id`,`actividad_id`,`horas_posibles_dia`,`horas_posibles_hora_inicio`,`horas_posibles_hora_fin`,`evento_id`,`user_id`,`espacio_id`), ADD KEY `fk_sesion_actividad1_idx` (`actividad_id`), ADD KEY `fk_sesion_horas_posibles1_idx` (`horas_posibles_dia`,`horas_posibles_hora_inicio`,`horas_posibles_hora_fin`), ADD KEY `fk_sesion_evento1_idx` (`evento_id`), ADD KEY `fk_sesion_user1_idx` (`user_id`), ADD KEY `fk_sesion_espacio1_idx` (`espacio_id`);
-
+-- ADD PRIMARY KEY (`id`,`actividad_id`,`horas_posibles_id`,`evento_id`,`user_id`,`espacio_id`), ADD KEY `fk_sesion_actividad1_idx` (`actividad_id`), ADD KEY `fk_sesion_horas_posibles1_idx` (`horas_posibles_id`), ADD KEY `fk_sesion_evento1_idx` (`evento_id`), ADD KEY `fk_sesion_user1_idx` (`user_id`), ADD KEY `fk_sesion_espacio1_idx` (`espacio_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_sesion_actividad1_idx` (`actividad_id`), ADD KEY `fk_sesion_horas_posibles1_idx` (`horas_posibles_id`), ADD KEY `fk_sesion_evento1_idx` (`evento_id`), ADD KEY `fk_sesion_user1_idx` (`user_id`), ADD KEY `fk_sesion_espacio1_idx` (`espacio_id`);
 --
 -- Indexes for table `user`
 --
@@ -1054,6 +943,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `horario_temporada`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `horas_posibles`
+--
+ALTER TABLE `horas_posibles`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `hora_fisio`
 --
 ALTER TABLE `hora_fisio`
@@ -1109,6 +1003,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 ALTER TABLE `recibo`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `rango_horario`
+--
+ALTER TABLE `rango_horario`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `reserva`
 --
 ALTER TABLE `reserva`
@@ -1148,8 +1047,10 @@ ADD CONSTRAINT `fk_actividad_espacio1` FOREIGN KEY (`espacio_id`) REFERENCES `es
 --
 -- Constraints for table `alerta`
 --
+
+
 ALTER TABLE `alerta`
-ADD CONSTRAINT `fk_alerta_asistencia1` FOREIGN KEY (`asistencia_id_cliente`, `asistencia_id_sesion`, `asistencia_sesion_id`) REFERENCES `asistencia` (`id_cliente`, `id_sesion`, `sesion_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_alerta_asistencia1` FOREIGN KEY (`asistencia_id_cliente`, `asistencia_sesion_id`) REFERENCES `asistencia` (`id_cliente`,`sesion_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_alerta_pago1` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_alerta_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -1163,6 +1064,7 @@ ADD CONSTRAINT `fk_aplica_descuento1` FOREIGN KEY (`descuento_id`) REFERENCES `d
 --
 -- Constraints for table `asistencia`
 --
+
 ALTER TABLE `asistencia`
 ADD CONSTRAINT `fk_asistencia_sesion1` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `id_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -1210,7 +1112,7 @@ ADD CONSTRAINT `fk_factura_pago1` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id
 -- Constraints for table `horas_posibles`
 --
 ALTER TABLE `horas_posibles`
-ADD CONSTRAINT `fk_horas_posibles_rango_horario1` FOREIGN KEY (`rango_horario_dia_s`, `rango_horario_hora_apertura`, `rango_horario_hora_cierre`) REFERENCES `rango_horario` (`dia_s`, `hora_apertura`, `hora_cierre`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `fk_horas_posibles_rango_horario1` FOREIGN KEY (`rango_horario_id`) REFERENCES `rango_horario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `hora_fisio`
@@ -1225,13 +1127,10 @@ ALTER TABLE `inscripcion`
 ADD CONSTRAINT `fk_inscripcion_cliente1` FOREIGN KEY (`cliente_dni_c`) REFERENCES `cliente` (`dni_c`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_inscripcion_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_inscripcion_particular_externo1` FOREIGN KEY (`particular_externo_id`) REFERENCES `particular_externo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_inscripcion_reserva1` FOREIGN KEY (`reserva_id`) REFERENCES `reserva` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `fk_inscripcion_reserva1` FOREIGN KEY (`reserva_id`) REFERENCES `reserva` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_inscripcion_actividad1` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_inscripcion_descuento1` FOREIGN KEY (`id_descuento`) REFERENCES `descuento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
---
--- Constraints for table `lesiones`
---
-ALTER TABLE `lesiones`
-ADD CONSTRAINT `fk_lesiones_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `lesion_cliente`
@@ -1291,7 +1190,7 @@ ADD CONSTRAINT `profileid` FOREIGN KEY (`profile`) REFERENCES `profile` (`id`) O
 -- Constraints for table `rango_horario`
 --
 ALTER TABLE `rango_horario`
-ADD CONSTRAINT `fk_rango_horario_horario_temporada1` FOREIGN KEY (`horario_temporada_id`, `horario_temporada_dia_inicio`, `horario_temporada_dia_fin`) REFERENCES `horario_temporada` (`id`, `dia_inicio`, `dia_fin`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `fk_rango_horario_horario_temporada1` FOREIGN KEY (`horario_temporada_id`) REFERENCES `horario_temporada` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `recibe`
@@ -1310,7 +1209,8 @@ ADD CONSTRAINT `fk_recibo_pago1` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id`
 -- Constraints for table `reserva`
 --
 ALTER TABLE `reserva`
-ADD CONSTRAINT `id_espacio` FOREIGN KEY (`id_espacio`) REFERENCES `espacio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `id_espacio` FOREIGN KEY (`id_espacio`) REFERENCES `espacio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_reserva_cliente1` FOREIGN KEY (`dni_c`) REFERENCES `cliente` (`dni_c`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `servicio`
@@ -1326,7 +1226,7 @@ ALTER TABLE `sesion`
 ADD CONSTRAINT `fk_sesion_actividad1` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_sesion_espacio1` FOREIGN KEY (`espacio_id`) REFERENCES `espacio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_sesion_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_sesion_horas_posibles1` FOREIGN KEY (`horas_posibles_dia`, `horas_posibles_hora_inicio`, `horas_posibles_hora_fin`) REFERENCES `horas_posibles` (`dia`, `hora_inicio`, `hora_fin`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_sesion_horas_posibles1` FOREIGN KEY (`horas_posibles_id`) REFERENCES `horas_posibles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_sesion_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -1341,6 +1241,335 @@ ADD CONSTRAINT `fk_user_profile1` FOREIGN KEY (`profile`) REFERENCES `profile` (
 ALTER TABLE `user_perms`
 ADD CONSTRAINT `fk_user_perms_permission1` FOREIGN KEY (`permission`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `userid` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- ---------------------------------------------------
+
+--
+-- Dumping data for table `profile`
+--
+
+INSERT INTO `profile` (`id`, `profilename`) VALUES
+(1, 'admin');
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `dni`, `username`, `name`, `surname`, `fecha_nac`, `direccion`, `comentario`, `num_cuenta`, `tipo_contrato`, `email`, `foto`, `activo`, `passwd`, `profile`) VALUES
+(1, '44849254q', 'test', 'josé ángel', 'ferro santiago', '2016-11-01', 'calle emilia pardo bazán 5,5ºd, ourense', 'un saludo', 'es648654684654', 'indefinido', 'jfsantiago2@gmail.com', '', 0, 'abc123.', 'admin'),
+(2, '44849299Y', 'jfsantiago2', 'Jose Angel', 'Ferro Santiago', '2016-12-24', 'Calle falsa 123, Ourense', '', 'ES9287423222928374923847', 'Indefinido', 'jfsantiago2@esei.uvigo.es', '', 1, 'abc123.', 'admin');
+
+
+--
+-- Dumping data for table `action`
+--
+
+INSERT INTO `action` (`id`, `actionname`) VALUES
+(3, 'add'),
+(5, 'delete'),
+(1, 'show'),
+(2, 'showone'),
+(4, 'update');
+
+--
+-- Dumping data for table `controller`
+--
+
+INSERT INTO `controller` (`id`, `controllername`) VALUES
+(5, 'action'),
+(2, 'controller'),
+(3, 'permission'),
+(4, 'profile'),
+(1, 'user'),
+(6, 'userperm');
+
+--
+-- Dumping data for table `permission`
+--
+
+INSERT INTO `permission` (`id`, `controller`, `action`) VALUES
+(1, 'user', 'show'),
+(2, 'user', 'showone'),
+(3, 'user', 'add'),
+(4, 'user', 'delete'),
+(5, 'user', 'update'),
+(6, 'controller', 'add'),
+(7, 'controller', 'delete'),
+(8, 'controller', 'show'),
+(9, 'controller', 'showone'),
+(10, 'controller', 'update'),
+(11, 'permission', 'add'),
+(12, 'permission', 'add'),
+(13, 'permission', 'show'),
+(14, 'permission', 'showone'),
+(15, 'permission', 'update'),
+(16, 'profile', 'add'),
+(17, 'profile', 'delete'),
+(18, 'profile', 'show'),
+(19, 'profile', 'showone'),
+(20, 'profile', 'update'),
+(21, 'action', 'add'),
+(22, 'action', 'delete'),
+(23, 'action', 'show'),
+(24, 'action', 'showone'),
+(25, 'action', 'update'),
+(26, 'userperm', 'add'),
+(27, 'userperm', 'delete'),
+(28, 'userperm', 'show'),
+(29, 'userperm', 'showone'),
+(30, 'userperm', 'update');
+
+--
+-- Dumping data for table `cliente`
+--
+INSERT INTO `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`) VALUES 
+(1, '12345678C', 'Nombre3', 'Aellidos3', '1999-11-11', 'Programador', 666666666, 'Calle2,numero2,piso2', 'Es un negado', 'cliente1@gym.com', true, DEFAULT, true, DEFAULT),
+(2, '13245678D', 'Nombre4', 'Apellidos4', '1999-12-12', 'Ingeniero', 777777777, 'Calle3,numero3,piso3', 'Está calvo', 'cliente2@gym.com', false, DEFAULT, DEFAULT, DEFAULT);
+
+--
+-- Dumping data for table `particular_externo`
+--
+INSERT INTO `particular_externo` (`id`, `nombre`, `apellidos`, `telefono`) VALUES (1, 'NombreExt', 'ApellidosExt', 111222333);
+
+--
+-- Dumping data for table `espacio`
+--
+INSERT INTO `espacio` (`id`, `nombre`) VALUES (1, 'AULA1'),(2, 'AULA2');
+
+--
+-- Dumping data for table `reserva`
+--
+INSERT INTO `reserva` (`id`, `id_espacio`, `dni_c`, `precio_espacio`, `precio_fisio`) VALUES (1, 1, '12345678C', 13, NULL),(2, NULL, '13245678D', NULL, 25);
+
+--
+-- Dumping data for table `categoria`
+--
+INSERT INTO `categoria` (`id`, `tipo`) VALUES (1, 'AZUL'),(2, 'ROSA');
+
+--
+-- Dumping data for table `descuento`
+--
+INSERT INTO `descuento` (`id`, `descripcion`,`categoria_id`, `cantidad`) VALUES (1, 'AZUL', 1, 10),(2, 'ROSA', 2, 20);
+
+--
+-- Dumping data for table `evento`
+--
+INSERT INTO `evento` (`id`, `nombre`, `espacio_id`, `precio`) VALUES (1, 'Halloween', 1, 5),(2, 'Magosto', 2, 7);
+
+--
+-- Dumping data for table `actividad`
+--
+INSERT INTO `actividad` (`id`, `nombre`, `espacio_id`, `descuento_id`, `capacidad`, `precio`, `categoria_id`) VALUES
+(1, 'Zumba', 1, 1, 20, 20, 1),
+(2, 'Salsa', 2, 2, 13, 50, 2);
+
+--
+-- Dumping data for table `inscripcion`
+--
+INSERT INTO `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`, `id_descuento`) VALUES 
+(1, NULL, NULL, 1, NULL, '12345678C', '2016-5-6', 1),
+(2, 1, 1, NULL, NULL, '13245678D', '2016-4-3', NULL);
+
+--
+-- Dumping data for table `documento`
+--
+INSERT INTO `documento` (`dni`, `dni_c`, `id_inscripcion`, `id`, `tipo`, `documento`) VALUES 
+(NULL, '12345678C', NULL, 1, 'LESION', 'lesion1.pdf'),
+('44849254q', NULL, NULL, 2, 'SEPA', 'sepa1.pdf');
+
+--
+-- Dumping data for table `lesiones`
+--
+INSERT INTO `lesiones` (`id`, `descripcion`) VALUES (1, 'Rodilla de golfista'),(2, 'Codo de tenista');
+
+--
+-- Dumping data for table `lesion_cliente`
+--
+INSERT INTO `lesion_cliente` (`id_lesion`, `cliente_id`) VALUES (1, 1);
+
+--
+-- Dumping data for table `lesion_empleado`
+--
+INSERT INTO `lesion_empleado` ( `lesiones_id`,  `user_id`) VALUES (2, 1);
+
+--
+-- Dumping data for table `empleado_mira`
+--
+INSERT INTO `empleado_mira` (`user_id`, `lesion_cliente_cliente_id`, `lesion_cliente_id_lesion`, `fecha_vista`) VALUES (1, 1, 1, '2016-11-4');
+
+--
+-- Dumping data for table `horario_temporada`
+--
+INSERT INTO `horario_temporada` (`id`, `dia_inicio`, `dia_fin`, `nombre_temp`) VALUES (1, '2016-6-15', '2016-9-15', 'Verano');
+
+--
+-- Dumping data for table `rango_horario`
+--
+INSERT INTO `rango_horario` (`id`, `dia_s`, `hora_apertura`, `hora_cierre`, `horario_temporada_id`) VALUES (1, 'Lunes', '9:00', '15:00', 1);
+
+--
+-- Dumping data for table `horas_posibles`
+--
+INSERT INTO `horas_posibles` (`id`,`dia`, `hora_inicio`, `hora_fin`,`rango_horario_id`) VALUES 
+(1,'Lunes', '9:00', '10:00', 1),
+(2,'Lunes', '10:00', '11:00', 1),
+(3,'Lunes', '11:00', '12:00', 1);
+
+--
+-- Dumping data for table `sesion`
+--
+INSERT INTO `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`,`horas_posibles_id`) VALUES (1, 1, NULL, 1, 1, 1),(2, 1, NULL, 1, 1, 2);
+
+--
+-- Dumping data for table `pago`
+--
+INSERT INTO `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`) VALUES 
+(1, 'Tarjeta', '2016-3-2', NULL, 25, NULL, NULL),
+(2, 'Transferencia', '2016-4-9', 'Anual', 100, 1, NULL),
+(3, 'Tarjeta', '2016-2-3', NULL, 300, NULL, NULL);
+
+--
+-- Dumping data for table `asistencia`
+--
+INSERT INTO `asistencia` (`id_cliente`, `sesion_id`, `asiste`) VALUES (1, 1, false),(2, 2, true);
+
+
+--
+-- Dumping data for table `alerta`
+--
+INSERT INTO `alerta` (`id`, `descripcion`, `user_id`, `pago_id`, `asistencia_id_cliente`,`asistencia_sesion_id`) VALUES 
+(1, 'No acude',NULL,NULL, 1, 1),
+(2, 'No paga', NULL, 1, 1, NULL);
+
+--
+-- Dumping data for table `notificacion`
+--
+INSERT INTO `notificacion` (`id`, `descripcion`, `user_id`) VALUES (1, 'Notifiacion1', 1);
+
+--
+-- Dumping data for table `recibe`
+--
+INSERT INTO `recibe` (`notificacion_id`, `cliente_id`) VALUES (1, 1);
+
+--
+-- Dumping data for table `percibe`
+--
+INSERT INTO `percibe` ( `alerta_id`, `user_id`) VALUES (1, 1);
+
+--
+-- Dumping data for table `hora_fisio`
+--
+INSERT INTO `hora_fisio` (`id`, `id_reserva`, `dia_f`, `hora_i`, `hora_f`) VALUES (1, 2, '2016-11-11', '17:00', '18:00');
+
+--
+-- Dumping data for table `factura`
+--
+INSERT INTO `factura` (`id`, `pago_id`, `fecha`) VALUES (1, 1, '2016-10-5');
+
+--
+-- Dumping data for table `linea_factura`
+--
+INSERT INTO `linea_factura` (`id`, `id_factura`, `producto`, `cantidad`, `precio`) VALUES (1, 1, 'Batido Proteinas', 1, 10),(2, 1, 'Anabolizantes', 2, 30);
+
+--
+-- Dumping data for table `recibo`
+--
+INSERT INTO `recibo` (`id`, `pago_id`, `producto`, `precio`, `cantidad`) VALUES (1, 2, 'Clase ZUmba Anual', 100, 1);
+
+--
+-- Dumping data for table `caja`
+--
+INSERT INTO `caja` (`pago_id`, `id`, `efectivo_inicial`, `cantidad`, `efectivo_final`) VALUES (1, 1, 0, 20, 20),(2, 2, 20, -10, 10);
+
+--
+-- Dumping data for table `cliente_externo`
+--
+INSERT INTO `cliente_externo` (`id`, `dni_nif`, `nombre`, `apellido`, `telefono`, `email`) VALUES
+(1, '12345678F', 'Externo', 'ApellidoExt', 888888888, 'exte@rno.com');
+
+--
+-- Dumping data for table `servicio`
+--
+INSERT INTO `servicio` (`id`, `fecha`, `coste`, `pago_id`,  `cliente_externo_id`, `descripcion`) VALUES (1, '2016-12-3', 300, 3, 1, 'Boda');
+
+--
+-- Dumping data for table `aplica`
+--
+INSERT INTO `aplica` (`descuento_id`,`actividad_id`) VALUES (1, 1),(2,2);
+
+--
+-- Dumping data for table `user_perms`
+--
+
+INSERT INTO `user_perms` (`id`, `user`, `permission`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 1, 6),
+(7, 1, 7),
+(8, 1, 8),
+(9, 1, 9),
+(10, 1, 10),
+(11, 1, 11),
+(12, 1, 12),
+(13, 1, 13),
+(14, 1, 14),
+(15, 1, 15),
+(16, 1, 16),
+(17, 1, 17),
+(18, 1, 18),
+(19, 1, 19),
+(20, 1, 20),
+(21, 1, 21),
+(22, 1, 22),
+(23, 1, 23),
+(24, 1, 24),
+(25, 1, 25),
+(26, 1, 26),
+(27, 1, 27),
+(28, 1, 28),
+(29, 1, 29),
+(30, 1, 30);
+
+--
+-- Dumping data for table `profile_perms`
+--
+
+INSERT INTO `profile_perms` (`id`, `profile`, `permission`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 11),
+(5, 1, 4),
+(6, 1, 5),
+(7, 1, 6),
+(8, 1, 7),
+(9, 1, 8),
+(10, 1, 9),
+(11, 1, 10),
+(12, 1, 12),
+(13, 1, 13),
+(14, 1, 14),
+(15, 1, 15),
+(16, 1, 16),
+(17, 1, 17),
+(18, 1, 18),
+(19, 1, 19),
+(20, 1, 20),
+(21, 1, 21),
+(22, 1, 22),
+(23, 1, 23),
+(24, 1, 24),
+(25, 1, 25),
+(26, 1, 26),
+(27, 1, 27),
+(28, 1, 28),
+(29, 1, 29),
+(30, 1, 30);
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
