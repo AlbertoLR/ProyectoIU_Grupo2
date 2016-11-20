@@ -11,7 +11,7 @@ class PROFILEPERM_Model {
     }
 
     public function fetch_all(){
-        $join = "SELECT profile_perms.id as id, profile.profilename as profilename, permission.controller as controller, permission.action as action FROM profile_perms, profile, permission WHERE profile_perms.profile = profile.id AND profile_perms.permission = permission.id";
+        $join = "SELECT profile_perms.id as id, profile.profilename as profilename, permission.controller as controller, permission.action as action FROM profile_perms, profile, permission WHERE profile_perms.profile = profile.id AND profile_perms.permission = permission.id ORDER BY profilename";
         $sql = $this->db->prepare($join);
         $sql->execute();
         $profileperms_db = $sql->fetchAll(PDO::FETCH_ASSOC);

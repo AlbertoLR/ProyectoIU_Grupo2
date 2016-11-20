@@ -11,7 +11,7 @@ class PERMISSION_Model {
     }
 
     public function fetch_all(){
-        $sql = $this->db->prepare("SELECT * FROM permission");
+        $sql = $this->db->prepare("SELECT * FROM permission ORDER BY controller");
         $sql->execute();
         $permissions_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 

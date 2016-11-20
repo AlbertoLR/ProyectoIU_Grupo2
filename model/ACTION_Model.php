@@ -11,7 +11,7 @@ class ACTION_Model {
     }
 
     public function fetch_all(){
-        $sql = $this->db->prepare("SELECT * FROM action");
+        $sql = $this->db->prepare("SELECT * FROM action ORDER BY actionname");
         $sql->execute();
         $actions_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 

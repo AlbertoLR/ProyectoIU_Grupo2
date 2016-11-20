@@ -11,7 +11,7 @@ class USERPERM_Model {
     }
 
     public function fetch_all(){
-        $join = "SELECT user_perms.id as id, user.username as username, permission.controller as controller, permission.action as action FROM user_perms, user, permission WHERE user_perms.user = user.id AND user_perms.permission = permission.id";
+        $join = "SELECT user_perms.id as id, user.username as username, permission.controller as controller, permission.action as action FROM user_perms, user, permission WHERE user_perms.user = user.id AND user_perms.permission = permission.id ORDER BY username";
         $sql = $this->db->prepare($join);
         $sql->execute();
         $userperms_db = $sql->fetchAll(PDO::FETCH_ASSOC);

@@ -14,6 +14,25 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
+
+        <form class="top-buffer" action="index.php?controller=permission&amp;action=add" method="POST">
+        Controller: <select name="controller">
+        <option value="" selected></option>
+        <?php foreach($controllers as $controller) {?>
+            <option value="<?= $controller->getControllerName()?>"><?= $controller->getControllerName()?></option>
+        <?php }?>
+        </select>
+
+        Action: <select name="action">
+        <option value="" selected></option>
+        <?php foreach($actions as $action) {?>
+            <option value="<?= $action->getActionName()?>"><?= $action->getActionName()?></option>
+        <?php }?>
+        </select>
+
+	       <button type="submit" name="submit" value="submit" class="btn btn-default"><?= i18n("Submit") ?></button>
+        </form>
+        
 <table class="table">
       <thead>
         <tr>
@@ -36,23 +55,5 @@ $errors = $view->getVariable("errors");
 	<?php } ?>
       </tbody>
 </table>
-
-        <form class="top-buffer" action="index.php?controller=permission&amp;action=add" method="POST">
-        Controller: <select name="controller">
-        <option value="" selected></option>
-        <?php foreach($controllers as $controller) {?>
-            <option value="<?= $controller->getControllerName()?>"><?= $controller->getControllerName()?></option>
-        <?php }?>
-        </select>
-
-        Action: <select name="action">
-        <option value="" selected></option>
-        <?php foreach($actions as $action) {?>
-            <option value="<?= $action->getActionName()?>"><?= $action->getActionName()?></option>
-        <?php }?>
-        </select>
-
-	       <button type="submit" name="submit" value="submit" class="btn btn-default"><?= i18n("Submit") ?></button>
-        </form>
     </div>
 </div>

@@ -11,7 +11,7 @@ class CONTROLLER_Model {
     }
 
     public function fetch_all(){
-        $sql = $this->db->prepare("SELECT * FROM controller");
+        $sql = $this->db->prepare("SELECT * FROM controller ORDER BY controllername");
         $sql->execute();
         $controllers_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 

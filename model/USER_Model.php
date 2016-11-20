@@ -11,7 +11,7 @@ class USER_Model {
     }
 
     public function fetch_all($activo = 1){
-        $sql = $this->db->prepare("SELECT * FROM user WHERE activo=?");
+        $sql = $this->db->prepare("SELECT * FROM user WHERE activo=? ORDER BY username");
         $sql->execute(array($activo));
         $users_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 
