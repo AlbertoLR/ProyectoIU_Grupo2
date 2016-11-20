@@ -113,7 +113,11 @@ class USER_Controller extends BaseController {
         }
 
           $user->setUsername($_POST["username"]);
-          $user->setProfile($_POST["profile"]);
+          if (empty($_POST["profile"])) {
+              $user->setProfile(NULL);
+          } else {
+              $user->setProfile($_POST["profile"]);
+          }
           $user->setDni($_POST["dni"]);
           $user->setUsername($_POST["username"]);
           $user->setName($_POST["name"]);
@@ -202,7 +206,11 @@ class USER_Controller extends BaseController {
           $this->view->setVariable("errors", $errors);
         }
 
-          $user->setProfile($_POST["profile"]);
+          if (empty($_POST["profile"])) {
+              $user->setProfile(NULL);
+          } else {
+              $user->setProfile($_POST["profile"]);
+          }
           $user->setDni($_POST["dni"]);
           $user->setUsername($_POST["username"]);
           $user->setName($_POST["name"]);
@@ -214,7 +222,7 @@ class USER_Controller extends BaseController {
           $user->setTipoContrato($_POST["tipo_contrato"]);
           $user->setEmail($_POST["email"]);
           $user->setFoto($_FILES["foto"]["name"]);
-          if($_POST["activo"] == Yes){
+          if($_POST["activo"] == "Yes"){
             $user->setActivo(TRUE);
           }
           else{

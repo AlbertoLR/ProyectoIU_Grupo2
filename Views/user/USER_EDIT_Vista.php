@@ -34,8 +34,13 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
         <div class="form-group">
           <label><?= i18n("Profile") ?>:</label>
           <select name="profile" class="form-control">
+            <option value=""></option>
             <?php foreach($profiles as $profile) {?>
+                <?php if ($profile->getProfileName() == $user->getProfile()): ?>
+                <option value="<?= $profile->getProfileName() ?>" selected><?= $profile->getProfileName()?></option>
+                <?php else: ?>
                 <option value="<?= $profile->getProfileName()?>"><?= $profile->getProfileName()?></option>
+                <?php endif ?>
             <?php }?>
           </select>
         </div>
