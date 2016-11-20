@@ -138,22 +138,22 @@ class USER_Controller extends BaseController {
           $user->setPasswd($_POST["passwd"]);
 
             try {
-              if(!$this->userMapper->dniExists($_POST["dni"])){
-                if (!$this->userMapper->usernameExists($_POST["username"])){
-                    $user->checkIsValidForCreate();
-                    $this->userMapper->insert($user);
-                    $this->view->setFlash(sprintf(i18n("User \"%s\" successfully added."),$user->getUsername()));
-                    $this->view->redirect("user", "show");
+                if(!$this->userMapper->dniExists($_POST["dni"]) && !empty($_POST["dni"])){
+                    if (!$this->userMapper->usernameExists($_POST["username"])){
+                        $user->checkIsValidForCreate();
+                        $this->userMapper->insert($user);
+                        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully added."),$user->getUsername()));
+                        $this->view->redirect("user", "show");
+                    } else {
+                        $errors = array();
+                        $errors["general"] = "Username already exists";
+                        $this->view->setVariable("errors", $errors);
+                    }
                 } else {
                     $errors = array();
-	                  $errors["general"] = "Username already exists";
-	                  $this->view->setVariable("errors", $errors);
+                    $errors["general"] = "DNI already exists or NULL";
+                    $this->view->setVariable("errors", $errors);
                 }
-              } else {
-                $errors = array();
-                $errors["general"] = "DNI already exists";
-                $this->view->setVariable("errors", $errors);
-              }
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
@@ -237,24 +237,24 @@ class USER_Controller extends BaseController {
                     $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
                     $this->view->redirect("user", "show");
                 } else {
-                  if(!$this->userMapper->dniExists($_POST["dni"])){
-                     if (!$this->userMapper->usernameExists($_POST["username"])){
-                      $user->setUsername($_POST["username"]);
-                      $user->checkIsValidForCreate();
-                      $this->userMapper->update($user);
-                      $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
-                      $this->view->redirect("user", "show");
-                     } else {
+                    if(!$this->userMapper->dniExists($_POST["dni"]) && !empty($_POST["dni"])){
+                        if (!$this->userMapper->usernameExists($_POST["username"])){
+                            $user->setUsername($_POST["username"]);
+                            $user->checkIsValidForCreate();
+                            $this->userMapper->update($user);
+                            $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
+                            $this->view->redirect("user", "show");
+                        } else {
+                            $errors = array();
+                            $errors["general"] = "Username already exists";
+                            $this->view->setVariable("errors", $errors);
+                        }
+                    } else{
                         $errors = array();
-      	                $errors["general"] = "Username already exists";
-      	                $this->view->setVariable("errors", $errors);
+                        $errors["general"] = "DNI already exists or NULL";
+                        $this->view->setVariable("errors", $errors);
                     }
-                  } else{
-                    $errors = array();
-                    $errors["general"] = "DNI already exists";
-                    $this->view->setVariable("errors", $errors);
-                  }
-              }
+                }
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
