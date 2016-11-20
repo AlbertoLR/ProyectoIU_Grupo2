@@ -83,4 +83,34 @@ class PERMISSION_Model {
 
         return false;
     }
+
+    public function user_controllers(User $user){
+        $join_user = "SELECT p.controller as controller from user_perms as u, permission as p WHERE u.permission=p.id AND u.user=?";
+        $join_profile = "SELECT p.controller as controller from profile_perms as pp, permission as p, profile WHERE pp.permission=p.id and pp.profile=profile.id AND profile.profilename=?";
+
+        $sql_user = $this->db-> prepare($join_user);
+        $sql_user->execute(array($user->getID()));
+        $user_controllers = $sql_user->fetchAll(PDO::FETCH_ASSOC);
+
+        $sql_profile = $this->db->prepare($join_profile);
+        $sql_profile->execute(array($user->getProfile()));
+        $profile_controllers = $sql_profile->fetchAll(PDO::FETCH_ASSOC);
+
+        $controllers = array();
+
+        foreach ($user_controllers as $controller) {
+            if (!in_array($controller['controller'], $controllers)) {
+                array_push($controllers, $controller['controller']);
+            }
+        }
+
+        foreach ($profile_controllers as $controller) {
+            if (!in_array($controller['controller'], $controllers)) {
+                array_push($controllers, $controller['controller']);
+            }
+        }
+
+        return $controllers;
+        
+    }
 }

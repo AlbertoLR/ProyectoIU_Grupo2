@@ -24,6 +24,7 @@ class USER_Controller extends BaseController {
                 $_SESSION["currentuser"] = $user->getUsername();
                 $_SESSION["currentuserid"] = $user->getID();
                 $_SESSION["currentuserprofile"] = $user->getProfile();
+                $_SESSION["usercontrollers"] = $this->user_controllers($user);
                 $this->view->redirect("user", "login");
             }else{
                 $errors = array();
@@ -32,6 +33,7 @@ class USER_Controller extends BaseController {
             }
         }
 
+        $this->view->setVariable("user_controllers", $this->currentUserControllers); 
         $this->view->render("user", "USER_LOGIN_Vista");
     }
 
@@ -335,6 +337,10 @@ class USER_Controller extends BaseController {
         }
 
         return $users_json;
+    }
+
+    private function user_controllers($user){
+        return $this->checkPerms->user_controllers($user);
     }
 
 }

@@ -1,8 +1,9 @@
 <?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
-$controllers = array('user', 'profile', 'controller', 'action', 'permission');
+$restrictions = array('userperm', 'profileperm');
 $currentuser = $view->getVariable("currentusername");
+$controllers = $view->getVariable("user_controllers");
 $view->setVariable("title", "Login");
 $errors = $view->getVariable("errors");
 $permissions = $view->getVariable("permissions");
@@ -18,9 +19,11 @@ $permissions = $view->getVariable("permissions");
       <p>Administer this site:</p>
     <div class="row">
 	    <?php foreach ($controllers as $controller) {?>
+            <?php if (!in_array($controller, $restrictions)): ?>
         <div class="col-sm-4 form-group" >
-          <a class="btn btn-primary btn-lg btn-block" href="index.php?controller=<?php echo $controller ?>&amp;action=show" role="button">Administer <?php echo $controller ?>s  here &raquo;</a>
+          <a class="btn btn-primary btn-lg btn-block" href="index.php?controller=<?php echo $controller ?>&amp;action=show" role="button"><?php echo $controller ?>s &raquo;</a>
         </div>
+            <?php endif ?>
       <?php }?>
     </div>
 	    <?php else: ?>

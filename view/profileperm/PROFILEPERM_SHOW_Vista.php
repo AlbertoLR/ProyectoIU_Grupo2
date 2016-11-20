@@ -14,6 +14,23 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
+
+        <form class="top-buffer" action="index.php?controller=profileperm&amp;action=add" method="POST">
+        Profile: <select name="profile">
+        <option value="" selected></option>
+        <?php foreach($profiles as $profile) {?>
+            <option value="<?= $profile->getID()?>"><?= $profile->getProfileName()?></option>
+        <?php }?>
+        </select>
+        Permission: <select name="permission">
+        <option value="" selected></option>
+        <?php foreach($permissions as $permission) {?>
+        <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
+        <?php }?>
+        </select>
+	       <button type="submit" name="submit" value="submit" class="btn btn-default"><?= i18n("Submit") ?></button>
+        </form>
+        
 <table class="table">
       <thead>
         <tr>
@@ -38,20 +55,5 @@ $errors = $view->getVariable("errors");
 	<?php } ?>
       </tbody>
 </table>
-        <form class="top-buffer" action="index.php?controller=profileperm&amp;action=add" method="POST">
-        Profile: <select name="profile">
-        <option value="" selected></option>
-        <?php foreach($profiles as $profile) {?>
-            <option value="<?= $profile->getID()?>"><?= $profile->getProfileName()?></option>
-        <?php }?>
-        </select>
-        Permission: <select name="permission">
-        <option value="" selected></option>
-        <?php foreach($permissions as $permission) {?>
-        <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
-        <?php }?>
-        </select>
-	       <button type="submit" name="submit" value="submit" class="btn btn-default"><?= i18n("Submit") ?></button>
-        </form>
     </div>
 </div>

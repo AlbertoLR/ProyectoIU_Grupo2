@@ -10,6 +10,7 @@ class BaseController {
     protected $currentUser;
     protected $currentUserId;
     protected $currentUserProfile;
+    protected $currentUserControllers;
     protected $checkPerms;
   
     public function __construct() {
@@ -32,6 +33,10 @@ class BaseController {
 
         if(isset($_SESSION["currentuserprofile"])) {
             $this->currentUserProfile = $_SESSION["currentuserprofile"];
+        }
+
+        if(isset($_SESSION["usercontrollers"])) {
+            $this->currentUserControllers = $_SESSION["usercontrollers"];
         }
     }
 }

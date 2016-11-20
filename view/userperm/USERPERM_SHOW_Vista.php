@@ -14,6 +14,25 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
+
+        <form action="index.php?controller=userperm&amp;action=add" method="POST">
+        User: <select name="user">
+        <option value="" selected></option>
+        <?php foreach($users as $user) {?>
+            <option value="<?= $user->getID()?>"><?= $user->getUsername()?></option>
+        <?php }?>
+        </select>
+
+        Permission: <select name="permission">
+        <option value="" selected></option>
+        <?php foreach($permissions as $permission) {?>
+        <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
+        <?php }?>
+        </select>
+        
+	    <input type="submit" name="submit" value="submit">
+        </form>
+        
 <table class="table">
       <thead>
         <tr>
@@ -39,22 +58,5 @@ $errors = $view->getVariable("errors");
       </tbody>
 </table><br />
 
-        <form action="index.php?controller=userperm&amp;action=add" method="POST">
-        User: <select name="user">
-        <option value="" selected></option>
-        <?php foreach($users as $user) {?>
-            <option value="<?= $user->getID()?>"><?= $user->getUsername()?></option>
-        <?php }?>
-        </select>
-
-        Permission: <select name="permission">
-        <option value="" selected></option>
-        <?php foreach($permissions as $permission) {?>
-        <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
-        <?php }?>
-        </select>
-        
-	    <input type="submit" name="submit" value="submit">
-        </form>
     </div>
 </div>
