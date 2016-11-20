@@ -69,5 +69,11 @@ $currentuser = $view->getVariable("currentusername");
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+
+    <!-- Typeahead core JavaScript
+	     ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/typeahead.bundle.js"></script>
+    <script src="js/filter_users.js"></script>
     </body>
 </html>

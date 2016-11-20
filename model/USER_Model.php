@@ -10,9 +10,9 @@ class USER_Model {
         $this->db = PDOConnection::getInstance();
     }
 
-    public function fetch_all(){
-        $sql = $this->db->prepare("SELECT * FROM user");
-        $sql->execute();
+    public function fetch_all($activo = 1){
+        $sql = $this->db->prepare("SELECT * FROM user WHERE activo=?");
+        $sql->execute(array($activo));
         $users_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 
         $users = array();
@@ -80,9 +80,20 @@ class USER_Model {
         }
     }
 
+    //Realizarase borrado loxico
     public function delete(User $user){
+        /*
         $sql = $this->db->prepare("DELETE FROM user where id=?");
         $sql->execute(array($user->getID()));
+        */
+
+        $user->setActivo(FALSE);
+        $this->update($user);
+    }
+
+    public function recovery(User $user) {
+        $user->setActivo(TRUE);
+        $this->update($user);
     }
 
     public function usernameExists($username) {

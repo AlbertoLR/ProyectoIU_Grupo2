@@ -42,8 +42,22 @@ class USER_Controller extends BaseController {
         }
         
         $users = $this->userMapper->fetch_all();
+        $users_json = json_encode($this->users_to_json($users));
         $this->view->setVariable("users", $users);
+        $this->view->setVariable("users_json", $users_json);
         $this->view->render("user", "USER_SHOW_Vista");
+    }
+
+    //Esta accion valida os mesmos permisos que show, parece loxico
+    public function showdeleted(){
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "show")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
+        $users = $this->userMapper->fetch_all(0);
+        $this->view->setVariable("users", $users);
+        $this->view->render("user", "USER_SHOWDELETED_Vista");
     }
 
     public function showone(){
@@ -254,8 +268,6 @@ class USER_Controller extends BaseController {
             throw new Exception("id is mandatory");
         }
 
-        //CheckPermissionNeed
-
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
 
@@ -274,9 +286,55 @@ class USER_Controller extends BaseController {
         $this->view->render("user", "USER_DELETE_Vista");
     }
 
+    //Para recuperar un usuario dado de baixa previamente
+    //checkeanse mesmos permisos que delete
+    public function recovery() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "delete")) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
+        }
+        
+        if (!isset($_REQUEST["id"])) {
+            throw new Exception("id is mandatory");
+        }
+
+        $userid = $_REQUEST["id"];
+        $user = $this->userMapper->fetch($userid);
+
+        if ($user == NULL) {
+            throw new Exception("no such user with id: ".$userid);
+        }
+
+        if (isset($_POST["submit"])) {
+            if ($_POST["submit"] == "yes"){
+                
+            }
+            
+        }
+        
+        $this->userMapper->recovery($user);
+        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
+        $this->view->redirect("user", "show");
+    }
+
     public function logout() {
         session_destroy();
         $this->view->redirect("user", "login");
+    }
+
+    private function users_to_json($users){
+        $users_json = array();
+
+        foreach ($users as $user){
+            $aux = array();
+            $aux['id'] = $user->getID();
+            $aux['username'] = $user->getUsername();
+            $aux['dni'] = $user->getDNI();
+            $aux['profile'] = $user-> getProfile();
+            $users_json[] = $aux;
+        }
+
+        return $users_json;
     }
 
 }
