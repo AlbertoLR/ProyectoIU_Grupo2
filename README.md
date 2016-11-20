@@ -7,7 +7,7 @@ Ter a Máquina Virtual utilizada para o desenvolvemento, ofrecida polo profesor 
 #Instalacion
 * git clone https://github.com/AlbertoLR/ProyectoIU_Grupo2.git
 * mv ProyectoIU_Grupo2/* /var/www/html
-* Mediante o navegador accedede a ip_do_voso_servidor:porto/install.php (Podense editar usuario e contrasinal de root para mysql no interior do arquivo, así como o arquivo da base de datos).
+* Mediante o navegador accedede a ip_do_voso_servidor:porto/install.php (Solicitará usuario e password de root para mysql).
 
 #Usuario Probas
 * nome: test
