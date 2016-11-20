@@ -19,7 +19,7 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
         <form action="index.php?controller=user&amp;action=add" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label><?= i18n("DNI") ?>:</label>
-            <input type="text" name="dni" class="form-control"  placeholder="ej: 00000000A" minlength="9" maxlength="9" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" >
+            <input type="text" name="dni" class="form-control"  placeholder="ej: 00000000A" minlength="9" maxlength="9" required="required" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" >
           </div>
           <div class="form-group">
             <label><?= i18n("Username") ?>:</label>
