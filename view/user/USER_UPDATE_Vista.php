@@ -5,6 +5,8 @@ $view->setVariable("title", "Update User");
 $user = $view->getVariable("user");
 $profiles = $view->getVariable("profiles");
 $errors = $view->getVariable("errors");
+$date_array=getDate();
+$date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
 ?>
 
 <?= isset($errors["general"])?$errors["general"]:"" ?>
@@ -39,15 +41,15 @@ $errors = $view->getVariable("errors");
         </div>
         <div class="form-group">
           <label><?= i18n("Name") ?>:</label>
-           <input type="text" name="name" class="form-control" value="<?= $user->getName()?>" pattern="[a-zA-Z]+">
+           <input type="text" name="name" class="form-control" value="<?= $user->getName()?>" pattern="[a-zA-Z ]+">
         </div>
         <div class="form-group">
           <label><?= i18n("Surname") ?>:</label>
-           <input type="text" name="surname" class="form-control" value="<?= $user->getSurname()?>" pattern="[a-zA-Z]+"> 
+           <input type="text" name="surname" class="form-control" value="<?= $user->getSurname()?>" pattern="[a-zA-Z ]+">
         </div>
         <div class="form-group">
           <label><?= i18n("Birthdate") ?>:</label>
-           <input type="date" name="fecha_nac" class="form-control" value="<?= $user->getFechaNac()?>">
+           <input type="date" name="fecha_nac" class="form-control" value="<?= $user->getFechaNac()?>" max="<?= $date?>">
         </div>
         <div class="form-group">
           <label><?= i18n("Adress") ?>:</label>
