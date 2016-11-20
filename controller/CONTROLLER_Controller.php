@@ -58,7 +58,7 @@ class CONTROLLER_Controller extends BaseController {
         if (isset($_POST["submit"])) { 
             $controller->setControllerName($_POST["controllername"]);
             try {
-                if (!$this->controllerMapper->nameExists($_POST["controllername"], $_POST["action"])){
+                if (!$this->controllerMapper->nameExists($_POST["controllername"])){
                     $controller->checkIsValidForCreate();
                     $this->controllerMapper->insert($controller);
 	
@@ -80,8 +80,8 @@ class CONTROLLER_Controller extends BaseController {
         $this->view->render("controller", "CONTROLLER_ADD_Vista");
     }
 
-    public function update() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "controller", "update")) {
+    public function edit() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "controller", "edit")) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
@@ -118,7 +118,7 @@ class CONTROLLER_Controller extends BaseController {
         }
 
         $this->view->setVariable("controller", $controller);
-        $this->view->render("controller", "CONTROLLER_UPDATE_Vista");    
+        $this->view->render("controller", "CONTROLLER_EDIT_Vista");    
     }
 
     public function delete() {

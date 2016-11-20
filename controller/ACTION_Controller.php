@@ -85,10 +85,10 @@ class ACTION_Controller extends BaseController {
     }
 
 
-    public function update() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "update")) {
+    public function edit() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "edit")) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
+            //$this->view->redirect("user", "login");
         }
         
         if (!isset($_REQUEST["id"])) {
@@ -123,7 +123,7 @@ class ACTION_Controller extends BaseController {
         }
     
         $this->view->setVariable("action", $action);
-        $this->view->render("action", "ACTION_UPDATE_Vista");
+        $this->view->render("action", "ACTION_EDIT_Vista");
     }
 
     public function delete() {

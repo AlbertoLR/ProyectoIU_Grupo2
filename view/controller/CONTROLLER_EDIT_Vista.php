@@ -13,7 +13,7 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
     <div class="container">
       <h1><?= i18n("Update Controller")?></h1>
-      <form action="index.php?controller=controller&amp;action=update" method="POST">
+      <form action="index.php?controller=controller&amp;action=edit" method="POST">
         <div class="form-group">
           <label><?= i18n("Name") ?>:</label>
           <input type="text" name="controllername" class="form-control" value="<?php echo $controller->getControllerName(); ?>" minlength="2" required="required">

@@ -13,7 +13,7 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
     <div class="container">
       <h1><?= i18n("Update Profile")?></h1>
-      <form action="index.php?controller=profile&amp;action=update" method="POST">
+      <form action="index.php?controller=profile&amp;action=edit" method="POST">
         <div class="form-group">
           <label><?= i18n("Action Name") ?>:</label>
           <input type="text" name="profilename" class="form-control" value="<?php echo $profile->getProfileName(); ?>" minlength="2" required="required">

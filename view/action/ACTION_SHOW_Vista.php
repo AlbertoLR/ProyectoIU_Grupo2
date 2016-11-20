@@ -28,7 +28,7 @@ $errors = $view->getVariable("errors");
           <td><?php echo $action->getActionName(); ?></td>
           <td>
               <a href="index.php?controller=action&action=showone&id=<?php echo $action->getID();  ?>"><i class="fa fa-id-card" aria-hidden="true"></i></a>
-              <a href="index.php?controller=action&action=update&id=<?php echo $action->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
+              <a href="index.php?controller=action&action=edit&id=<?php echo $action->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
               <a href="index.php?controller=action&action=delete&id=<?php echo $action->getID();  ?>" role="button" data-toggle="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
           </td>
         </tr>

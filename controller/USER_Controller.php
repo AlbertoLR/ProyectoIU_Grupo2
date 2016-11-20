@@ -162,8 +162,8 @@ class USER_Controller extends BaseController {
     }
 
 
-    public function update() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "update")) {
+    public function edit() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "edit")) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
@@ -255,7 +255,7 @@ class USER_Controller extends BaseController {
         $profiles = $profileMapper->fetch_all();
         $this->view->setVariable("user", $user);
         $this->view->setVariable("profiles", $profiles);
-        $this->view->render("user", "USER_UPDATE_Vista");
+        $this->view->render("user", "USER_EDIT_Vista");
     }
 
     public function delete() {

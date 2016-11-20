@@ -81,8 +81,8 @@ class PROFILE_Controller extends BaseController {
         $this->view->render("profile", "PROFILE_ADD_Vista");
     }
 
-    public function update() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profile", "update")) {
+    public function edit() {
+        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profile", "edit")) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
@@ -119,7 +119,7 @@ class PROFILE_Controller extends BaseController {
         }
     
         $this->view->setVariable("profile", $profile);
-        $this->view->render("profile", "PROFILE_UPDATE_Vista");    
+        $this->view->render("profile", "PROFILE_EDIT_Vista");
     }
 
     public function delete() {

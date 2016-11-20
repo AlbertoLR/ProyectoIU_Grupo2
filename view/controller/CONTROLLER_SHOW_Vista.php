@@ -28,7 +28,7 @@ $errors = $view->getVariable("errors");
           <td><?php echo $controller->getControllerName(); ?></td>
           <td>
               <a href="index.php?controller=controller&action=showone&id=<?php echo $controller->getID();  ?>"><i class="fa fa-id-card" aria-hidden="true"></i></a>
-              <a href="index.php?controller=controller&action=update&id=<?php echo $controller->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
+              <a href="index.php?controller=controller&action=edit&id=<?php echo $controller->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
               <a href="index.php?controller=controller&action=delete&id=<?php echo $controller->getID();  ?>" role="button" data-toggle="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
           </td>
         </tr>
