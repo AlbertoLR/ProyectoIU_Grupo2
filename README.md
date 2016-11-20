@@ -10,5 +10,5 @@ Ter a Máquina Virtual utilizada para o desenvolvemento, ofrecida polo profesor 
 * Mediante o navegador accedede a ip_do_voso_servidor:porto/install.php (Solicitará usuario e password de root para mysql).
 
 #Usuario Probas
-* nome: test
-* contrasinal: abc123.
+* nome: admin
+* contrasinal: admin
