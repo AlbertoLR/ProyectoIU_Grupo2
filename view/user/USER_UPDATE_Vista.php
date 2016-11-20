@@ -81,7 +81,7 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
         </div>
         <div class="form-group">
           <label><?= i18n("Image") ?>:</label>
-          <input type="file" name="foto">
+          <input type="file" name="foto" accept="image/*">
         </div>
         <div class="form-group">
           <label><?= i18n("Comment") ?>:</label>

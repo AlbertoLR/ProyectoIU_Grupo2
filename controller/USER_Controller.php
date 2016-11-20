@@ -40,7 +40,7 @@ class USER_Controller extends BaseController {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
-        
+
         $users = $this->userMapper->fetch_all();
         $users_json = json_encode($this->users_to_json($users));
         $this->view->setVariable("users", $users);
@@ -54,7 +54,7 @@ class USER_Controller extends BaseController {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
-        
+
         $users = $this->userMapper->fetch_all(0);
         $this->view->setVariable("users", $users);
         $this->view->render("user", "USER_SHOWDELETED_Vista");
@@ -65,7 +65,7 @@ class USER_Controller extends BaseController {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
-        
+
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An user id is mandatory");
         }
@@ -94,10 +94,10 @@ class USER_Controller extends BaseController {
 		  $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
-          $folder = $_SERVER['DOCUMENT_ROOT'] . '/IUA/pictures/';
+          $folder = $_SERVER['DOCUMENT_ROOT'] . '/pictures/';
 
           if($image_size < 100000000 ){ /*100MB*/
-            if($image_type == "image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif"){
+            if($image_type == ("image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif")){
             move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
             }else{
               $errors = array();
@@ -167,7 +167,7 @@ class USER_Controller extends BaseController {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
-        
+
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An user id is mandatory");
         }
@@ -184,10 +184,10 @@ class USER_Controller extends BaseController {
 		  $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
-          $folder = $_SERVER['DOCUMENT_ROOT'] . '/IUA/pictures/';
+          $folder = $_SERVER['DOCUMENT_ROOT'] . '/pictures/';
 
           if($image_size < 100000000 ){ /*100MB*/
-            if($image_type == "image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif"){
+            if($image_type == ("image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif")){
             move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
             }else{
               $errors = array();
@@ -263,7 +263,7 @@ class USER_Controller extends BaseController {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
-        
+
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
@@ -293,7 +293,7 @@ class USER_Controller extends BaseController {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
-        
+
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
@@ -307,11 +307,11 @@ class USER_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
             if ($_POST["submit"] == "yes"){
-                
+
             }
-            
+
         }
-        
+
         $this->userMapper->recovery($user);
         $this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
         $this->view->redirect("user", "show");
