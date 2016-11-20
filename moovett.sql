@@ -1,1270 +1,1270 @@
--- phpMyAdmin SQL Dump
+-- phpmyadmin sql dump
 -- version 4.2.9
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Nov 20, 2016 at 01:02 AM
--- Server version: 5.5.39
--- PHP Version: 5.4.33
+-- host: 127.0.0.1:3306
+-- generation time: nov 20, 2016 at 01:02 am
+-- server version: 5.5.39
+-- php version: 5.4.33
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+set sql_mode = "no_auto_value_on_zero";
+set time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 set @old_character_set_client=@@character_set_client */;
+/*!40101 set @old_character_set_results=@@character_set_results */;
+/*!40101 set @old_collation_connection=@@collation_connection */;
+/*!40101 set names utf8 */;
 
 --
--- Database: `iu_web`
+-- database: `iu_web`
 --
-CREATE DATABASE IF NOT EXISTS `iu_web` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `iu_web`;
+create database if not exists `moovett` default character set utf8 collate utf8_spanish_ci;
+use `moovett`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `action`
+-- table structure for table `action`
 --
 
-DROP TABLE IF EXISTS `action`;
-CREATE TABLE `action` (
-`id` int(11) NOT NULL,
-  `actionname` varchar(25) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `actividad`
---
-
-DROP TABLE IF EXISTS `actividad`;
-CREATE TABLE `actividad` (
-`id` int(11) NOT NULL,
-  `nombre` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
-  `capacidad` smallint(6) NOT NULL,
-  `precio` smallint(6) NOT NULL,
-  `descuento_id` int(11) NOT NULL,
-  `espacio_id` int(11) NOT NULL,
-  `categoria_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
+drop table if exists `action`;
+create table `action` (
+`id` int(11) not null,
+  `actionname` varchar(25) collate utf8_spanish_ci not null
+) engine=innodb auto_increment=6 default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `alerta`
+-- table structure for table `actividad`
 --
 
-DROP TABLE IF EXISTS `alerta`;
-CREATE TABLE `alerta` (
-`id` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `pago_id` int(11) NULL,
-  `asistencia_id_cliente` int(11) NULL,
-  `asistencia_sesion_id` int(11) NULL,
-  `user_id` int(11) NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `aplica`
---
-
-DROP TABLE IF EXISTS `aplica`;
-CREATE TABLE `aplica` (
-  `descuento_id` int(11) NOT NULL,
-  `actividad_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `asistencia`
---
-
-DROP TABLE IF EXISTS `asistencia`;
-CREATE TABLE `asistencia` (
-  `id_cliente` int(11) NOT NULL,
-  `asiste` tinyint(1) DEFAULT NULL,
-  `sesion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `caja`
---
-
-DROP TABLE IF EXISTS `caja`;
-CREATE TABLE `caja` (
-`id` int(11) NOT NULL,
-  `efectivo_inicial` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `efectivo_final` int(11) NOT NULL,
-  `pago_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categoria`
---
-
-DROP TABLE IF EXISTS `categoria`;
-CREATE TABLE `categoria` (
-`id` int(11) NOT NULL,
-  `tipo` varchar(10) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cliente`
---
-
-DROP TABLE IF EXISTS `cliente`;
-CREATE TABLE `cliente` (
-`id` int(11) NOT NULL,
-  `dni_c` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
-  `nombre_c` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `apellidos_c` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
-  `fecha_nac` date DEFAULT NULL,
-  `profesion` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `telefono` int(11) DEFAULT NULL,
-  `direccion` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `comentario` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `email` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `alerta_falta` tinyint(1) NOT NULL DEFAULT '0',
-  `desempleado` tinyint(1) NOT NULL DEFAULT '0',
-  `estudiante` tinyint(1) NOT NULL DEFAULT '0',
-  `familiar` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cliente_externo`
---
-
-DROP TABLE IF EXISTS `cliente_externo`;
-CREATE TABLE `cliente_externo` (
-`id` int(11) NOT NULL,
-  `dni_nif` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
-  `nombre` varchar(80) COLLATE utf8_spanish_ci NOT NULL,
-  `apellido` varchar(40) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `telefono` int(11) DEFAULT NULL,
-  `email` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `controller`
---
-
-DROP TABLE IF EXISTS `controller`;
-CREATE TABLE `controller` (
-`id` int(11) NOT NULL,
-  `controllername` varchar(25) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `descuento`
---
-
-DROP TABLE IF EXISTS `descuento`;
-CREATE TABLE `descuento` (
-`id` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `cantidad` float NOT NULL,
-  `categoria_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `documento`
---
-
-DROP TABLE IF EXISTS `documento`;
-CREATE TABLE `documento` (
-  `dni` varchar(9) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `dni_c` varchar(9) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `id_inscripcion` int(11) DEFAULT NULL,
-`id` int(11) NOT NULL,
-  `tipo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `documento` varchar(50) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `empleado_mira`
---
-
-DROP TABLE IF EXISTS `empleado_mira`;
-CREATE TABLE `empleado_mira` (
-  `lesion_cliente_id_lesion` int(11) NOT NULL,
-  `lesion_cliente_cliente_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `fecha_vista` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `espacio`
---
-
-DROP TABLE IF EXISTS `espacio`;
-CREATE TABLE `espacio` (
-`id` int(11) NOT NULL,
-  `nombre` varchar(45) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `actividad`;
+create table `actividad` (
+`id` int(11) not null,
+  `nombre` varchar(10) collate utf8_spanish_ci not null,
+  `capacidad` smallint(6) not null,
+  `precio` smallint(6) not null,
+  `descuento_id` int(11) not null,
+  `espacio_id` int(11) not null,
+  `categoria_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `evento`
+-- table structure for table `alerta`
 --
 
-DROP TABLE IF EXISTS `evento`;
-CREATE TABLE `evento` (
-`id` int(11) NOT NULL,
-  `nombre` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
-  `precio` smallint(6) NOT NULL,
-  `espacio_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `alerta`;
+create table `alerta` (
+`id` int(11) not null,
+  `descripcion` text collate utf8_spanish_ci not null,
+  `pago_id` int(11) null,
+  `asistencia_id_cliente` int(11) null,
+  `asistencia_sesion_id` int(11) null,
+  `user_id` int(11) null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `factura`
+-- table structure for table `aplica`
 --
 
-DROP TABLE IF EXISTS `factura`;
-CREATE TABLE `factura` (
-`id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `pago_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `aplica`;
+create table `aplica` (
+  `descuento_id` int(11) not null,
+  `actividad_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `horario_temporada`
+-- table structure for table `asistencia`
 --
 
-DROP TABLE IF EXISTS `horario_temporada`;
-CREATE TABLE `horario_temporada` (
-`id` int(11) NOT NULL,
-  `dia_inicio` date NOT NULL,
-  `dia_fin` date NOT NULL,
-  `nombre_temp` varchar(30) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `asistencia`;
+create table `asistencia` (
+  `id_cliente` int(11) not null,
+  `asiste` tinyint(1) default null,
+  `sesion_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `horas_posibles`
+-- table structure for table `caja`
 --
 
-DROP TABLE IF EXISTS `horas_posibles`;
-CREATE TABLE `horas_posibles` (
-  `id` int(11) NOT NULL,
-  `dia` date NOT NULL,
-  `hora_inicio` time NOT NULL,
-  `hora_fin` time NOT NULL,
-  `rango_horario_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `caja`;
+create table `caja` (
+`id` int(11) not null,
+  `efectivo_inicial` int(11) not null,
+  `cantidad` int(11) not null,
+  `efectivo_final` int(11) not null,
+  `pago_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hora_fisio`
+-- table structure for table `categoria`
 --
 
-DROP TABLE IF EXISTS `hora_fisio`;
-CREATE TABLE `hora_fisio` (
-`id` int(11) NOT NULL,
-  `id_reserva` int(11) NOT NULL,
-  `dia_f` date NOT NULL,
-  `hora_i` time NOT NULL,
-  `hora_f` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `categoria`;
+create table `categoria` (
+`id` int(11) not null,
+  `tipo` varchar(10) collate utf8_spanish_ci not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inscripcion`
+-- table structure for table `cliente`
 --
 
-DROP TABLE IF EXISTS `inscripcion`;
-CREATE TABLE `inscripcion` (
-`id` int(11) NOT NULL,
-  `fecha` date DEFAULT NULL,
-  `particular_externo_id` int(11) DEFAULT NULL,
-  `evento_id` int(11) NULL,
-  `reserva_id` int(11) NULL,
-  `cliente_dni_c` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
-  `id_actividad` int(11) NULL,
-  `id_descuento` int(11) NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `cliente`;
+create table `cliente` (
+`id` int(11) not null,
+  `dni_c` varchar(9) collate utf8_spanish_ci not null,
+  `nombre_c` varchar(15) collate utf8_spanish_ci not null,
+  `apellidos_c` varchar(40) collate utf8_spanish_ci not null,
+  `fecha_nac` date default null,
+  `profesion` varchar(20) collate utf8_spanish_ci default null,
+  `telefono` int(11) default null,
+  `direccion` varchar(50) collate utf8_spanish_ci default null,
+  `comentario` varchar(500) collate utf8_spanish_ci default null,
+  `email` varchar(30) collate utf8_spanish_ci default null,
+  `alerta_falta` tinyint(1) not null default '0',
+  `desempleado` tinyint(1) not null default '0',
+  `estudiante` tinyint(1) not null default '0',
+  `familiar` tinyint(1) not null default '0'
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lesiones`
+-- table structure for table `cliente_externo`
 --
 
-DROP TABLE IF EXISTS `lesiones`;
-CREATE TABLE `lesiones` (
-`id` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `cliente_externo`;
+create table `cliente_externo` (
+`id` int(11) not null,
+  `dni_nif` varchar(9) collate utf8_spanish_ci not null,
+  `nombre` varchar(80) collate utf8_spanish_ci not null,
+  `apellido` varchar(40) collate utf8_spanish_ci default null,
+  `telefono` int(11) default null,
+  `email` varchar(30) collate utf8_spanish_ci default null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `controller`
+--
+
+drop table if exists `controller`;
+create table `controller` (
+`id` int(11) not null,
+  `controllername` varchar(25) collate utf8_spanish_ci not null
+) engine=innodb auto_increment=7 default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `descuento`
+--
+
+drop table if exists `descuento`;
+create table `descuento` (
+`id` int(11) not null,
+  `descripcion` text collate utf8_spanish_ci not null,
+  `cantidad` float not null,
+  `categoria_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `documento`
+--
+
+drop table if exists `documento`;
+create table `documento` (
+  `dni` varchar(9) collate utf8_spanish_ci default null,
+  `dni_c` varchar(9) collate utf8_spanish_ci default null,
+  `id_inscripcion` int(11) default null,
+`id` int(11) not null,
+  `tipo` varchar(50) collate utf8_spanish_ci not null,
+  `documento` varchar(50) collate utf8_spanish_ci not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `empleado_mira`
+--
+
+drop table if exists `empleado_mira`;
+create table `empleado_mira` (
+  `lesion_cliente_id_lesion` int(11) not null,
+  `lesion_cliente_cliente_id` int(11) not null,
+  `user_id` int(11) not null,
+  `fecha_vista` date not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `espacio`
+--
+
+drop table if exists `espacio`;
+create table `espacio` (
+`id` int(11) not null,
+  `nombre` varchar(45) collate utf8_spanish_ci not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lesion_cliente`
+-- table structure for table `evento`
 --
 
-DROP TABLE IF EXISTS `lesion_cliente`;
-CREATE TABLE `lesion_cliente` (
-  `id_lesion` int(11) NOT NULL,
-  `cliente_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `evento`;
+create table `evento` (
+`id` int(11) not null,
+  `nombre` varchar(10) collate utf8_spanish_ci not null,
+  `precio` smallint(6) not null,
+  `espacio_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lesion_empleado`
+-- table structure for table `factura`
 --
 
-DROP TABLE IF EXISTS `lesion_empleado`;
-CREATE TABLE `lesion_empleado` (
-  `lesiones_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `factura`;
+create table `factura` (
+`id` int(11) not null,
+  `fecha` date not null,
+  `pago_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linea_factura`
+-- table structure for table `horario_temporada`
 --
 
-DROP TABLE IF EXISTS `linea_factura`;
-CREATE TABLE `linea_factura` (
-`id` int(11) NOT NULL,
-  `id_factura` int(11) NOT NULL,
-  `producto` varchar(40) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `cantidad` smallint(6) DEFAULT NULL,
-  `precio` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `horario_temporada`;
+create table `horario_temporada` (
+`id` int(11) not null,
+  `dia_inicio` date not null,
+  `dia_fin` date not null,
+  `nombre_temp` varchar(30) collate utf8_spanish_ci not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notificacion`
+-- table structure for table `horas_posibles`
 --
 
-DROP TABLE IF EXISTS `notificacion`;
-CREATE TABLE `notificacion` (
-`id` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `horas_posibles`;
+create table `horas_posibles` (
+  `id` int(11) not null,
+  `dia` date not null,
+  `hora_inicio` time not null,
+  `hora_fin` time not null,
+  `rango_horario_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pago`
+-- table structure for table `hora_fisio`
 --
 
-DROP TABLE IF EXISTS `pago`;
-CREATE TABLE `pago` (
-`id` int(11) NOT NULL,
-  `metodo_pago` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `fecha` date NOT NULL,
-  `periodicidad` varchar(45) COLLATE utf8_spanish_ci NULL,
-  `cantidad` smallint(6) NOT NULL,
-  `reserva_id` int(11) NULL,
-  `inscripcion_id` int(11) NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `hora_fisio`;
+create table `hora_fisio` (
+`id` int(11) not null,
+  `id_reserva` int(11) not null,
+  `dia_f` date not null,
+  `hora_i` time not null,
+  `hora_f` time not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `particular_externo`
+-- table structure for table `inscripcion`
 --
 
-DROP TABLE IF EXISTS `particular_externo`;
-CREATE TABLE `particular_externo` (
-`id` int(11) NOT NULL,
-  `nombre` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `apellidos` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `inscripcion`;
+create table `inscripcion` (
+`id` int(11) not null,
+  `fecha` date default null,
+  `particular_externo_id` int(11) default null,
+  `evento_id` int(11) null,
+  `reserva_id` int(11) null,
+  `cliente_dni_c` varchar(9) collate utf8_spanish_ci not null,
+  `id_actividad` int(11) null,
+  `id_descuento` int(11) null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `percibe`
+-- table structure for table `lesiones`
 --
 
-DROP TABLE IF EXISTS `percibe`;
-CREATE TABLE `percibe` (
-  `user_id` int(11) NOT NULL,
-  `alerta_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `lesiones`;
+create table `lesiones` (
+`id` int(11) not null,
+  `descripcion` text collate utf8_spanish_ci not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permission`
+-- table structure for table `lesion_cliente`
 --
 
-DROP TABLE IF EXISTS `permission`;
-CREATE TABLE `permission` (
-`id` int(11) NOT NULL,
-  `controller` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
-  `action` varchar(25) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `lesion_cliente`;
+create table `lesion_cliente` (
+  `id_lesion` int(11) not null,
+  `cliente_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profile`
+-- table structure for table `lesion_empleado`
 --
 
-DROP TABLE IF EXISTS `profile`;
-CREATE TABLE `profile` (
-`id` int(11) NOT NULL,
-  `profilename` varchar(25) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `lesion_empleado`;
+create table `lesion_empleado` (
+  `lesiones_id` int(11) not null,
+  `user_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profile_perms`
+-- table structure for table `linea_factura`
 --
 
-DROP TABLE IF EXISTS `profile_perms`;
-CREATE TABLE `profile_perms` (
-`id` int(11) NOT NULL,
-  `profile` int(11) NOT NULL,
-  `permission` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `linea_factura`;
+create table `linea_factura` (
+`id` int(11) not null,
+  `id_factura` int(11) not null,
+  `producto` varchar(40) collate utf8_spanish_ci default null,
+  `cantidad` smallint(6) default null,
+  `precio` smallint(6) default null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rango_horario`
+-- table structure for table `notificacion`
 --
 
-DROP TABLE IF EXISTS `rango_horario`;
-CREATE TABLE `rango_horario` (
-  `id` int(11) NOT NULL,
-  `dia_s` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
-  `hora_apertura` time NOT NULL,
-  `hora_cierre` time NOT NULL,
-  `horario_temporada_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `notificacion`;
+create table `notificacion` (
+`id` int(11) not null,
+  `descripcion` text collate utf8_spanish_ci not null,
+  `user_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recibe`
+-- table structure for table `pago`
 --
 
-DROP TABLE IF EXISTS `recibe`;
-CREATE TABLE `recibe` (
-  `notificacion_id` int(11) NOT NULL,
-  `cliente_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `pago`;
+create table `pago` (
+`id` int(11) not null,
+  `metodo_pago` varchar(20) collate utf8_spanish_ci not null,
+  `fecha` date not null,
+  `periodicidad` varchar(45) collate utf8_spanish_ci null,
+  `cantidad` smallint(6) not null,
+  `reserva_id` int(11) null,
+  `inscripcion_id` int(11) null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recibo`
+-- table structure for table `particular_externo`
 --
 
-DROP TABLE IF EXISTS `recibo`;
-CREATE TABLE `recibo` (
-`id` int(11) NOT NULL,
-  `producto` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
-  `precio` smallint(6) NOT NULL,
-  `cantidad` smallint(6) NOT NULL,
-  `pago_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `particular_externo`;
+create table `particular_externo` (
+`id` int(11) not null,
+  `nombre` varchar(20) collate utf8_spanish_ci not null,
+  `apellidos` varchar(30) collate utf8_spanish_ci not null,
+  `telefono` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reserva`
+-- table structure for table `percibe`
 --
 
-DROP TABLE IF EXISTS `reserva`;
-CREATE TABLE `reserva` (
-  `id_espacio` int(11) NULL,
-  `dni_c` varchar(9) COLLATE utf8_spanish_ci DEFAULT NULL,
-`id` int(11) NOT NULL,
-  `precio_espacio` smallint(6) DEFAULT NULL,
-  `precio_fisio` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `percibe`;
+create table `percibe` (
+  `user_id` int(11) not null,
+  `alerta_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `servicio`
+-- table structure for table `permission`
 --
 
-DROP TABLE IF EXISTS `servicio`;
-CREATE TABLE `servicio` (
-`id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `coste` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci,
-  `pago_id` int(11) NOT NULL,
-  `cliente_externo_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `permission`;
+create table `permission` (
+`id` int(11) not null,
+  `controller` varchar(25) collate utf8_spanish_ci not null,
+  `action` varchar(25) collate utf8_spanish_ci not null
+) engine=innodb auto_increment=31 default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sesion`
+-- table structure for table `profile`
 --
 
-DROP TABLE IF EXISTS `sesion`;
-CREATE TABLE `sesion` (
-`id` int(11) NOT NULL,
+drop table if exists `profile`;
+create table `profile` (
+`id` int(11) not null,
+  `profilename` varchar(25) collate utf8_spanish_ci not null
+) engine=innodb auto_increment=2 default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `profile_perms`
+--
+
+drop table if exists `profile_perms`;
+create table `profile_perms` (
+`id` int(11) not null,
+  `profile` int(11) not null,
+  `permission` int(11) not null
+) engine=innodb auto_increment=31 default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `rango_horario`
+--
+
+drop table if exists `rango_horario`;
+create table `rango_horario` (
+  `id` int(11) not null,
+  `dia_s` varchar(10) collate utf8_spanish_ci not null,
+  `hora_apertura` time not null,
+  `hora_cierre` time not null,
+  `horario_temporada_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `recibe`
+--
+
+drop table if exists `recibe`;
+create table `recibe` (
+  `notificacion_id` int(11) not null,
+  `cliente_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `recibo`
+--
+
+drop table if exists `recibo`;
+create table `recibo` (
+`id` int(11) not null,
+  `producto` varchar(40) collate utf8_spanish_ci not null,
+  `precio` smallint(6) not null,
+  `cantidad` smallint(6) not null,
+  `pago_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `reserva`
+--
+
+drop table if exists `reserva`;
+create table `reserva` (
+  `id_espacio` int(11) null,
+  `dni_c` varchar(9) collate utf8_spanish_ci default null,
+`id` int(11) not null,
+  `precio_espacio` smallint(6) default null,
+  `precio_fisio` smallint(6) default null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `servicio`
+--
+
+drop table if exists `servicio`;
+create table `servicio` (
+`id` int(11) not null,
+  `fecha` date not null,
+  `coste` int(11) not null,
+  `descripcion` text collate utf8_spanish_ci,
+  `pago_id` int(11) not null,
+  `cliente_externo_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- table structure for table `sesion`
+--
+
+drop table if exists `sesion`;
+create table `sesion` (
+`id` int(11) not null,
   `actividad_id` int(11),
-  `horas_posibles_id` int(11) NOT NULL,
-  `evento_id` int(11) NULL,
-  `user_id` int(11) NOT NULL,
-  `espacio_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `horas_posibles_id` int(11) not null,
+  `evento_id` int(11) null,
+  `user_id` int(11) not null,
+  `espacio_id` int(11) not null
+) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-`id` int(11) NOT NULL,
-  `dni` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
-  `username` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
-  `name` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `surname` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
-  `fecha_nac` date NOT NULL,
-  `direccion` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `comentario` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `num_cuenta` varchar(24) COLLATE utf8_spanish_ci NOT NULL,
-  `tipo_contrato` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
-  `foto` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT '1',
-  `passwd` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `profile` varchar(25) COLLATE utf8_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `user`;
+create table `user` (
+`id` int(11) not null,
+  `dni` varchar(9) collate utf8_spanish_ci not null,
+  `username` varchar(25) collate utf8_spanish_ci not null,
+  `name` varchar(15) collate utf8_spanish_ci not null,
+  `surname` varchar(40) collate utf8_spanish_ci not null,
+  `fecha_nac` date not null,
+  `direccion` varchar(50) collate utf8_spanish_ci not null,
+  `comentario` varchar(500) collate utf8_spanish_ci default null,
+  `num_cuenta` varchar(24) collate utf8_spanish_ci not null,
+  `tipo_contrato` varchar(20) collate utf8_spanish_ci not null,
+  `email` varchar(40) collate utf8_spanish_ci not null,
+  `foto` varchar(50) collate utf8_spanish_ci not null,
+  `activo` tinyint(1) not null default '1',
+  `passwd` varchar(15) collate utf8_spanish_ci default null,
+  `profile` varchar(25) collate utf8_spanish_ci default null
+) engine=innodb auto_increment=3 default charset=utf8 collate=utf8_spanish_ci;
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_perms`
+-- table structure for table `user_perms`
 --
 
-DROP TABLE IF EXISTS `user_perms`;
-CREATE TABLE `user_perms` (
-`id` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
-  `permission` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+drop table if exists `user_perms`;
+create table `user_perms` (
+`id` int(11) not null,
+  `user` int(11) not null,
+  `permission` int(11) not null
+) engine=innodb auto_increment=31 default charset=utf8 collate=utf8_spanish_ci;
 
 
 --
--- Indexes for dumped tables
+-- indexes for dumped tables
 --
 
 --
--- Indexes for table `action`
+-- indexes for table `action`
 --
-ALTER TABLE `action`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `actionname_unique` (`actionname`);
+alter table `action`
+ add primary key (`id`), add unique key `actionname_unique` (`actionname`);
 
 --
--- Indexes for table `actividad`
+-- indexes for table `actividad`
 --
-ALTER TABLE `actividad`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_actividad_descuento1_idx` (`descuento_id`), ADD KEY `fk_actividad_espacio1_idx` (`espacio_id`), ADD KEY `fk_actividad_categoria1_idx` (`categoria_id`);
+alter table `actividad`
+ add primary key (`id`), add key `fk_actividad_descuento1_idx` (`descuento_id`), add key `fk_actividad_espacio1_idx` (`espacio_id`), add key `fk_actividad_categoria1_idx` (`categoria_id`);
 
 --
--- Indexes for table `alerta`
+-- indexes for table `alerta`
 --
-ALTER TABLE `alerta`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_alerta_pago1_idx` (`pago_id`), ADD KEY `fk_alerta_asistencia1_idx` (`asistencia_id_cliente`,`asistencia_sesion_id`), ADD KEY `fk_alerta_user1_idx` (`user_id`);
+alter table `alerta`
+ add primary key (`id`), add key `fk_alerta_pago1_idx` (`pago_id`), add key `fk_alerta_asistencia1_idx` (`asistencia_id_cliente`,`asistencia_sesion_id`), add key `fk_alerta_user1_idx` (`user_id`);
 
 --
--- Indexes for table `aplica`
+-- indexes for table `aplica`
 --
-ALTER TABLE `aplica`
- ADD PRIMARY KEY (`descuento_id`,`actividad_id`), ADD KEY `fk_aplica_descuento1_idx` (`descuento_id`), ADD KEY `fk_aplica_actividad1_idx` (`actividad_id`);
+alter table `aplica`
+ add primary key (`descuento_id`,`actividad_id`), add key `fk_aplica_descuento1_idx` (`descuento_id`), add key `fk_aplica_actividad1_idx` (`actividad_id`);
 
 --
--- Indexes for table `asistencia`
+-- indexes for table `asistencia`
 --
-ALTER TABLE `asistencia`
- ADD PRIMARY KEY (`id_cliente`,`sesion_id`), ADD KEY `fk_asistencia_sesion1_idx` (`sesion_id`);
+alter table `asistencia`
+ add primary key (`id_cliente`,`sesion_id`), add key `fk_asistencia_sesion1_idx` (`sesion_id`);
 
 --
--- Indexes for table `caja`
+-- indexes for table `caja`
 --
-ALTER TABLE `caja`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_caja_pago1_idx` (`pago_id`);
+alter table `caja`
+ add primary key (`id`), add key `fk_caja_pago1_idx` (`pago_id`);
 
 --
--- Indexes for table `categoria`
+-- indexes for table `categoria`
 --
-ALTER TABLE `categoria`
- ADD PRIMARY KEY (`id`);
+alter table `categoria`
+ add primary key (`id`);
 
 --
--- Indexes for table `cliente`
+-- indexes for table `cliente`
 --
-ALTER TABLE `cliente`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `dni_c_unique` (`dni_c`);
+alter table `cliente`
+ add primary key (`id`), add unique key `dni_c_unique` (`dni_c`);
 
 --
--- Indexes for table `cliente_externo`
+-- indexes for table `cliente_externo`
 --
-ALTER TABLE `cliente_externo`
- ADD PRIMARY KEY (`id`);
+alter table `cliente_externo`
+ add primary key (`id`);
 
 --
--- Indexes for table `controller`
+-- indexes for table `controller`
 --
-ALTER TABLE `controller`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `controllername_unique` (`controllername`);
+alter table `controller`
+ add primary key (`id`), add unique key `controllername_unique` (`controllername`);
 
 --
--- Indexes for table `descuento`
+-- indexes for table `descuento`
 --
-ALTER TABLE `descuento`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_descuento_categoria1_idx` (`categoria_id`);
+alter table `descuento`
+ add primary key (`id`), add key `fk_descuento_categoria1_idx` (`categoria_id`);
 
 --
--- Indexes for table `documento`
+-- indexes for table `documento`
 --
-ALTER TABLE `documento`
- ADD PRIMARY KEY (`id`), ADD KEY `dni_c_idx` (`dni_c`), ADD KEY `id_inscripcion_idx` (`id_inscripcion`), ADD KEY `dni_idx` (`dni`);
+alter table `documento`
+ add primary key (`id`), add key `dni_c_idx` (`dni_c`), add key `id_inscripcion_idx` (`id_inscripcion`), add key `dni_idx` (`dni`);
 
 --
--- Indexes for table `empleado_mira`
+-- indexes for table `empleado_mira`
 --
-ALTER TABLE `empleado_mira`
- ADD PRIMARY KEY (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`,`user_id`,`fecha_vista`), ADD KEY `fk_empleado_mira_lesion_cliente1_idx` (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`), ADD KEY `fk_empleado_mira_user1_idx` (`user_id`);
+alter table `empleado_mira`
+ add primary key (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`,`user_id`,`fecha_vista`), add key `fk_empleado_mira_lesion_cliente1_idx` (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`), add key `fk_empleado_mira_user1_idx` (`user_id`);
 
 --
--- Indexes for table `espacio`
+-- indexes for table `espacio`
 --
-ALTER TABLE `espacio`
- ADD PRIMARY KEY (`id`);
+alter table `espacio`
+ add primary key (`id`);
 
 --
--- Indexes for table `evento`
+-- indexes for table `evento`
 --
-ALTER TABLE `evento`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_evento_espacio1_idx` (`espacio_id`);
+alter table `evento`
+ add primary key (`id`), add key `fk_evento_espacio1_idx` (`espacio_id`);
 
 --
--- Indexes for table `factura`
+-- indexes for table `factura`
 --
-ALTER TABLE `factura`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_factura_pago1_idx` (`pago_id`);
+alter table `factura`
+ add primary key (`id`), add key `fk_factura_pago1_idx` (`pago_id`);
 
 --
--- Indexes for table `horario_temporada`
+-- indexes for table `horario_temporada`
 --
-ALTER TABLE `horario_temporada`
- ADD PRIMARY KEY (`id`);
+alter table `horario_temporada`
+ add primary key (`id`);
 
 --
--- Indexes for table `horas_posibles`
+-- indexes for table `horas_posibles`
 --
-ALTER TABLE `horas_posibles`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_horas_posibles_rango_horario1_idx` (`rango_horario_id`);
+alter table `horas_posibles`
+ add primary key (`id`), add key `fk_horas_posibles_rango_horario1_idx` (`rango_horario_id`);
 
 --
--- Indexes for table `hora_fisio`
+-- indexes for table `hora_fisio`
 --
-ALTER TABLE `hora_fisio`
- ADD PRIMARY KEY (`id`), ADD KEY `id_reserva_idx` (`id_reserva`);
+alter table `hora_fisio`
+ add primary key (`id`), add key `id_reserva_idx` (`id_reserva`);
 
 --
--- Indexes for table `inscripcion`
+-- indexes for table `inscripcion`
 --
-ALTER TABLE `inscripcion`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_inscripcion_particular_externo1_idx` (`particular_externo_id`), ADD KEY `fk_inscripcion_evento1_idx` (`evento_id`), ADD KEY `fk_inscripcion_reserva1_idx` (`reserva_id`),ADD KEY `fk_inscripcion_actividad1_idx` (`id_actividad`),ADD KEY `fk_inscripcion_descuento1_idx` (`id_descuento`),ADD KEY `fk_inscripcion_cliente1_idx` (`cliente_dni_c`);
+alter table `inscripcion`
+ add primary key (`id`), add key `fk_inscripcion_particular_externo1_idx` (`particular_externo_id`), add key `fk_inscripcion_evento1_idx` (`evento_id`), add key `fk_inscripcion_reserva1_idx` (`reserva_id`),add key `fk_inscripcion_actividad1_idx` (`id_actividad`),add key `fk_inscripcion_descuento1_idx` (`id_descuento`),add key `fk_inscripcion_cliente1_idx` (`cliente_dni_c`);
 
 --
--- Indexes for table `lesiones`
+-- indexes for table `lesiones`
 --
-ALTER TABLE `lesiones`
- ADD PRIMARY KEY (`id`);
+alter table `lesiones`
+ add primary key (`id`);
 
 --
--- Indexes for table `lesion_cliente`
+-- indexes for table `lesion_cliente`
 --
-ALTER TABLE `lesion_cliente`
- ADD PRIMARY KEY (`id_lesion`,`cliente_id`), ADD KEY `fk_lesion_cliente_cliente1_idx` (`cliente_id`),ADD KEY `fk_lesion_cliente_lesion1_idx` (`id_lesion`);
+alter table `lesion_cliente`
+ add primary key (`id_lesion`,`cliente_id`), add key `fk_lesion_cliente_cliente1_idx` (`cliente_id`),add key `fk_lesion_cliente_lesion1_idx` (`id_lesion`);
 
 --
--- Indexes for table `lesion_empleado`
+-- indexes for table `lesion_empleado`
 --
-ALTER TABLE `lesion_empleado`
- ADD PRIMARY KEY (`user_id`,`lesiones_id`), ADD KEY `fk_lesion_empleado_lesiones1_idx` (`lesiones_id`),ADD KEY `fk_lesion_empleado_user1_idx` (`user_id`);
+alter table `lesion_empleado`
+ add primary key (`user_id`,`lesiones_id`), add key `fk_lesion_empleado_lesiones1_idx` (`lesiones_id`),add key `fk_lesion_empleado_user1_idx` (`user_id`);
 
 --
--- Indexes for table `linea_factura`
+-- indexes for table `linea_factura`
 --
-ALTER TABLE `linea_factura`
- ADD PRIMARY KEY (`id`,`id_factura`), ADD KEY `id_factura_idx` (`id_factura`);
+alter table `linea_factura`
+ add primary key (`id`,`id_factura`), add key `id_factura_idx` (`id_factura`);
 
 --
--- Indexes for table `notificacion`
+-- indexes for table `notificacion`
 --
-ALTER TABLE `notificacion`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_notificacion_user1_idx` (`user_id`);
+alter table `notificacion`
+ add primary key (`id`), add key `fk_notificacion_user1_idx` (`user_id`);
 
 --
--- Indexes for table `pago`
+-- indexes for table `pago`
 --
-ALTER TABLE `pago`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_pago_reserva1_idx` (`reserva_id`), ADD KEY `fk_pago_inscripcion1_idx` (`inscripcion_id`);
+alter table `pago`
+ add primary key (`id`), add key `fk_pago_reserva1_idx` (`reserva_id`), add key `fk_pago_inscripcion1_idx` (`inscripcion_id`);
 
 --
--- Indexes for table `particular_externo`
+-- indexes for table `particular_externo`
 --
-ALTER TABLE `particular_externo`
- ADD PRIMARY KEY (`id`);
+alter table `particular_externo`
+ add primary key (`id`);
 
 --
--- Indexes for table `percibe`
+-- indexes for table `percibe`
 --
-ALTER TABLE `percibe`
- ADD PRIMARY KEY (`user_id`,`alerta_id`), ADD KEY `fk_percibe_user1_idx` (`user_id`), ADD KEY `fk_percibe_alerta1_idx` (`alerta_id`);
+alter table `percibe`
+ add primary key (`user_id`,`alerta_id`), add key `fk_percibe_user1_idx` (`user_id`), add key `fk_percibe_alerta1_idx` (`alerta_id`);
 
 --
--- Indexes for table `permission`
+-- indexes for table `permission`
 --
-ALTER TABLE `permission`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_permission_controller1_idx` (`controller`), ADD KEY `fk_permission_action1_idx` (`action`);
+alter table `permission`
+ add primary key (`id`), add key `fk_permission_controller1_idx` (`controller`), add key `fk_permission_action1_idx` (`action`);
 
 --
--- Indexes for table `profile`
+-- indexes for table `profile`
 --
-ALTER TABLE `profile`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `profilename_unique` (`profilename`);
+alter table `profile`
+ add primary key (`id`), add unique key `profilename_unique` (`profilename`);
 
 --
--- Indexes for table `profile_perms`
+-- indexes for table `profile_perms`
 --
-ALTER TABLE `profile_perms`
- ADD PRIMARY KEY (`id`), ADD KEY `profileid_idx` (`profile`), ADD KEY `fk_profile_perms_permission1_idx` (`permission`);
+alter table `profile_perms`
+ add primary key (`id`), add key `profileid_idx` (`profile`), add key `fk_profile_perms_permission1_idx` (`permission`);
 
 --
--- Indexes for table `rango_horario`
+-- indexes for table `rango_horario`
 --
-ALTER TABLE `rango_horario`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_rango_horario_horario_temporada1_idx` (`horario_temporada_id`);
+alter table `rango_horario`
+ add primary key (`id`), add key `fk_rango_horario_horario_temporada1_idx` (`horario_temporada_id`);
 
 --
--- Indexes for table `recibe`
+-- indexes for table `recibe`
 --
-ALTER TABLE `recibe`
- ADD PRIMARY KEY (`notificacion_id`,`cliente_id`), ADD KEY `fk_recibe_notificacion1_idx` (`notificacion_id`), ADD KEY `fk_recibe_cliente1_idx` (`cliente_id`);
+alter table `recibe`
+ add primary key (`notificacion_id`,`cliente_id`), add key `fk_recibe_notificacion1_idx` (`notificacion_id`), add key `fk_recibe_cliente1_idx` (`cliente_id`);
 
 --
--- Indexes for table `recibo`
+-- indexes for table `recibo`
 --
-ALTER TABLE `recibo`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_recibo_pago1_idx` (`pago_id`);
+alter table `recibo`
+ add primary key (`id`), add key `fk_recibo_pago1_idx` (`pago_id`);
 
 --
--- Indexes for table `reserva`
+-- indexes for table `reserva`
 --
-ALTER TABLE `reserva`
- ADD PRIMARY KEY (`id`), ADD KEY `id_espacio_idx` (`id_espacio`),ADD KEY `fk_reserva_cliente1_idx` (`dni_c`);
+alter table `reserva`
+ add primary key (`id`), add key `id_espacio_idx` (`id_espacio`),add key `fk_reserva_cliente1_idx` (`dni_c`);
 
 --
--- Indexes for table `servicio`
+-- indexes for table `servicio`
 --
-ALTER TABLE `servicio`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_servicio_pago1_idx` (`pago_id`), ADD KEY `fk_servicio_cliente_externo1_idx` (`cliente_externo_id`);
+alter table `servicio`
+ add primary key (`id`), add key `fk_servicio_pago1_idx` (`pago_id`), add key `fk_servicio_cliente_externo1_idx` (`cliente_externo_id`);
 
 --
--- Indexes for table `sesion`
+-- indexes for table `sesion`
 --
-ALTER TABLE `sesion`
--- ADD PRIMARY KEY (`id`,`actividad_id`,`horas_posibles_id`,`evento_id`,`user_id`,`espacio_id`), ADD KEY `fk_sesion_actividad1_idx` (`actividad_id`), ADD KEY `fk_sesion_horas_posibles1_idx` (`horas_posibles_id`), ADD KEY `fk_sesion_evento1_idx` (`evento_id`), ADD KEY `fk_sesion_user1_idx` (`user_id`), ADD KEY `fk_sesion_espacio1_idx` (`espacio_id`);
- ADD PRIMARY KEY (`id`), ADD KEY `fk_sesion_actividad1_idx` (`actividad_id`), ADD KEY `fk_sesion_horas_posibles1_idx` (`horas_posibles_id`), ADD KEY `fk_sesion_evento1_idx` (`evento_id`), ADD KEY `fk_sesion_user1_idx` (`user_id`), ADD KEY `fk_sesion_espacio1_idx` (`espacio_id`);
+alter table `sesion`
+-- add primary key (`id`,`actividad_id`,`horas_posibles_id`,`evento_id`,`user_id`,`espacio_id`), add key `fk_sesion_actividad1_idx` (`actividad_id`), add key `fk_sesion_horas_posibles1_idx` (`horas_posibles_id`), add key `fk_sesion_evento1_idx` (`evento_id`), add key `fk_sesion_user1_idx` (`user_id`), add key `fk_sesion_espacio1_idx` (`espacio_id`);
+ add primary key (`id`), add key `fk_sesion_actividad1_idx` (`actividad_id`), add key `fk_sesion_horas_posibles1_idx` (`horas_posibles_id`), add key `fk_sesion_evento1_idx` (`evento_id`), add key `fk_sesion_user1_idx` (`user_id`), add key `fk_sesion_espacio1_idx` (`espacio_id`);
 --
--- Indexes for table `user`
+-- indexes for table `user`
 --
-ALTER TABLE `user`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `dni_unique` (`dni`), ADD KEY `fk_user_profile1_idx` (`profile`);
+alter table `user`
+ add primary key (`id`), add unique key `dni_unique` (`dni`), add key `fk_user_profile1_idx` (`profile`);
 
 --
--- Indexes for table `user_perms`
+-- indexes for table `user_perms`
 --
-ALTER TABLE `user_perms`
- ADD PRIMARY KEY (`id`), ADD KEY `userid_idx` (`user`), ADD KEY `fk_user_perms_permission1_idx` (`permission`);
+alter table `user_perms`
+ add primary key (`id`), add key `userid_idx` (`user`), add key `fk_user_perms_permission1_idx` (`permission`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- auto_increment for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `action`
+-- auto_increment for table `action`
 --
-ALTER TABLE `action`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+alter table `action`
+modify `id` int(11) not null auto_increment,auto_increment=6;
 --
--- AUTO_INCREMENT for table `actividad`
+-- auto_increment for table `actividad`
 --
-ALTER TABLE `actividad`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `actividad`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `alerta`
+-- auto_increment for table `alerta`
 --
-ALTER TABLE `alerta`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `alerta`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `caja`
+-- auto_increment for table `caja`
 --
-ALTER TABLE `caja`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `caja`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `categoria`
+-- auto_increment for table `categoria`
 --
-ALTER TABLE `categoria`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `categoria`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `cliente`
+-- auto_increment for table `cliente`
 --
-ALTER TABLE `cliente`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `cliente`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `cliente_externo`
+-- auto_increment for table `cliente_externo`
 --
-ALTER TABLE `cliente_externo`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `cliente_externo`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `controller`
+-- auto_increment for table `controller`
 --
-ALTER TABLE `controller`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+alter table `controller`
+modify `id` int(11) not null auto_increment,auto_increment=7;
 --
--- AUTO_INCREMENT for table `descuento`
+-- auto_increment for table `descuento`
 --
-ALTER TABLE `descuento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `descuento`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `documento`
+-- auto_increment for table `documento`
 --
-ALTER TABLE `documento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `documento`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `espacio`
+-- auto_increment for table `espacio`
 --
-ALTER TABLE `espacio`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `espacio`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `evento`
+-- auto_increment for table `evento`
 --
-ALTER TABLE `evento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `evento`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `factura`
+-- auto_increment for table `factura`
 --
-ALTER TABLE `factura`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `factura`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `horario_temporada`
+-- auto_increment for table `horario_temporada`
 --
-ALTER TABLE `horario_temporada`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `horario_temporada`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `horas_posibles`
+-- auto_increment for table `horas_posibles`
 --
-ALTER TABLE `horas_posibles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `horas_posibles`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `hora_fisio`
+-- auto_increment for table `hora_fisio`
 --
-ALTER TABLE `hora_fisio`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `hora_fisio`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `inscripcion`
+-- auto_increment for table `inscripcion`
 --
-ALTER TABLE `inscripcion`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `inscripcion`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `lesiones`
+-- auto_increment for table `lesiones`
 --
-ALTER TABLE `lesiones`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `lesiones`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `linea_factura`
+-- auto_increment for table `linea_factura`
 --
-ALTER TABLE `linea_factura`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `linea_factura`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `notificacion`
+-- auto_increment for table `notificacion`
 --
-ALTER TABLE `notificacion`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `notificacion`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `pago`
+-- auto_increment for table `pago`
 --
-ALTER TABLE `pago`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `pago`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `particular_externo`
+-- auto_increment for table `particular_externo`
 --
-ALTER TABLE `particular_externo`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `particular_externo`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `permission`
+-- auto_increment for table `permission`
 --
-ALTER TABLE `permission`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+alter table `permission`
+modify `id` int(11) not null auto_increment,auto_increment=31;
 --
--- AUTO_INCREMENT for table `profile`
+-- auto_increment for table `profile`
 --
-ALTER TABLE `profile`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+alter table `profile`
+modify `id` int(11) not null auto_increment,auto_increment=2;
 --
--- AUTO_INCREMENT for table `profile_perms`
+-- auto_increment for table `profile_perms`
 --
-ALTER TABLE `profile_perms`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+alter table `profile_perms`
+modify `id` int(11) not null auto_increment,auto_increment=31;
 --
--- AUTO_INCREMENT for table `recibo`
+-- auto_increment for table `recibo`
 --
-ALTER TABLE `recibo`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `recibo`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `rango_horario`
+-- auto_increment for table `rango_horario`
 --
-ALTER TABLE `rango_horario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `rango_horario`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `reserva`
+-- auto_increment for table `reserva`
 --
-ALTER TABLE `reserva`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `reserva`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `servicio`
+-- auto_increment for table `servicio`
 --
-ALTER TABLE `servicio`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `servicio`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `sesion`
+-- auto_increment for table `sesion`
 --
-ALTER TABLE `sesion`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+alter table `sesion`
+modify `id` int(11) not null auto_increment;
 --
--- AUTO_INCREMENT for table `user`
+-- auto_increment for table `user`
 --
-ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+alter table `user`
+modify `id` int(11) not null auto_increment,auto_increment=3;
 --
--- AUTO_INCREMENT for table `user_perms`
+-- auto_increment for table `user_perms`
 --
-ALTER TABLE `user_perms`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+alter table `user_perms`
+modify `id` int(11) not null auto_increment,auto_increment=31;
 --
--- Constraints for dumped tables
+-- constraints for dumped tables
 --
 
 --
--- Constraints for table `actividad`
+-- constraints for table `actividad`
 --
-ALTER TABLE `actividad`
-ADD CONSTRAINT `fk_actividad_categoria1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_actividad_descuento1` FOREIGN KEY (`descuento_id`) REFERENCES `descuento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_actividad_espacio1` FOREIGN KEY (`espacio_id`) REFERENCES `espacio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `actividad`
+add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`) on delete no action on update no action,
+add constraint `fk_actividad_descuento1` foreign key (`descuento_id`) references `descuento` (`id`) on delete no action on update no action,
+add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `alerta`
+-- constraints for table `alerta`
 --
 
 
-ALTER TABLE `alerta`
-ADD CONSTRAINT `fk_alerta_asistencia1` FOREIGN KEY (`asistencia_id_cliente`, `asistencia_sesion_id`) REFERENCES `asistencia` (`id_cliente`,`sesion_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_alerta_pago1` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_alerta_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `alerta`
+add constraint `fk_alerta_asistencia1` foreign key (`asistencia_id_cliente`, `asistencia_sesion_id`) references `asistencia` (`id_cliente`,`sesion_id`) on delete no action on update no action,
+add constraint `fk_alerta_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action,
+add constraint `fk_alerta_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `aplica`
+-- constraints for table `aplica`
 --
-ALTER TABLE `aplica`
-ADD CONSTRAINT `fk_aplica_actividad1` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_aplica_descuento1` FOREIGN KEY (`descuento_id`) REFERENCES `descuento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `aplica`
+add constraint `fk_aplica_actividad1` foreign key (`actividad_id`) references `actividad` (`id`) on delete no action on update no action,
+add constraint `fk_aplica_descuento1` foreign key (`descuento_id`) references `descuento` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `asistencia`
+-- constraints for table `asistencia`
 --
 
-ALTER TABLE `asistencia`
-ADD CONSTRAINT `fk_asistencia_sesion1` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `id_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `asistencia`
+add constraint `fk_asistencia_sesion1` foreign key (`sesion_id`) references `sesion` (`id`) on delete no action on update no action,
+add constraint `id_cliente` foreign key (`id_cliente`) references `cliente` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `caja`
+-- constraints for table `caja`
 --
-ALTER TABLE `caja`
-ADD CONSTRAINT `fk_caja_pago1` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `caja`
+add constraint `fk_caja_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `descuento`
+-- constraints for table `descuento`
 --
-ALTER TABLE `descuento`
-ADD CONSTRAINT `fk_descuento_categoria1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `descuento`
+add constraint `fk_descuento_categoria1` foreign key (`categoria_id`) references `categoria` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `documento`
+-- constraints for table `documento`
 --
-ALTER TABLE `documento`
-ADD CONSTRAINT `dni` FOREIGN KEY (`dni`) REFERENCES `user` (`dni`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `dni_c` FOREIGN KEY (`dni_c`) REFERENCES `cliente` (`dni_c`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `id_inscripcion` FOREIGN KEY (`id_inscripcion`) REFERENCES `inscripcion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `documento`
+add constraint `dni` foreign key (`dni`) references `user` (`dni`) on delete no action on update no action,
+add constraint `dni_c` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete no action on update no action,
+add constraint `id_inscripcion` foreign key (`id_inscripcion`) references `inscripcion` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `empleado_mira`
+-- constraints for table `empleado_mira`
 --
-ALTER TABLE `empleado_mira`
-ADD CONSTRAINT `fk_empleado_mira_lesion_cliente1` FOREIGN KEY (`lesion_cliente_id_lesion`, `lesion_cliente_cliente_id`) REFERENCES `lesion_cliente` (`id_lesion`, `cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_empleado_mira_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `empleado_mira`
+add constraint `fk_empleado_mira_lesion_cliente1` foreign key (`lesion_cliente_id_lesion`, `lesion_cliente_cliente_id`) references `lesion_cliente` (`id_lesion`, `cliente_id`) on delete no action on update no action,
+add constraint `fk_empleado_mira_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `evento`
+-- constraints for table `evento`
 --
-ALTER TABLE `evento`
-ADD CONSTRAINT `fk_evento_espacio1` FOREIGN KEY (`espacio_id`) REFERENCES `espacio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `evento`
+add constraint `fk_evento_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `factura`
+-- constraints for table `factura`
 --
-ALTER TABLE `factura`
-ADD CONSTRAINT `fk_factura_pago1` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `factura`
+add constraint `fk_factura_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `horas_posibles`
+-- constraints for table `horas_posibles`
 --
-ALTER TABLE `horas_posibles`
-ADD CONSTRAINT `fk_horas_posibles_rango_horario1` FOREIGN KEY (`rango_horario_id`) REFERENCES `rango_horario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `horas_posibles`
+add constraint `fk_horas_posibles_rango_horario1` foreign key (`rango_horario_id`) references `rango_horario` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `hora_fisio`
+-- constraints for table `hora_fisio`
 --
-ALTER TABLE `hora_fisio`
-ADD CONSTRAINT `id_reserva` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `hora_fisio`
+add constraint `id_reserva` foreign key (`id_reserva`) references `reserva` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `inscripcion`
+-- constraints for table `inscripcion`
 --
-ALTER TABLE `inscripcion`
-ADD CONSTRAINT `fk_inscripcion_cliente1` FOREIGN KEY (`cliente_dni_c`) REFERENCES `cliente` (`dni_c`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_inscripcion_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_inscripcion_particular_externo1` FOREIGN KEY (`particular_externo_id`) REFERENCES `particular_externo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_inscripcion_reserva1` FOREIGN KEY (`reserva_id`) REFERENCES `reserva` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_inscripcion_actividad1` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_inscripcion_descuento1` FOREIGN KEY (`id_descuento`) REFERENCES `descuento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `inscripcion`
+add constraint `fk_inscripcion_cliente1` foreign key (`cliente_dni_c`) references `cliente` (`dni_c`) on delete no action on update no action,
+add constraint `fk_inscripcion_evento1` foreign key (`evento_id`) references `evento` (`id`) on delete no action on update no action,
+add constraint `fk_inscripcion_particular_externo1` foreign key (`particular_externo_id`) references `particular_externo` (`id`) on delete no action on update no action,
+add constraint `fk_inscripcion_reserva1` foreign key (`reserva_id`) references `reserva` (`id`) on delete no action on update no action,
+add constraint `fk_inscripcion_actividad1` foreign key (`id_actividad`) references `actividad` (`id`) on delete no action on update no action,
+add constraint `fk_inscripcion_descuento1` foreign key (`id_descuento`) references `descuento` (`id`) on delete no action on update no action;
 
 
 --
--- Constraints for table `lesion_cliente`
+-- constraints for table `lesion_cliente`
 --
-ALTER TABLE `lesion_cliente`
-ADD CONSTRAINT `fk_lesion_cliente_cliente1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `id_lesion` FOREIGN KEY (`id_lesion`) REFERENCES `lesiones` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `lesion_cliente`
+add constraint `fk_lesion_cliente_cliente1` foreign key (`cliente_id`) references `cliente` (`id`) on delete no action on update no action,
+add constraint `id_lesion` foreign key (`id_lesion`) references `lesiones` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `lesion_empleado`
+-- constraints for table `lesion_empleado`
 --
-ALTER TABLE `lesion_empleado`
-ADD CONSTRAINT `fk_lesion_empleado_lesiones1` FOREIGN KEY (`lesiones_id`) REFERENCES `lesiones` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_lesion_empleado_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `lesion_empleado`
+add constraint `fk_lesion_empleado_lesiones1` foreign key (`lesiones_id`) references `lesiones` (`id`) on delete no action on update no action,
+add constraint `fk_lesion_empleado_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `linea_factura`
+-- constraints for table `linea_factura`
 --
-ALTER TABLE `linea_factura`
-ADD CONSTRAINT `id_factura` FOREIGN KEY (`id_factura`) REFERENCES `factura` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `linea_factura`
+add constraint `id_factura` foreign key (`id_factura`) references `factura` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `notificacion`
+-- constraints for table `notificacion`
 --
-ALTER TABLE `notificacion`
-ADD CONSTRAINT `fk_notificacion_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `notificacion`
+add constraint `fk_notificacion_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `pago`
+-- constraints for table `pago`
 --
-ALTER TABLE `pago`
-ADD CONSTRAINT `fk_pago_inscripcion1` FOREIGN KEY (`inscripcion_id`) REFERENCES `inscripcion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_pago_reserva1` FOREIGN KEY (`reserva_id`) REFERENCES `reserva` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `pago`
+add constraint `fk_pago_inscripcion1` foreign key (`inscripcion_id`) references `inscripcion` (`id`) on delete no action on update no action,
+add constraint `fk_pago_reserva1` foreign key (`reserva_id`) references `reserva` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `percibe`
+-- constraints for table `percibe`
 --
-ALTER TABLE `percibe`
-ADD CONSTRAINT `fk_percibe_alerta1` FOREIGN KEY (`alerta_id`) REFERENCES `alerta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_percibe_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `percibe`
+add constraint `fk_percibe_alerta1` foreign key (`alerta_id`) references `alerta` (`id`) on delete no action on update no action,
+add constraint `fk_percibe_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `permission`
+-- constraints for table `permission`
 --
-ALTER TABLE `permission`
-ADD CONSTRAINT `fk_permission_action1` FOREIGN KEY (`action`) REFERENCES `action` (`actionname`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `fk_permission_controller1` FOREIGN KEY (`controller`) REFERENCES `controller` (`controllername`) ON DELETE CASCADE ON UPDATE CASCADE;
+alter table `permission`
+add constraint `fk_permission_action1` foreign key (`action`) references `action` (`actionname`) on delete cascade on update cascade,
+add constraint `fk_permission_controller1` foreign key (`controller`) references `controller` (`controllername`) on delete cascade on update cascade;
 
 --
--- Constraints for table `profile_perms`
+-- constraints for table `profile_perms`
 --
-ALTER TABLE `profile_perms`
-ADD CONSTRAINT `fk_profile_perms_permission1` FOREIGN KEY (`permission`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `profileid` FOREIGN KEY (`profile`) REFERENCES `profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+alter table `profile_perms`
+add constraint `fk_profile_perms_permission1` foreign key (`permission`) references `permission` (`id`) on delete cascade on update cascade,
+add constraint `profileid` foreign key (`profile`) references `profile` (`id`) on delete cascade on update cascade;
 
 --
--- Constraints for table `rango_horario`
+-- constraints for table `rango_horario`
 --
-ALTER TABLE `rango_horario`
-ADD CONSTRAINT `fk_rango_horario_horario_temporada1` FOREIGN KEY (`horario_temporada_id`) REFERENCES `horario_temporada` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `rango_horario`
+add constraint `fk_rango_horario_horario_temporada1` foreign key (`horario_temporada_id`) references `horario_temporada` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `recibe`
+-- constraints for table `recibe`
 --
-ALTER TABLE `recibe`
-ADD CONSTRAINT `fk_recibe_cliente1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_recibe_notificacion1` FOREIGN KEY (`notificacion_id`) REFERENCES `notificacion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `recibe`
+add constraint `fk_recibe_cliente1` foreign key (`cliente_id`) references `cliente` (`id`) on delete no action on update no action,
+add constraint `fk_recibe_notificacion1` foreign key (`notificacion_id`) references `notificacion` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `recibo`
+-- constraints for table `recibo`
 --
-ALTER TABLE `recibo`
-ADD CONSTRAINT `fk_recibo_pago1` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `recibo`
+add constraint `fk_recibo_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `reserva`
+-- constraints for table `reserva`
 --
-ALTER TABLE `reserva`
-ADD CONSTRAINT `id_espacio` FOREIGN KEY (`id_espacio`) REFERENCES `espacio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_reserva_cliente1` FOREIGN KEY (`dni_c`) REFERENCES `cliente` (`dni_c`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `reserva`
+add constraint `id_espacio` foreign key (`id_espacio`) references `espacio` (`id`) on delete no action on update no action,
+add constraint `fk_reserva_cliente1` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete no action on update no action;
 
 --
--- Constraints for table `servicio`
+-- constraints for table `servicio`
 --
-ALTER TABLE `servicio`
-ADD CONSTRAINT `fk_servicio_cliente_externo1` FOREIGN KEY (`cliente_externo_id`) REFERENCES `cliente_externo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_servicio_pago1` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `servicio`
+add constraint `fk_servicio_cliente_externo1` foreign key (`cliente_externo_id`) references `cliente_externo` (`id`) on delete no action on update no action,
+add constraint `fk_servicio_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `sesion`
+-- constraints for table `sesion`
 --
-ALTER TABLE `sesion`
-ADD CONSTRAINT `fk_sesion_actividad1` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_sesion_espacio1` FOREIGN KEY (`espacio_id`) REFERENCES `espacio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_sesion_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_sesion_horas_posibles1` FOREIGN KEY (`horas_posibles_id`) REFERENCES `horas_posibles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_sesion_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+alter table `sesion`
+add constraint `fk_sesion_actividad1` foreign key (`actividad_id`) references `actividad` (`id`) on delete no action on update no action,
+add constraint `fk_sesion_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete no action on update no action,
+add constraint `fk_sesion_evento1` foreign key (`evento_id`) references `evento` (`id`) on delete no action on update no action,
+add constraint `fk_sesion_horas_posibles1` foreign key (`horas_posibles_id`) references `horas_posibles` (`id`) on delete no action on update no action,
+add constraint `fk_sesion_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
 
 --
--- Constraints for table `user`
+-- constraints for table `user`
 --
-ALTER TABLE `user`
-ADD CONSTRAINT `fk_user_profile1` FOREIGN KEY (`profile`) REFERENCES `profile` (`profilename`) ON DELETE SET NULL ON UPDATE CASCADE;
+alter table `user`
+add constraint `fk_user_profile1` foreign key (`profile`) references `profile` (`profilename`) on delete set null on update cascade;
 
 --
--- Constraints for table `user_perms`
+-- constraints for table `user_perms`
 --
-ALTER TABLE `user_perms`
-ADD CONSTRAINT `fk_user_perms_permission1` FOREIGN KEY (`permission`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `userid` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+alter table `user_perms`
+add constraint `fk_user_perms_permission1` foreign key (`permission`) references `permission` (`id`) on delete cascade on update cascade,
+add constraint `userid` foreign key (`user`) references `user` (`id`) on delete cascade on update cascade;
 
 -- ---------------------------------------------------
 
 --
--- Dumping data for table `profile`
+-- dumping data for table `profile`
 --
 
-INSERT INTO `profile` (`id`, `profilename`) VALUES
+insert into `profile` (`id`, `profilename`) values
 (1, 'admin');
 
 --
--- Dumping data for table `user`
+-- dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `dni`, `username`, `name`, `surname`, `fecha_nac`, `direccion`, `comentario`, `num_cuenta`, `tipo_contrato`, `email`, `foto`, `activo`, `passwd`, `profile`) VALUES
+insert into `user` (`id`, `dni`, `username`, `name`, `surname`, `fecha_nac`, `direccion`, `comentario`, `num_cuenta`, `tipo_contrato`, `email`, `foto`, `activo`, `passwd`, `profile`) values
 (1, '44849254q', 'admin', 'administrador', 'administrador', '2016-11-01', 'calle emilia pardo bazán 5,5ºd, ourense', 'un saludo', 'es648654684654', 'indefinido', 'jfsantiago2@gmail.com', '', 1, 'admin', 'admin'),
-(2, '44849299Y', 'jfsantiago2', 'Javier', 'Fernández López', '2015-12-24', 'Calle falsa 123, Ourense', '', 'ES9287423222928374923847', 'Indefinido', 'jfsantiago2@esei.uvigo.es', '', 0, 'abc123.', 'admin');
+(2, '44849299y', 'jfsantiago2', 'javier', 'fernández lópez', '2015-12-24', 'calle falsa 123, ourense', '', 'es9287423222928374923847', 'indefinido', 'jfsantiago2@esei.uvigo.es', '', 0, 'abc123.', 'admin');
 
 
 --
--- Dumping data for table `action`
+-- dumping data for table `action`
 --
 
-INSERT INTO `action` (`id`, `actionname`) VALUES
+insert into `action` (`id`, `actionname`) values
 (3, 'add'),
 (5, 'delete'),
 (1, 'show'),
@@ -1272,10 +1272,10 @@ INSERT INTO `action` (`id`, `actionname`) VALUES
 (4, 'edit');
 
 --
--- Dumping data for table `controller`
+-- dumping data for table `controller`
 --
 
-INSERT INTO `controller` (`id`, `controllername`) VALUES
+insert into `controller` (`id`, `controllername`) values
 (5, 'action'),
 (2, 'controller'),
 (3, 'permission'),
@@ -1286,10 +1286,10 @@ INSERT INTO `controller` (`id`, `controllername`) VALUES
 
 
 --
--- Dumping data for table `permission`
+-- dumping data for table `permission`
 --
 
-INSERT INTO `permission` (`id`, `controller`, `action`) VALUES
+insert into `permission` (`id`, `controller`, `action`) values
 (1, 'user', 'show'),
 (2, 'user', 'showone'),
 (3, 'user', 'add'),
@@ -1327,195 +1327,195 @@ INSERT INTO `permission` (`id`, `controller`, `action`) VALUES
 (35, 'profileperm', 'edit');
 
 --
--- Dumping data for table `cliente`
+-- dumping data for table `cliente`
 --
-INSERT INTO `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`) VALUES 
-(1, '12345678C', 'Nombre3', 'Aellidos3', '1999-11-11', 'Programador', 666666666, 'Calle2,numero2,piso2', 'Es un negado', 'cliente1@gym.com', true, DEFAULT, true, DEFAULT),
-(2, '13245678D', 'Nombre4', 'Apellidos4', '1999-12-12', 'Ingeniero', 777777777, 'Calle3,numero3,piso3', 'Está calvo', 'cliente2@gym.com', false, DEFAULT, DEFAULT, DEFAULT);
+insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`) values 
+(1, '12345678c', 'nombre3', 'aellidos3', '1999-11-11', 'programador', 666666666, 'calle2,numero2,piso2', 'es un negado', 'cliente1@gym.com', true, default, true, default),
+(2, '13245678d', 'nombre4', 'apellidos4', '1999-12-12', 'ingeniero', 777777777, 'calle3,numero3,piso3', 'está calvo', 'cliente2@gym.com', false, default, default, default);
 
 --
--- Dumping data for table `particular_externo`
+-- dumping data for table `particular_externo`
 --
-INSERT INTO `particular_externo` (`id`, `nombre`, `apellidos`, `telefono`) VALUES (1, 'NombreExt', 'ApellidosExt', 111222333);
+insert into `particular_externo` (`id`, `nombre`, `apellidos`, `telefono`) values (1, 'nombreext', 'apellidosext', 111222333);
 
 --
--- Dumping data for table `espacio`
+-- dumping data for table `espacio`
 --
-INSERT INTO `espacio` (`id`, `nombre`) VALUES (1, 'AULA1'),(2, 'AULA2');
+insert into `espacio` (`id`, `nombre`) values (1, 'aula1'),(2, 'aula2');
 
 --
--- Dumping data for table `reserva`
+-- dumping data for table `reserva`
 --
-INSERT INTO `reserva` (`id`, `id_espacio`, `dni_c`, `precio_espacio`, `precio_fisio`) VALUES (1, 1, '12345678C', 13, NULL),(2, NULL, '13245678D', NULL, 25);
+insert into `reserva` (`id`, `id_espacio`, `dni_c`, `precio_espacio`, `precio_fisio`) values (1, 1, '12345678c', 13, null),(2, null, '13245678d', null, 25);
 
 --
--- Dumping data for table `categoria`
+-- dumping data for table `categoria`
 --
-INSERT INTO `categoria` (`id`, `tipo`) VALUES (1, 'AZUL'),(2, 'ROSA');
+insert into `categoria` (`id`, `tipo`) values (1, 'azul'),(2, 'rosa');
 
 --
--- Dumping data for table `descuento`
+-- dumping data for table `descuento`
 --
-INSERT INTO `descuento` (`id`, `descripcion`,`categoria_id`, `cantidad`) VALUES (1, 'AZUL', 1, 10),(2, 'ROSA', 2, 20);
+insert into `descuento` (`id`, `descripcion`,`categoria_id`, `cantidad`) values (1, 'azul', 1, 10),(2, 'rosa', 2, 20);
 
 --
--- Dumping data for table `evento`
+-- dumping data for table `evento`
 --
-INSERT INTO `evento` (`id`, `nombre`, `espacio_id`, `precio`) VALUES (1, 'Halloween', 1, 5),(2, 'Magosto', 2, 7);
+insert into `evento` (`id`, `nombre`, `espacio_id`, `precio`) values (1, 'halloween', 1, 5),(2, 'magosto', 2, 7);
 
 --
--- Dumping data for table `actividad`
+-- dumping data for table `actividad`
 --
-INSERT INTO `actividad` (`id`, `nombre`, `espacio_id`, `descuento_id`, `capacidad`, `precio`, `categoria_id`) VALUES
-(1, 'Zumba', 1, 1, 20, 20, 1),
-(2, 'Salsa', 2, 2, 13, 50, 2);
+insert into `actividad` (`id`, `nombre`, `espacio_id`, `descuento_id`, `capacidad`, `precio`, `categoria_id`) values
+(1, 'zumba', 1, 1, 20, 20, 1),
+(2, 'salsa', 2, 2, 13, 50, 2);
 
 --
--- Dumping data for table `inscripcion`
+-- dumping data for table `inscripcion`
 --
-INSERT INTO `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`, `id_descuento`) VALUES 
-(1, NULL, NULL, 1, NULL, '12345678C', '2016-5-6', 1),
-(2, 1, 1, NULL, NULL, '13245678D', '2016-4-3', NULL);
+insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`, `id_descuento`) values 
+(1, null, null, 1, null, '12345678c', '2016-5-6', 1),
+(2, 1, 1, null, null, '13245678d', '2016-4-3', null);
 
 --
--- Dumping data for table `documento`
+-- dumping data for table `documento`
 --
-INSERT INTO `documento` (`dni`, `dni_c`, `id_inscripcion`, `id`, `tipo`, `documento`) VALUES 
-(NULL, '12345678C', NULL, 1, 'LESION', 'lesion1.pdf'),
-('44849254q', NULL, NULL, 2, 'SEPA', 'sepa1.pdf');
+insert into `documento` (`dni`, `dni_c`, `id_inscripcion`, `id`, `tipo`, `documento`) values 
+(null, '12345678c', null, 1, 'lesion', 'lesion1.pdf'),
+('44849254q', null, null, 2, 'sepa', 'sepa1.pdf');
 
 --
--- Dumping data for table `lesiones`
+-- dumping data for table `lesiones`
 --
-INSERT INTO `lesiones` (`id`, `descripcion`) VALUES (1, 'Rodilla de golfista'),(2, 'Codo de tenista');
+insert into `lesiones` (`id`, `descripcion`) values (1, 'rodilla de golfista'),(2, 'codo de tenista');
 
 --
--- Dumping data for table `lesion_cliente`
+-- dumping data for table `lesion_cliente`
 --
-INSERT INTO `lesion_cliente` (`id_lesion`, `cliente_id`) VALUES (1, 1);
+insert into `lesion_cliente` (`id_lesion`, `cliente_id`) values (1, 1);
 
 --
--- Dumping data for table `lesion_empleado`
+-- dumping data for table `lesion_empleado`
 --
-INSERT INTO `lesion_empleado` ( `lesiones_id`,  `user_id`) VALUES (2, 1);
+insert into `lesion_empleado` ( `lesiones_id`,  `user_id`) values (2, 1);
 
 --
--- Dumping data for table `empleado_mira`
+-- dumping data for table `empleado_mira`
 --
-INSERT INTO `empleado_mira` (`user_id`, `lesion_cliente_cliente_id`, `lesion_cliente_id_lesion`, `fecha_vista`) VALUES (1, 1, 1, '2016-11-4');
+insert into `empleado_mira` (`user_id`, `lesion_cliente_cliente_id`, `lesion_cliente_id_lesion`, `fecha_vista`) values (1, 1, 1, '2016-11-4');
 
 --
--- Dumping data for table `horario_temporada`
+-- dumping data for table `horario_temporada`
 --
-INSERT INTO `horario_temporada` (`id`, `dia_inicio`, `dia_fin`, `nombre_temp`) VALUES (1, '2016-6-15', '2016-9-15', 'Verano');
+insert into `horario_temporada` (`id`, `dia_inicio`, `dia_fin`, `nombre_temp`) values (1, '2016-6-15', '2016-9-15', 'verano');
 
 --
--- Dumping data for table `rango_horario`
+-- dumping data for table `rango_horario`
 --
-INSERT INTO `rango_horario` (`id`, `dia_s`, `hora_apertura`, `hora_cierre`, `horario_temporada_id`) VALUES (1, 'Lunes', '9:00', '15:00', 1);
+insert into `rango_horario` (`id`, `dia_s`, `hora_apertura`, `hora_cierre`, `horario_temporada_id`) values (1, 'lunes', '9:00', '15:00', 1);
 
 --
--- Dumping data for table `horas_posibles`
+-- dumping data for table `horas_posibles`
 --
-INSERT INTO `horas_posibles` (`id`,`dia`, `hora_inicio`, `hora_fin`,`rango_horario_id`) VALUES 
-(1,'Lunes', '9:00', '10:00', 1),
-(2,'Lunes', '10:00', '11:00', 1),
-(3,'Lunes', '11:00', '12:00', 1);
+insert into `horas_posibles` (`id`,`dia`, `hora_inicio`, `hora_fin`,`rango_horario_id`) values 
+(1,'lunes', '9:00', '10:00', 1),
+(2,'lunes', '10:00', '11:00', 1),
+(3,'lunes', '11:00', '12:00', 1);
 
 --
--- Dumping data for table `sesion`
+-- dumping data for table `sesion`
 --
-INSERT INTO `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`,`horas_posibles_id`) VALUES (1, 1, NULL, 1, 1, 1),(2, 1, NULL, 1, 1, 2);
+insert into `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`,`horas_posibles_id`) values (1, 1, null, 1, 1, 1),(2, 1, null, 1, 1, 2);
 
 --
--- Dumping data for table `pago`
+-- dumping data for table `pago`
 --
-INSERT INTO `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`) VALUES 
-(1, 'Tarjeta', '2016-3-2', NULL, 25, NULL, NULL),
-(2, 'Transferencia', '2016-4-9', 'Anual', 100, 1, NULL),
-(3, 'Tarjeta', '2016-2-3', NULL, 300, NULL, NULL);
+insert into `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`) values 
+(1, 'tarjeta', '2016-3-2', null, 25, null, null),
+(2, 'transferencia', '2016-4-9', 'anual', 100, 1, null),
+(3, 'tarjeta', '2016-2-3', null, 300, null, null);
 
 --
--- Dumping data for table `asistencia`
+-- dumping data for table `asistencia`
 --
-INSERT INTO `asistencia` (`id_cliente`, `sesion_id`, `asiste`) VALUES (1, 1, false),(2, 2, true);
+insert into `asistencia` (`id_cliente`, `sesion_id`, `asiste`) values (1, 1, false),(2, 2, true);
 
 
 --
--- Dumping data for table `alerta`
+-- dumping data for table `alerta`
 --
-INSERT INTO `alerta` (`id`, `descripcion`, `user_id`, `pago_id`, `asistencia_id_cliente`,`asistencia_sesion_id`) VALUES 
-(1, 'No acude',NULL,NULL, 1, 1),
-(2, 'No paga', NULL, 1, 1, NULL);
+insert into `alerta` (`id`, `descripcion`, `user_id`, `pago_id`, `asistencia_id_cliente`,`asistencia_sesion_id`) values 
+(1, 'no acude',null,null, 1, 1),
+(2, 'no paga', null, 1, 1, null);
 
 --
--- Dumping data for table `notificacion`
+-- dumping data for table `notificacion`
 --
-INSERT INTO `notificacion` (`id`, `descripcion`, `user_id`) VALUES (1, 'Notifiacion1', 1);
+insert into `notificacion` (`id`, `descripcion`, `user_id`) values (1, 'notifiacion1', 1);
 
 --
--- Dumping data for table `recibe`
+-- dumping data for table `recibe`
 --
-INSERT INTO `recibe` (`notificacion_id`, `cliente_id`) VALUES (1, 1);
+insert into `recibe` (`notificacion_id`, `cliente_id`) values (1, 1);
 
 --
--- Dumping data for table `percibe`
+-- dumping data for table `percibe`
 --
-INSERT INTO `percibe` ( `alerta_id`, `user_id`) VALUES (1, 1);
+insert into `percibe` ( `alerta_id`, `user_id`) values (1, 1);
 
 --
--- Dumping data for table `hora_fisio`
+-- dumping data for table `hora_fisio`
 --
-INSERT INTO `hora_fisio` (`id`, `id_reserva`, `dia_f`, `hora_i`, `hora_f`) VALUES (1, 2, '2016-11-11', '17:00', '18:00');
+insert into `hora_fisio` (`id`, `id_reserva`, `dia_f`, `hora_i`, `hora_f`) values (1, 2, '2016-11-11', '17:00', '18:00');
 
 --
--- Dumping data for table `factura`
+-- dumping data for table `factura`
 --
-INSERT INTO `factura` (`id`, `pago_id`, `fecha`) VALUES (1, 1, '2016-10-5');
+insert into `factura` (`id`, `pago_id`, `fecha`) values (1, 1, '2016-10-5');
 
 --
--- Dumping data for table `linea_factura`
+-- dumping data for table `linea_factura`
 --
-INSERT INTO `linea_factura` (`id`, `id_factura`, `producto`, `cantidad`, `precio`) VALUES (1, 1, 'Batido Proteinas', 1, 10),(2, 1, 'Anabolizantes', 2, 30);
+insert into `linea_factura` (`id`, `id_factura`, `producto`, `cantidad`, `precio`) values (1, 1, 'batido proteinas', 1, 10),(2, 1, 'anabolizantes', 2, 30);
 
 --
--- Dumping data for table `recibo`
+-- dumping data for table `recibo`
 --
-INSERT INTO `recibo` (`id`, `pago_id`, `producto`, `precio`, `cantidad`) VALUES (1, 2, 'Clase ZUmba Anual', 100, 1);
+insert into `recibo` (`id`, `pago_id`, `producto`, `precio`, `cantidad`) values (1, 2, 'clase zumba anual', 100, 1);
 
 --
--- Dumping data for table `caja`
+-- dumping data for table `caja`
 --
-INSERT INTO `caja` (`pago_id`, `id`, `efectivo_inicial`, `cantidad`, `efectivo_final`) VALUES (1, 1, 0, 20, 20),(2, 2, 20, -10, 10);
+insert into `caja` (`pago_id`, `id`, `efectivo_inicial`, `cantidad`, `efectivo_final`) values (1, 1, 0, 20, 20),(2, 2, 20, -10, 10);
 
 --
--- Dumping data for table `cliente_externo`
+-- dumping data for table `cliente_externo`
 --
-INSERT INTO `cliente_externo` (`id`, `dni_nif`, `nombre`, `apellido`, `telefono`, `email`) VALUES
-(1, '12345678F', 'Externo', 'ApellidoExt', 888888888, 'exte@rno.com');
+insert into `cliente_externo` (`id`, `dni_nif`, `nombre`, `apellido`, `telefono`, `email`) values
+(1, '12345678f', 'externo', 'apellidoext', 888888888, 'exte@rno.com');
 
 --
--- Dumping data for table `servicio`
+-- dumping data for table `servicio`
 --
-INSERT INTO `servicio` (`id`, `fecha`, `coste`, `pago_id`,  `cliente_externo_id`, `descripcion`) VALUES (1, '2016-12-3', 300, 3, 1, 'Boda');
+insert into `servicio` (`id`, `fecha`, `coste`, `pago_id`,  `cliente_externo_id`, `descripcion`) values (1, '2016-12-3', 300, 3, 1, 'boda');
 
 --
--- Dumping data for table `aplica`
+-- dumping data for table `aplica`
 --
-INSERT INTO `aplica` (`descuento_id`,`actividad_id`) VALUES (1, 1),(2,2);
+insert into `aplica` (`descuento_id`,`actividad_id`) values (1, 1),(2,2);
 
 --
--- Dumping data for table `user_perms`
+-- dumping data for table `user_perms`
 --
 
-INSERT INTO `user_perms` (`id`, `user`, `permission`) VALUES
+insert into `user_perms` (`id`, `user`, `permission`) values
 (1, 1, 1);
 
 --
--- Dumping data for table `profile_perms`
+-- dumping data for table `profile_perms`
 --
 
-INSERT INTO `profile_perms` (`id`, `profile`, `permission`) VALUES
+insert into `profile_perms` (`id`, `profile`, `permission`) values
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
@@ -1553,11 +1553,9 @@ INSERT INTO `profile_perms` (`id`, `profile`, `permission`) VALUES
 (35, 1, 35);
 
 
-CREATE USER 'moovett'@'localhost' IDENTIFIED BY '***';GRANT ALL PRIVILEGES ON *.* TO 'moovett'@'localhost' 
-								  IDENTIFIED BY '***' WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
-								  GRANT ALL PRIVILEGES ON `iu_web`.* TO 'moovett'@'localhost';
+CREATE USER 'moovett'@'localhost' IDENTIFIED BY 'moovett';
+GRANT ALL PRIVILEGES ON * . * TO 'moovett'@'localhost';					  
 								  
-								  
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 set character_set_client=@old_character_set_client */;
+/*!40101 set character_set_results=@old_character_set_results */;
+/*!40101 set collation_connection=@old_collation_connection */;
