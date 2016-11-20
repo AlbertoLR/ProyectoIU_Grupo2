@@ -23,11 +23,11 @@ $errors = $view->getVariable("errors");
       <div class="row top-buffer">
     		<table class="table" >
           <tr class="active">
-            <th>ID:</th>
+            <th><?= i18n("Identifier")?>:</th>
             <td><?= $user->getID() ?></td>
           </tr>
           <tr>
-            <th>Profile:</th>
+            <th><?= i18n("Profile")?>:</th>
             <td><?= $user->getProfile() ?></td>
           </tr>
           <tr class="active">
@@ -35,39 +35,39 @@ $errors = $view->getVariable("errors");
             <td><?= $user->getDni() ?></td>
           </tr>
           <tr>
-            <th>Nombre usuario:</th>
+            <th><?= i18n("Username")?>:</th>
             <td><?= $user->getUsername() ?></td>
           </tr>
           <tr class="active">
-            <th>Nombre:</th>
+            <th><?= i18n("Name")?>:</th>
             <td><?= $user->getName() ?></td>
           </tr>
           <tr>
-            <th>Apellidos:</th>
+            <th><?= i18n("Surname")?>:</th>
             <td><?= $user->getSurname() ?></td>
           </tr>
           <tr class="active">
-            <th>Email:</th>
+            <th><?= i18n("Email")?>:</th>
             <td><?= $user->getEmail() ?></td>
           </tr>
           <tr>
-            <th>Fecha nacimiento:</th>
+            <th><?= i18n("Birthdate")?>:</th>
             <td><?= $user->getFechaNac() ?></td>
           </tr>
           <tr class="active">
-            <th>Direccion:</th>
+            <th><?= i18n("Address")?>:</th>
             <td><?= $user->getDireccion() ?></td>
           </tr>
           <tr>
-            <th>Número cuenta:</th>
+            <th><?= i18n("Bank accout")?>:</th>
             <td><?= $user->getNumCuenta() ?></td>
           </tr>
           <tr class="active">
-            <th>Tipo contrato:</th>
+            <th><?= i18n("Contract")?>:</th>
             <td><?= $user->getTipoContrato() ?></td>
           </tr>
           <tr>
-            <th>Activo:</th>
+            <th><?= i18n("Operating")?>:</th>
               <?php if($user->getActivo()){ ?>
               <td>Yes</td>
               <?php } else { ?>

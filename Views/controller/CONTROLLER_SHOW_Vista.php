@@ -12,12 +12,13 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
-	<a href="index.php?controller=controller&action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create Controller</a>
+        <h1><?= i18n("List of Controllers")?></h1>
+	<a href="index.php?controller=controller&action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create Controllers")?></a>
 <table class="table">
       <thead>
         <tr>
           <th>#</th>
-          <th>Controller Name</th>
+          <th><?= i18n("Controller") ?></th>
           <th style="width: 72px;"></th>
         </tr>
       </thead>

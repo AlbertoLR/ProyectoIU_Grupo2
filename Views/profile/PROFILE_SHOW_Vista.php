@@ -12,13 +12,14 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
-	<a href="index.php?controller=profile&action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create Profile</a>
-    <a href="index.php?controller=profileperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Permissions</a>
+    <h1><?= i18n("List of Profiles")?></h1>    
+	<a href="index.php?controller=profile&action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create Profile")?></a>
+    <a href="index.php?controller=profileperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Manage Permissions")?></a>
 <table class="table">
       <thead>
         <tr>
           <th>#</th>
-          <th>Profile Name</th>
+          <th><?= i18n("Profile")?></th>
           <th style="width: 72px;"></th>
         </tr>
       </thead>

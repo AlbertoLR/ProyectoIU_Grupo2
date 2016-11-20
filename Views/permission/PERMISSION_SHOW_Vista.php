@@ -15,19 +15,19 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
     <div class="container">
 
-            <a href="index.php?controller=userperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Users Permissions</a>
-            <a href="index.php?controller=profileperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Profiles Permissions</a>
+            <a href="index.php?controller=userperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Manage User Permissions")?></a>
+            <a href="index.php?controller=profileperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Manage Profile Permissions")?></a>
 
-        <h1><?= i18n("Set Permissions: Controller-Action")?></h1>
+        <h1><?= i18n("List of Controller Actions")?></h1>
         <form class="top-buffer" action="index.php?controller=permission&amp;action=add" method="POST">
-        Controller: <select name="controller">
+        <?= i18n("Controller") ?>: <select name="controller">
         <option value="" selected></option>
         <?php foreach($controllers as $controller) {?>
             <option value="<?= $controller->getControllerName()?>"><?= $controller->getControllerName()?></option>
         <?php }?>
         </select>
 
-        Action: <select name="action">
+        <?= i18n("Action") ?>: <select name="action">
         <option value="" selected></option>
         <?php foreach($actions as $action) {?>
             <option value="<?= $action->getActionName()?>"><?= $action->getActionName()?></option>

@@ -15,20 +15,20 @@ $permissions = $view->getVariable("permissions");
     <div class="jumbotron">
 	<div class="container">
 	    <?php if (isset($currentuser)): ?>
-		<h1><?= sprintf(i18n("Welcome to Moovet %s"), $currentuser) ?></h1>
-      <p>Administer this site:</p>
+		<h1><?= sprintf(i18n("Welcome to Moovett %s"), $currentuser) ?></h1>
+      <p><?= i18n("Administer this site") ?></p>
     <div class="row">
 	    <?php foreach ($controllers as $controller) {?>
             <?php if (!in_array($controller, $restrictions)): ?>
         <div class="col-sm-4 form-group" >
-          <a class="btn btn-primary btn-lg btn-block" href="index.php?controller=<?php echo $controller ?>&amp;action=show" role="button"><?php echo $controller ?>s &raquo;</a>
+          <a class="btn btn-primary btn-lg btn-block" href="index.php?controller=<?php echo $controller ?>&amp;action=show" role="button"><?= i18n($controller) ?>s &raquo;</a>
         </div>
             <?php endif ?>
       <?php }?>
     </div>
 	    <?php else: ?>
-	      <h1><?= i18n("Welcome to Moovet") ?></h1>
-              <p>Please Login</p>
+	      <h1><?= i18n("Welcome to Moovett") ?></h1>
+              <p><?= i18n("Please Login") ?></p>
 	     <?php endif ?>
       </div>
     </div>

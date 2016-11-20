@@ -42,10 +42,7 @@ class ACTION_Controller extends BaseController {
         if ($action == NULL) {
             throw new Exception("no such action with id: ".$actionid);
         }
-
-        $errors = array();
-        $errors["general"] = var_dump($this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "showone"));
-        $this->view->setVariable("errors", $errors);
+        
         $this->view->setVariable("action", $action);
         $this->view->render("action", "ACTION_SHOWONE_Vista");
     }

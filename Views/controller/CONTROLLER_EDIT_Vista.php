@@ -19,7 +19,7 @@ $errors = $view->getVariable("errors");
           <input type="text" name="controllername" class="form-control" value="<?php echo $controller->getControllerName(); ?>" minlength="2" required="required">
           <input type="hidden" name="id" value="<?= $controller->getID() ?>">
         </div>
-        <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update Controller") ?></button>
+        <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update") ?></button>
         </div>
       </form>
 </div>

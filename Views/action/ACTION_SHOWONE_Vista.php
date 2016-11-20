@@ -16,13 +16,13 @@ $errors = $view->getVariable("errors");
         <table class="table">
         <thead>
           <tr class="active">
-            <th class="col-sm-2"><?= i18n("Identifier:")?></th>
+            <th class="col-sm-2"><?= i18n("Identifier")?></th>
             <td class="col-sm-10"><?= $action->getID() ?></td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th><?= i18n("Action:")?></th>
+            <th><?= i18n("Action")?></th>
             <td><?= $action->getActionName() ?></td>
           </tr>
         </tbody>

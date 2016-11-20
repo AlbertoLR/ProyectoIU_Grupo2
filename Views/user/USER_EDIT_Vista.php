@@ -88,7 +88,7 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
            <textarea name="comentario" rows="5" class="form-control"><?= $user->getComentario()?></textarea>
         </div>
         <input type="hidden" name="id" value="<?= $user->getID() ?>">
-        <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update Controller") ?></button>
+        <button type="submit" name="submit"class="btn btn-default"><?= i18n("Update") ?></button>
       </form>
       </div>
 </div>

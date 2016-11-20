@@ -12,12 +12,13 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
+        <h1><?= i18n("List of Deleted Users")?></h1>
 <table class="table">
       <thead>
         <tr>
           <th>#</th>
-          <th>Username</th>
-          <th>Profile</th>
+          <th><?= i18n("Username") ?></th>
+          <th><?= i18n("Profile") ?></th>
           <th style="width: 72px;"></th>
         </tr>
       </thead>

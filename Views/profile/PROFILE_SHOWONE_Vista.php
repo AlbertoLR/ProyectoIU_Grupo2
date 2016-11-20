@@ -12,18 +12,18 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
-        <h1><?= i18n("Action")?></h1>
+        <h1><?= i18n("Profile")?></h1>
         <table class="table">
         <thead>
           <tr class="active">
-            <th class="col-sm-2"><?= i18n("Identifier:")?></th>
+            <th class="col-sm-2"><?= i18n("Identifier")?></th>
             <td class="col-sm-10"><?= $profile->getID() ?></td>
 
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th><?= i18n("Action:")?></th>
+            <th><?= i18n("Profile")?></th>
             <td><?= $profile->getProfileName() ?></td>
           </tr>
         </tbody>

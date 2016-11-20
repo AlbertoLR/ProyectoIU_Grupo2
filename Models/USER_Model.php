@@ -82,11 +82,6 @@ class USER_Model {
 
     //Realizarase borrado loxico
     public function delete(User $user){
-        /*
-        $sql = $this->db->prepare("DELETE FROM user where id=?");
-        $sql->execute(array($user->getID()));
-        */
-
         $user->setActivo(FALSE);
         $this->update($user);
     }
@@ -120,7 +115,7 @@ class USER_Model {
             return false;
         }
 
-        $sql = $this->db->prepare("SELECT count(username) FROM user where username=? and passwd=?");
+        $sql = $this->db->prepare("SELECT count(username) FROM user where username=? and passwd=? and activo=TRUE");
         $sql->execute(array($username, $passwd));
 
         if ($sql->fetchColumn() > 0) {

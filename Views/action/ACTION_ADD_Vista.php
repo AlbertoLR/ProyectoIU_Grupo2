@@ -15,7 +15,7 @@ $errors = $view->getVariable("errors");
       <h1><?= i18n("Create Action")?></h1>
       <form action="index.php?controller=action&amp;action=add" method="POST">
       <div class="form-group">
-        <label><?= i18n("Action Name") ?>:</label>
+        <label><?= i18n("Action") ?>:</label>
          <input type="text" name="actionname" class="form-control">
       </div>
         <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>

@@ -17,12 +17,13 @@ $errors = $view->getVariable("errors");
 
 <div class="jumbotron">
     <div class="container">
-	<a href="index.php?controller=user&amp;action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create User</a>
-    <a href="index.php?controller=userperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Manage Permissions</a>
-    <a href="index.php?controller=user&amp;action=showdeleted" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> View Deleted Users</a>
+    <h1><?= i18n("List of Users") ?></h1>
+	<a href="index.php?controller=user&amp;action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create User") ?></a>
+    <a href="index.php?controller=userperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Manage Permissions") ?></a>
+    <a href="index.php?controller=user&amp;action=showdeleted" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("View Deleted Users") ?></a>
     <form action="index.php?controller=user&amp;action=showone" method="POST">
     <div class=" tt-dropdown-menu .tt-menu form-group top-buffer">
-	   Search: <input type="text" name="id" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false">
+	   <?= i18n("Search") ?>: <input type="text" name="id" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false">
     <div>
     </form>
 
@@ -30,8 +31,8 @@ $errors = $view->getVariable("errors");
       <thead>
         <tr>
           <th>#</th>
-          <th>Username</th>
-          <th>Profile</th>
+          <th><?= i18n("Username") ?></th>
+          <th><?= i18n("Profile") ?></th>
           <th style="width: 72px;"></th>
         </tr>
       </thead>

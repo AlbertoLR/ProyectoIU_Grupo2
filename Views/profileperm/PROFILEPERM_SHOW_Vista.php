@@ -15,6 +15,8 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
     <div class="container">
 
+	<h1><?= i18n("List of User Permissions")?></h1>
+	
         <form class="top-buffer" action="index.php?controller=profileperm&amp;action=add" method="POST">
         Profile: <select name="profile">
         <option value="" selected></option>
