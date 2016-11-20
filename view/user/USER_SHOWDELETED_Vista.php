@@ -29,7 +29,7 @@ $errors = $view->getVariable("errors");
           <td><?php echo $user->getProfile(); ?></td>
           <td>
               <a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $user->getID();  ?>"><i class="fa fa-id-card" aria-hidden="true"></i></a>
-              <a href="index.php?controller=user&amp;action=update&amp;id=<?php echo $user->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
+              <a href="index.php?controller=user&amp;action=edit&amp;id=<?php echo $user->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
               <a href="index.php?controller=user&amp;action=recovery&amp;id=<?php echo $user->getID();  ?>" role="button" data-toggle="modal"><i class="fa fa-undo" aria-hidden="true"></i></a>
           </td>
         </tr>
