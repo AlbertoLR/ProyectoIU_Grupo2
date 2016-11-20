@@ -8,7 +8,7 @@ $(document).ready(function(){
         local: users
     });
 
-    $('.search-typeahead').typeahead({
+    $('.typeahead').typeahead({
         hint: true,
         highlight: true,
         minLength: 1
