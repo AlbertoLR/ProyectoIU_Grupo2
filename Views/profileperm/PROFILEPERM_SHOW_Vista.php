@@ -15,16 +15,16 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
     <div class="container">
 
-	<h1><?= i18n("List of User Permissions")?></h1>
+	<h1><?= i18n("List of Profile Permissions")?></h1>
 	
         <form class="top-buffer" action="index.php?controller=profileperm&amp;action=add" method="POST">
-        Profile: <select name="profile">
+        <?= i18n("Profile")?>: <select name="profile">
         <option value="" selected></option>
         <?php foreach($profiles as $profile) {?>
             <option value="<?= $profile->getID()?>"><?= $profile->getProfileName()?></option>
         <?php }?>
         </select>
-        Permission: <select name="permission">
+        <?= i18n("Permission")?>: <select name="permission">
         <option value="" selected></option>
         <?php foreach($permissions as $permission) {?>
         <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>

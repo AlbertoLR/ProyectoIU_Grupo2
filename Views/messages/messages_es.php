@@ -69,5 +69,6 @@
     "List of Actions" => "Listado de Acciones",
     "Create Action" => "Crear Acciones",
     "Language" => "Idioma",
+    "List of Profile Permissions" => "Listado de Permisos de Perfiles",
   )
 ?>
