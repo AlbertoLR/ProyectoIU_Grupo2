@@ -167,31 +167,24 @@ class USER_Controller extends BaseController {
         $this->view->render("user", "USER_ADD_Vista");
     }
 
-
     public function edit() {
         if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "edit")) {
             $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
             $this->view->redirect("user", "login");
         }
-
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An user id is mandatory");
         }
-
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
-
         if ($user == NULL) {
             throw new Exception("no such user with id: ".$userid);
         }
-
         if (isset($_POST["submit"])) {
-
 		  $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
           $folder = $_SERVER['DOCUMENT_ROOT'] . '/pictures/';
-
           if($image_size < 100000000 ){ /*100MB*/
             if($image_type == ("image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif")){
             move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
@@ -205,7 +198,6 @@ class USER_Controller extends BaseController {
           $errors["general"] = "Image too large";
           $this->view->setVariable("errors", $errors);
         }
-
           if (empty($_POST["profile"])) {
               $user->setProfile(NULL);
           } else {
@@ -229,7 +221,6 @@ class USER_Controller extends BaseController {
             $user->setActivo(FALSE);
           }
           $user->setPasswd($_POST["passwd"]);
-
             try {
                 if ($user->getUsername() == $_POST["username"]){
                     $user->checkIsValidForCreate();
@@ -260,7 +251,6 @@ class USER_Controller extends BaseController {
                 $this->view->setVariable("errors", $errors);
             }
         }
-
         $profileMapper = new PROFILE_Model();
         $profiles = $profileMapper->fetch_all();
         $this->view->setVariable("user", $user);
