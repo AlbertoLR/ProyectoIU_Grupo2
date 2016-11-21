@@ -1041,8 +1041,8 @@ modify `id` int(11) not null auto_increment,auto_increment=31;
 --
 alter table `actividad`
 add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`)  on delete cascade on update cascade,
-add constraint `fk_actividad_descuento1` foreign key (`descuento_id`) references `descuento` (`id`) o on delete cascade on update cascade,
-add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `espacio` (`id`)  on delete no cascade update cascade;
+add constraint `fk_actividad_descuento1` foreign key (`descuento_id`) references `descuento` (`id`)  on delete cascade on update cascade,
+add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `espacio` (`id`)  on delete cascade on update cascade;
 
 --
 -- constraints for table `alerta`
@@ -1087,7 +1087,7 @@ add constraint `fk_descuento_categoria1` foreign key (`categoria_id`) references
 alter table `documento`
 add constraint `dni` foreign key (`dni`) references `user` (`dni`) on delete cascade on update cascade,
 add constraint `dni_c` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade,
-add constraint `id_inscripcion` foreign key (`id_inscripcion`) references `inscripcion` (`id`) on delete no cascade on update no cascade,
+add constraint `id_inscripcion` foreign key (`id_inscripcion`) references `inscripcion` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `empleado_mira`
