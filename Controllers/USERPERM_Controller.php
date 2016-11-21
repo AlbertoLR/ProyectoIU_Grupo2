@@ -30,10 +30,7 @@ class USERPERM_Controller extends BaseController {
     }
 
     public function show(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "userperm", "show")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("userperm", "show", $this->currentUserId);
         
         $users = $this->userMapper->fetch_all();
         $permissions = $this->permissionMapper->fetch_all();
@@ -45,10 +42,7 @@ class USERPERM_Controller extends BaseController {
     }
 
     public function add(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "userperm", "add")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("userperm", "add", $this->currentUserId);
     
         $userperm = new UserPerm();
     
@@ -78,10 +72,7 @@ class USERPERM_Controller extends BaseController {
     }
 
     public function delete() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "userperm", "delete")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("userperm", "delete", $this->currentUserId);
         
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");

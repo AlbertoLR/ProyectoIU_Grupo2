@@ -67,10 +67,14 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
         <div class="form-group">
           <label><?= i18n("Contract") ?>:</label>
           <select name="tipo_contrato" class="form-control">
-            <option value="Indefinido">Indefinido</option>
-            <option value="Temporal">Temporal</option>
-            <option value="Para la formacion y el aprendizaje">Para la formación y el aprendizaje</option>
-            <option value="Practicas">Prácticas</option>
+	      <?php $contratos = array("Indefinido", "Temporal", "Para la formacion y el aprendizaje", "Practicas") ?>
+	      <?php foreach($contratos as $contrato){ ?>
+		  <?php if ($contrato == $user->getTipoContrato()): ?>
+		      <option value ="<?= $contrato ?>" selected><?= $contrato ?></option>
+		  <?php else: ?>
+		      <option value ="<?= $contrato ?>"><?= $contrato ?></option>
+		  <?php endif ?>
+	      <?php } ?>
           </select>
         </div>
         <div class="form-group">
@@ -80,8 +84,11 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
         <div class="form-group">
           <label><?= i18n("Operating") ?>:</label>
           <select name="activo" class="form-control">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
+	      <?php if ($user->getActivo() == TRUE): ?>
+		  <option value="Yes" <?php echo "selected" ?>>Yes</option>
+		  <?php else: ?>
+		  <option value="No" <?php echo "selected" ?>>No</option>
+		  <?php endif ?>
           </select>
         </div>
         <div class="form-group">

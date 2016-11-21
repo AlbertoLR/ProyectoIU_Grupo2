@@ -30,10 +30,7 @@ class PROFILEPERM_Controller extends BaseController {
     }
 
     public function show(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profileperm", "show")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("profileperm", "show", $this->currentUserId);
         
         $profiles = $this->profileMapper->fetch_all();
         $permissions = $this->permissionMapper->fetch_all();
@@ -45,10 +42,7 @@ class PROFILEPERM_Controller extends BaseController {
     }
 
     public function add(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profileperm", "add")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("profileperm", "add", $this->currentUserId);
     
         $profileperm = new ProfilePerm();
     
@@ -77,10 +71,7 @@ class PROFILEPERM_Controller extends BaseController {
     }
 
     public function delete() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "profileperm", "delete")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("profileperm", "delete", $this->currentUserId);
         
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");

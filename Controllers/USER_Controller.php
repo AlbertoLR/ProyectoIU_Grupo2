@@ -23,8 +23,6 @@ class USER_Controller extends BaseController {
                 $user = $this->userMapper->fetch_by_username($_POST["username"]);
                 $_SESSION["currentuser"] = $user->getUsername();
                 $_SESSION["currentuserid"] = $user->getID();
-                $_SESSION["currentuserprofile"] = $user->getProfile();
-                $_SESSION["usercontrollers"] = $this->user_controllers($user);
                 $this->view->redirect("user", "login");
             }else{
                 $errors = array();
@@ -33,15 +31,12 @@ class USER_Controller extends BaseController {
             }
         }
 
-        $this->view->setVariable("user_controllers", $this->currentUserControllers); 
+        $this->view->setVariable("user_controllers", $this->user_controllers($this->currentUserId)); 
         $this->view->render("user", "USER_LOGIN_Vista");
     }
 
     public function show(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "show")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("user", "show", $this->currentUserId);
 
         $users = $this->userMapper->fetch_all();
         $users_json = json_encode($this->users_to_json($users));
@@ -52,10 +47,7 @@ class USER_Controller extends BaseController {
 
     //Esta accion valida os mesmos permisos que show, parece loxico
     public function showdeleted(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "show")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("user", "show", $this->currentUserId);
 
         $users = $this->userMapper->fetch_all(0);
         $this->view->setVariable("users", $users);
@@ -63,10 +55,7 @@ class USER_Controller extends BaseController {
     }
 
     public function showone(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "showone")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("user", "showone", $this->currentUserId);
 
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An user id is mandatory");
@@ -84,10 +73,7 @@ class USER_Controller extends BaseController {
     }
 
     public function add(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "add")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("user", "add", $this->currentUserId);
 
         $user = new User();
 
@@ -168,10 +154,8 @@ class USER_Controller extends BaseController {
     }
 
     public function edit() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "edit")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("user", "edit", $this->currentUserId);
+        
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An user id is mandatory");
         }
@@ -259,10 +243,7 @@ class USER_Controller extends BaseController {
     }
 
     public function delete() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "delete")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("user", "delete", $this->currentUserId);
 
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
@@ -289,10 +270,7 @@ class USER_Controller extends BaseController {
     //Para recuperar un usuario dado de baixa previamente
     //checkeanse mesmos permisos que delete
     public function recovery() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "user", "delete")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("user", "delete", $this->currentUserId);
 
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
@@ -337,8 +315,8 @@ class USER_Controller extends BaseController {
         return $users_json;
     }
 
-    private function user_controllers($user){
-        return $this->checkPerms->user_controllers($user);
+    private function user_controllers($userid){
+        return $this->checkPerms->user_controllers($userid);
     }
 
 }

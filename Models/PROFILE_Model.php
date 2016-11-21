@@ -42,7 +42,7 @@ class PROFILE_Model {
     }
 
     public function update(Profile $profile){
-        $sql = $this->db-prepare("UPDATE profile SET name=? where id=?");
+        $sql = $this->db->prepare("UPDATE profile SET name=? where id=?");
         $sql->execute(array($profile->getProfileName(), $profile->getID()));
     }
     

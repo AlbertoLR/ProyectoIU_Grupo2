@@ -58,11 +58,11 @@ class PERMISSION_Model {
     /**
      * Checkea se o usuario ou o perfil asociado teñen permisos para realizar un accion dun determinado controlador
      */
-    public function check($userid, $profile, $controllername, $actionname) {
-        return ($this->checkUserPerms($userid, $controllername, $actionname) || $this->checkProfilePerms($profile, $controllername, $actionname));
+    public function check($controllername, $actionname, $userid) {
+        return ($this->checkUserPerms($userid, $controllername, $actionname) || $this->checkProfilePerms($controllername, $actionname, $userid));
     }
 
-    private function checkUserPerms($userid, $controllername, $actionname) {
+    private function checkUserPerms($controllername, $actionname, $userid) {
         $join = "SELECT count(p.id) from permission as p, user_perms as u WHERE p.id=u.permission AND u.user=? AND p.controller=? AND p.action=?";
         $sql = $this->db->prepare($join);
         $sql->execute(array($userid, $controllername, $actionname));
@@ -75,10 +75,10 @@ class PERMISSION_Model {
         
     }
     
-    private function checkProfilePerms($profile, $controllername, $actionname) {
-        $join = "SELECT count(p.id) from permission as p, profile_perms as pp, profile as pr WHERE p.id=pp.permission AND pp.profile=pr.id AND pr.profilename=? AND p.controller=? AND p.action=?";
+    private function checkProfilePerms($controllername, $actionname, $userid) {
+        $join = "SELECT count(p.id) from user, profile, profile_perms as pp, permission as p WHERE profile.profilename=user.profile AND profile.id=pp.profile AND pp.permission=p.id AND user.id=? AND p.controller=? AND p.action=?";
         $sql = $this->db->prepare($join);
-        $sql->execute(array($profile, $controllername, $actionname));
+        $sql->execute(array($userid, $controllername, $actionname));
     
         if ($sql->fetchColumn() > 0) {
             return true;
@@ -87,16 +87,16 @@ class PERMISSION_Model {
         return false;
     }
 
-    public function user_controllers(User $user){
+    public function user_controllers($userid){
         $join_user = "SELECT p.controller as controller from user_perms as u, permission as p WHERE u.permission=p.id AND u.user=?";
-        $join_profile = "SELECT p.controller as controller from profile_perms as pp, permission as p, profile WHERE pp.permission=p.id and pp.profile=profile.id AND profile.profilename=?";
+        $join_profile = "SELECT p.controller as controller from profile_perms as pp, permission as p, profile, user WHERE pp.permission=p.id and pp.profile=profile.id AND profile.profilename=user.profile AND user.id=?";
 
         $sql_user = $this->db-> prepare($join_user);
-        $sql_user->execute(array($user->getID()));
+        $sql_user->execute(array($userid));
         $user_controllers = $sql_user->fetchAll(PDO::FETCH_ASSOC);
 
         $sql_profile = $this->db->prepare($join_profile);
-        $sql_profile->execute(array($user->getProfile()));
+        $sql_profile->execute(array($userid));
         $profile_controllers = $sql_profile->fetchAll(PDO::FETCH_ASSOC);
 
         $controllers = array();

@@ -6,12 +6,10 @@ require_once(__DIR__."/../Models/PERMISSION_Model.php");
 
 class BaseController {
 
-    protected $view;  
+    protected $view;
+    protected $checkPerms;
     protected $currentUser;
     protected $currentUserId;
-    protected $currentUserProfile;
-    protected $currentUserControllers;
-    protected $checkPerms;
   
     public function __construct() {
         $this->view = ViewManager::getInstance();
@@ -30,13 +28,13 @@ class BaseController {
         if(isset($_SESSION["currentuserid"])) {
             $this->currentUserId = $_SESSION["currentuserid"];
         }
+        
+    }
 
-        if(isset($_SESSION["currentuserprofile"])) {
-            $this->currentUserProfile = $_SESSION["currentuserprofile"];
-        }
-
-        if(isset($_SESSION["usercontrollers"])) {
-            $this->currentUserControllers = $_SESSION["usercontrollers"];
+    protected function checkPerms($controller, $action, $userid){
+        if (!$this->checkPerms->check($controller, $action, $userid)) {
+            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
+            $this->view->redirect("user", "login");
         }
     }
 }

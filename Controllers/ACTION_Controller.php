@@ -16,10 +16,7 @@ class ACTION_Controller extends BaseController {
     }
 
     public function show(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "show")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("action", "show", $this->currentUserId);
         
         $actions = $this->actionMapper->fetch_all();
         $this->view->setVariable("actions", $actions);
@@ -27,10 +24,7 @@ class ACTION_Controller extends BaseController {
     }
 
     public function showone(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "showone")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("action", "showone", $this->currentUserId);
         
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An action id is mandatory");
@@ -48,10 +42,7 @@ class ACTION_Controller extends BaseController {
     }
 
     public function add(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "add")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("action", "add", $this->currentUserId);
     
         $action = new Action();
     
@@ -83,10 +74,7 @@ class ACTION_Controller extends BaseController {
 
 
     public function edit() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "edit")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("action", "edit", $this->currentUserId);
         
         if (!isset($_REQUEST["id"])) {
             throw new Exception("An action id is mandatory");
@@ -124,10 +112,7 @@ class ACTION_Controller extends BaseController {
     }
 
     public function delete() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "action", "delete")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("action", "delete", $this->currentUserId); 
         
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");

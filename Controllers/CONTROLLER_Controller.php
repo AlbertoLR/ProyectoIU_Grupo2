@@ -16,10 +16,7 @@ class CONTROLLER_Controller extends BaseController {
     }
 
     public function show(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "controller", "show")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("controller", "show", $this->currentUserId);
         
         $controllers = $this->controllerMapper->fetch_all();
         $this->view->setVariable("controllers", $controllers);
@@ -27,10 +24,7 @@ class CONTROLLER_Controller extends BaseController {
     }
 
     public function showone(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "controller", "showone")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("controller", "showone", $this->currentUserId);
         
         if (!isset($_REQUEST["id"])) {
             throw new Exception("A controller id is mandatory");
@@ -48,10 +42,7 @@ class CONTROLLER_Controller extends BaseController {
     }
 
     public function add(){
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "controller", "add")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("controller", "add", $this->currentUserId);
     
         $controller = new Controller();
     
@@ -81,10 +72,7 @@ class CONTROLLER_Controller extends BaseController {
     }
 
     public function edit() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "controller", "edit")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("controller", "edit", $this->currentUserId);
         
         if (!isset($_REQUEST["id"])) {
             throw new Exception("A Controller id is mandatory");
@@ -122,10 +110,7 @@ class CONTROLLER_Controller extends BaseController {
     }
 
     public function delete() {
-        if (!$this->checkPerms->check($this->currentUserId, $this->currentUserProfile, "controller", "delete")) {
-            $this->view->setFlash(sprintf(i18n("You don't have permissions here.")));
-            $this->view->redirect("user", "login");
-        }
+        $this->checkPerms("controller", "delete", $this->currentUserId);
         
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
