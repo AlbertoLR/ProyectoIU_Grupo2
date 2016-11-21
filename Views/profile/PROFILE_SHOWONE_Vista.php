@@ -23,7 +23,7 @@ $errors = $view->getVariable("errors");
         </thead>
         <tbody>
           <tr>
-            <th><?= i18n("Profile")?></th>
+            <th><?= i18n("Name")?></th>
             <td><?= $profile->getProfileName() ?></td>
           </tr>
         </tbody>

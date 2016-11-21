@@ -22,7 +22,7 @@ $errors = $view->getVariable("errors");
         </thead>
         <tbody>
           <tr>
-        <th><?= i18n("Controller")?>:</th>
+        <th><?= i18n("Name")?>:</th>
             <td><?= $controller->getControllerName() ?></td>
           </tr>
         </tbody>

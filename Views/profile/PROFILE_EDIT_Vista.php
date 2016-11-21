@@ -15,7 +15,7 @@ $errors = $view->getVariable("errors");
       <h1><?= i18n("Update Profile")?></h1>
       <form action="index.php?controller=profile&amp;action=edit" method="POST">
         <div class="form-group">
-          <label><?= i18n("Action Name") ?>:</label>
+          <label><?= i18n("Name") ?>:</label>
           <input type="text" name="profilename" class="form-control" value="<?php echo $profile->getProfileName(); ?>" minlength="2" required="required">
           <input type="hidden" name="id" value="<?= $profile->getID() ?>">
         </div>

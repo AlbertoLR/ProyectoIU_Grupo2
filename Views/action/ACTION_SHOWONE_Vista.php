@@ -22,7 +22,7 @@ $errors = $view->getVariable("errors");
         </thead>
         <tbody>
           <tr>
-            <th><?= i18n("Action")?></th>
+            <th><?= i18n("Name")?></th>
             <td><?= $action->getActionName() ?></td>
           </tr>
         </tbody>
