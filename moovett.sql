@@ -1040,9 +1040,9 @@ modify `id` int(11) not null auto_increment,auto_increment=31;
 -- constraints for table `actividad`
 --
 alter table `actividad`
-add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`) on delete no action on update no action,
-add constraint `fk_actividad_descuento1` foreign key (`descuento_id`) references `descuento` (`id`) on delete no action on update no action,
-add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete no action on update no action;
+add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`)  on delete cascade on update cascade,
+add constraint `fk_actividad_descuento1` foreign key (`descuento_id`) references `descuento` (`id`) o on delete cascade on update cascade,
+add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `espacio` (`id`)  on delete no cascade update cascade;
 
 --
 -- constraints for table `alerta`
@@ -1051,126 +1051,126 @@ add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `es
 
 alter table `alerta`
 add constraint `fk_alerta_asistencia1` foreign key (`asistencia_id_cliente`, `asistencia_sesion_id`) references `asistencia` (`id_cliente`,`sesion_id`) on delete no action on update no action,
-add constraint `fk_alerta_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action,
-add constraint `fk_alerta_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
+add constraint `fk_alerta_pago1` foreign key (`pago_id`) references `pago` (`id`)  on delete cascade on update cascade,
+add constraint `fk_alerta_user1` foreign key (`user_id`) references `user` (`id`)  on delete cascade on update cascade;
 
 --
 -- constraints for table `aplica`
 --
 alter table `aplica`
-add constraint `fk_aplica_actividad1` foreign key (`actividad_id`) references `actividad` (`id`) on delete no action on update no action,
-add constraint `fk_aplica_descuento1` foreign key (`descuento_id`) references `descuento` (`id`) on delete no action on update no action;
+add constraint `fk_aplica_actividad1` foreign key (`actividad_id`) references `actividad` (`id`)  on delete cascade on update cascade,
+add constraint `fk_aplica_descuento1` foreign key (`descuento_id`) references `descuento` (`id`)  on delete cascade on update cascade;
 
 --
 -- constraints for table `asistencia`
 --
 
 alter table `asistencia`
-add constraint `fk_asistencia_sesion1` foreign key (`sesion_id`) references `sesion` (`id`) on delete no action on update no action,
-add constraint `id_cliente` foreign key (`id_cliente`) references `cliente` (`id`) on delete no action on update no action;
+add constraint `fk_asistencia_sesion1` foreign key (`sesion_id`) references `sesion` (`id`)  on delete cascade on update cascade,
+add constraint `id_cliente` foreign key (`id_cliente`) references `cliente` (`id`)  on delete cascade on update cascade;
 
 --
 -- constraints for table `caja`
 --
 alter table `caja`
-add constraint `fk_caja_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action;
+add constraint `fk_caja_pago1` foreign key (`pago_id`) references `pago` (`id`)  on delete cascade on update cascade;
 
 --
 -- constraints for table `descuento`
 --
 alter table `descuento`
-add constraint `fk_descuento_categoria1` foreign key (`categoria_id`) references `categoria` (`id`) on delete no action on update no action;
+add constraint `fk_descuento_categoria1` foreign key (`categoria_id`) references `categoria` (`id`)  on delete cascade on update cascade;
 
 --
 -- constraints for table `documento`
 --
 alter table `documento`
-add constraint `dni` foreign key (`dni`) references `user` (`dni`) on delete no action on update no action,
-add constraint `dni_c` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete no action on update no action,
-add constraint `id_inscripcion` foreign key (`id_inscripcion`) references `inscripcion` (`id`) on delete no action on update no action;
+add constraint `dni` foreign key (`dni`) references `user` (`dni`) on delete cascade on update cascade,
+add constraint `dni_c` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade,
+add constraint `id_inscripcion` foreign key (`id_inscripcion`) references `inscripcion` (`id`) on delete no cascade on update no cascade,
 
 --
 -- constraints for table `empleado_mira`
 --
 alter table `empleado_mira`
-add constraint `fk_empleado_mira_lesion_cliente1` foreign key (`lesion_cliente_id_lesion`, `lesion_cliente_cliente_id`) references `lesion_cliente` (`id_lesion`, `cliente_id`) on delete no action on update no action,
-add constraint `fk_empleado_mira_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
+add constraint `fk_empleado_mira_lesion_cliente1` foreign key (`lesion_cliente_id_lesion`, `lesion_cliente_cliente_id`) references `lesion_cliente` (`id_lesion`, `cliente_id`) on delete cascade on update cascade,
+add constraint `fk_empleado_mira_user1` foreign key (`user_id`) references `user` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `evento`
 --
 alter table `evento`
-add constraint `fk_evento_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete no action on update no action;
+add constraint `fk_evento_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `factura`
 --
 alter table `factura`
-add constraint `fk_factura_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action;
+add constraint `fk_factura_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `horas_posibles`
 --
 alter table `horas_posibles`
-add constraint `fk_horas_posibles_rango_horario1` foreign key (`rango_horario_id`) references `rango_horario` (`id`) on delete no action on update no action;
+add constraint `fk_horas_posibles_rango_horario1` foreign key (`rango_horario_id`) references `rango_horario` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `hora_fisio`
 --
 alter table `hora_fisio`
-add constraint `id_reserva` foreign key (`id_reserva`) references `reserva` (`id`) on delete no action on update no action;
+add constraint `id_reserva` foreign key (`id_reserva`) references `reserva` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `inscripcion`
 --
 alter table `inscripcion`
-add constraint `fk_inscripcion_cliente1` foreign key (`cliente_dni_c`) references `cliente` (`dni_c`) on delete no action on update no action,
-add constraint `fk_inscripcion_evento1` foreign key (`evento_id`) references `evento` (`id`) on delete no action on update no action,
-add constraint `fk_inscripcion_particular_externo1` foreign key (`particular_externo_id`) references `particular_externo` (`id`) on delete no action on update no action,
-add constraint `fk_inscripcion_reserva1` foreign key (`reserva_id`) references `reserva` (`id`) on delete no action on update no action,
-add constraint `fk_inscripcion_actividad1` foreign key (`id_actividad`) references `actividad` (`id`) on delete no action on update no action,
-add constraint `fk_inscripcion_descuento1` foreign key (`id_descuento`) references `descuento` (`id`) on delete no action on update no action;
+add constraint `fk_inscripcion_cliente1` foreign key (`cliente_dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade,
+add constraint `fk_inscripcion_evento1` foreign key (`evento_id`) references `evento` (`id`) on delete cascade on update cascade,
+add constraint `fk_inscripcion_particular_externo1` foreign key (`particular_externo_id`) references `particular_externo` (`id`) on delete cascade on update cascade,
+add constraint `fk_inscripcion_reserva1` foreign key (`reserva_id`) references `reserva` (`id`) on delete cascade on update cascade,
+add constraint `fk_inscripcion_actividad1` foreign key (`id_actividad`) references `actividad` (`id`) on delete cascade on update cascade,
+add constraint `fk_inscripcion_descuento1` foreign key (`id_descuento`) references `descuento` (`id`) on delete cascade on update cascade;
 
 
 --
 -- constraints for table `lesion_cliente`
 --
 alter table `lesion_cliente`
-add constraint `fk_lesion_cliente_cliente1` foreign key (`cliente_id`) references `cliente` (`id`) on delete no action on update no action,
-add constraint `id_lesion` foreign key (`id_lesion`) references `lesiones` (`id`) on delete no action on update no action;
+add constraint `fk_lesion_cliente_cliente1` foreign key (`cliente_id`) references `cliente` (`id`) on delete cascade on update cascade,
+add constraint `id_lesion` foreign key (`id_lesion`) references `lesiones` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `lesion_empleado`
 --
 alter table `lesion_empleado`
-add constraint `fk_lesion_empleado_lesiones1` foreign key (`lesiones_id`) references `lesiones` (`id`) on delete no action on update no action,
-add constraint `fk_lesion_empleado_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
+add constraint `fk_lesion_empleado_lesiones1` foreign key (`lesiones_id`) references `lesiones` (`id`) on delete cascade on update cascade,
+add constraint `fk_lesion_empleado_user1` foreign key (`user_id`) references `user` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `linea_factura`
 --
 alter table `linea_factura`
-add constraint `id_factura` foreign key (`id_factura`) references `factura` (`id`) on delete no action on update no action;
+add constraint `id_factura` foreign key (`id_factura`) references `factura` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `notificacion`
 --
 alter table `notificacion`
-add constraint `fk_notificacion_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
+add constraint `fk_notificacion_user1` foreign key (`user_id`) references `user` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `pago`
 --
 alter table `pago`
-add constraint `fk_pago_inscripcion1` foreign key (`inscripcion_id`) references `inscripcion` (`id`) on delete no action on update no action,
-add constraint `fk_pago_reserva1` foreign key (`reserva_id`) references `reserva` (`id`) on delete no action on update no action;
+add constraint `fk_pago_inscripcion1` foreign key (`inscripcion_id`) references `inscripcion` (`id`) on delete cascade on update cascade,
+add constraint `fk_pago_reserva1` foreign key (`reserva_id`) references `reserva` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `percibe`
 --
 alter table `percibe`
-add constraint `fk_percibe_alerta1` foreign key (`alerta_id`) references `alerta` (`id`) on delete no action on update no action,
-add constraint `fk_percibe_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
+add constraint `fk_percibe_alerta1` foreign key (`alerta_id`) references `alerta` (`id`) on delete cascade on update cascade,
+add constraint `fk_percibe_user1` foreign key (`user_id`) references `user` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `permission`
@@ -1190,44 +1190,44 @@ add constraint `profileid` foreign key (`profile`) references `profile` (`id`) o
 -- constraints for table `rango_horario`
 --
 alter table `rango_horario`
-add constraint `fk_rango_horario_horario_temporada1` foreign key (`horario_temporada_id`) references `horario_temporada` (`id`) on delete no action on update no action;
+add constraint `fk_rango_horario_horario_temporada1` foreign key (`horario_temporada_id`) references `horario_temporada` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `recibe`
 --
 alter table `recibe`
-add constraint `fk_recibe_cliente1` foreign key (`cliente_id`) references `cliente` (`id`) on delete no action on update no action,
-add constraint `fk_recibe_notificacion1` foreign key (`notificacion_id`) references `notificacion` (`id`) on delete no action on update no action;
+add constraint `fk_recibe_cliente1` foreign key (`cliente_id`) references `cliente` (`id`) on delete cascade on update cascade,
+add constraint `fk_recibe_notificacion1` foreign key (`notificacion_id`) references `notificacion` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `recibo`
 --
 alter table `recibo`
-add constraint `fk_recibo_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action;
+add constraint `fk_recibo_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `reserva`
 --
 alter table `reserva`
-add constraint `id_espacio` foreign key (`id_espacio`) references `espacio` (`id`) on delete no action on update no action,
-add constraint `fk_reserva_cliente1` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete no action on update no action;
+add constraint `id_espacio` foreign key (`id_espacio`) references `espacio` (`id`) on delete cascade on update cascade,
+add constraint `fk_reserva_cliente1` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade;
 
 --
 -- constraints for table `servicio`
 --
 alter table `servicio`
-add constraint `fk_servicio_cliente_externo1` foreign key (`cliente_externo_id`) references `cliente_externo` (`id`) on delete no action on update no action,
-add constraint `fk_servicio_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete no action on update no action;
+add constraint `fk_servicio_cliente_externo1` foreign key (`cliente_externo_id`) references `cliente_externo` (`id`) on delete cascade on update cascade,
+add constraint `fk_servicio_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `sesion`
 --
 alter table `sesion`
-add constraint `fk_sesion_actividad1` foreign key (`actividad_id`) references `actividad` (`id`) on delete no action on update no action,
-add constraint `fk_sesion_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete no action on update no action,
-add constraint `fk_sesion_evento1` foreign key (`evento_id`) references `evento` (`id`) on delete no action on update no action,
-add constraint `fk_sesion_horas_posibles1` foreign key (`horas_posibles_id`) references `horas_posibles` (`id`) on delete no action on update no action,
-add constraint `fk_sesion_user1` foreign key (`user_id`) references `user` (`id`) on delete no action on update no action;
+add constraint `fk_sesion_actividad1` foreign key (`actividad_id`) references `actividad` (`id`) on delete cascade on update cascade,
+add constraint `fk_sesion_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete cascade on update cascade,
+add constraint `fk_sesion_evento1` foreign key (`evento_id`) references `evento` (`id`) on delete cascade on update cascade,
+add constraint `fk_sesion_horas_posibles1` foreign key (`horas_posibles_id`) references `horas_posibles` (`id`) on delete cascade on update cascade,
+add constraint `fk_sesion_user1` foreign key (`user_id`) references `user` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `user`
@@ -1256,8 +1256,8 @@ insert into `profile` (`id`, `profilename`) values
 --
 
 insert into `user` (`id`, `dni`, `username`, `name`, `surname`, `fecha_nac`, `direccion`, `comentario`, `num_cuenta`, `tipo_contrato`, `email`, `foto`, `activo`, `passwd`, `profile`) values
-(1, '44849254q', 'admin', 'administrador', 'administrador', '2016-11-01', 'calle emilia pardo bazán 5,5ºd, ourense', 'un saludo', 'es648654684654', 'indefinido', 'jfsantiago2@gmail.com', '', 1, 'admin', 'admin'),
-(2, '44849299y', 'jfsantiago2', 'javier', 'fernández lópez', '2015-12-24', 'calle falsa 123, ourense', '', 'es9287423222928374923847', 'indefinido', 'jfsantiago2@esei.uvigo.es', '', 0, 'abc123.', 'admin');
+(1, '44849254Q', 'admin', 'administrador', 'administrador', '2016-11-01', 'Calle Emilia Pardo Bazán 5,5ºD, Ourense', 'Un saludo', 'ES9287423222928374923847', 'indefinido', 'usuario@gmail.com', '', 1, 'admin', 'admin'),
+(2, '44849299Y', 'usuario1', 'javier', 'Fernández López', '2015-12-24', 'Calle Falsa 123, Ourense', '', 'ES9287423222928374923847', 'indefinido', 'usuario@esei.uvigo.es', '', 0, 'abc123.', 'admin');
 
 
 --
