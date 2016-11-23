@@ -19,13 +19,11 @@ $errors = $view->getVariable("errors");
 	
         <form class="top-buffer" action="index.php?controller=profileperm&amp;action=add" method="POST">
         <?= i18n("Profile")?>: <select name="profile">
-        <option value="" selected></option>
         <?php foreach($profiles as $profile) {?>
             <option value="<?= $profile->getID()?>"><?= $profile->getProfileName()?></option>
         <?php }?>
         </select>
         <?= i18n("Permission")?>: <select name="permission">
-        <option value="" selected></option>
         <?php foreach($permissions as $permission) {?>
         <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
         <?php }?>

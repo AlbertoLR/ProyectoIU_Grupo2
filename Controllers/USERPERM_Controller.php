@@ -49,7 +49,12 @@ class USERPERM_Controller extends BaseController {
         if (isset($_POST["submit"])) {
             $userperm->setUser($_POST["user"]);
             $userperm->setPermission($_POST["permission"]);
-            try {
+            
+            if (empty($_POST["user"]) || empty($_POST["permission"])) {
+                $this->view->redirect("userperm", "show");
+            }
+            
+            try {                
                 if (!$this->userPermMapper->nameExists($_POST["user"], $_POST["permission"])){
                     
                     $this->userPermMapper->insert($userperm);

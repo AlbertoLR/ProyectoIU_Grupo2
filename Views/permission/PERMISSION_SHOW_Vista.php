@@ -21,14 +21,12 @@ $errors = $view->getVariable("errors");
         <h1><?= i18n("List of Controller Actions")?></h1>
         <form class="top-buffer" action="index.php?controller=permission&amp;action=add" method="POST">
         <?= i18n("Controller") ?>: <select name="controller">
-        <option value="" selected></option>
         <?php foreach($controllers as $controller) {?>
             <option value="<?= $controller->getControllerName()?>"><?= $controller->getControllerName()?></option>
         <?php }?>
         </select>
 
         <?= i18n("Action") ?>: <select name="action">
-        <option value="" selected></option>
         <?php foreach($actions as $action) {?>
             <option value="<?= $action->getActionName()?>"><?= $action->getActionName()?></option>
         <?php }?>

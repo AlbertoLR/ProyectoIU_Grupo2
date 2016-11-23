@@ -5,8 +5,6 @@ $view->setVariable("title", "Create User");
 $user = $view->getVariable("user");
 $profiles = $view->getVariable("profiles");
 $errors = $view->getVariable("errors");
-$date_array=getDate();
-$date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
 ?>
 
 <?= isset($errors["general"])?$errors["general"]:"" ?>
@@ -48,7 +46,7 @@ $date = $date_array['year']. "-" .$date_array['mon']. "-" .$date_array['mday'];
           </div>
           <div class="form-group">
             <label><?= i18n("Birthdate") ?>:</label>
-             <input type="date" name="fecha_nac" class="form-control"  max="<?= $date?>">
+             <input type="text" name="fecha_nac" class="form-control" placeholder="ej: 2015-12-15" id="datepicker">
           </div>
           <div class="form-group">
             <label><?= i18n("Adress") ?>:</label>

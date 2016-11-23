@@ -49,6 +49,11 @@ class PROFILEPERM_Controller extends BaseController {
         if (isset($_POST["submit"])) {
             $profileperm->setProfile($_POST["profile"]);
             $profileperm->setPermission($_POST["permission"]);
+
+            if (empty($_POST["profile"]) || empty($_POST["permission"])) {
+                $this->view->redirect("profileperm", "show");
+            }
+            
             try {
                 if (!$this->profilePermMapper->nameExists($_POST["profile"], $_POST["permission"])){
                     $this->profilePermMapper->insert($profileperm);

@@ -17,14 +17,12 @@ $errors = $view->getVariable("errors");
         <h1><?= i18n("List of User Permissions") ?></h1>
         <form action="index.php?controller=userperm&amp;action=add" method="POST">
         <?= i18n("User") ?>: <select name="user">
-        <option value="" selected></option>
         <?php foreach($users as $user) {?>
             <option value="<?= $user->getID()?>"><?= $user->getUsername()?></option>
         <?php }?>
         </select>
 
         <?= i18n("Permission") ?>: <select name="permission">
-        <option value="" selected></option>
         <?php foreach($permissions as $permission) {?>
         <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
         <?php }?>

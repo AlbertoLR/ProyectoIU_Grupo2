@@ -50,6 +50,11 @@ class PERMISSION_Controller extends BaseController {
         if (isset($_POST["submit"])) {
             $permission->setController($_POST["controller"]);
             $permission->setAction($_POST["action"]);
+
+            if (empty($_POST["controller"]) || empty($_POST["action"])) {
+                $this->view->redirect("permission", "show");
+            }
+            
             try {
                 if (!$this->permissionMapper->nameExists($_POST["controller"], $_POST["action"])){
                     $permission->checkIsValidForCreate();
