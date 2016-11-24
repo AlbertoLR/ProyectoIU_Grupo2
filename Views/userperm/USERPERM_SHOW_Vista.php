@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $view->setVariable("title", "Manage Permissions");
@@ -16,21 +16,21 @@ $errors = $view->getVariable("errors");
     <div class="container">
         <h1><?= i18n("List of User Permissions") ?></h1>
         <form action="index.php?controller=userperm&amp;action=add" method="POST">
-        <?= i18n("User") ?>: <select name="user">
+        <?= i18n("User") ?>: <select name="user" class="basic-s">
         <?php foreach($users as $user) {?>
             <option value="<?= $user->getID()?>"><?= $user->getUsername()?></option>
         <?php }?>
         </select>
 
-        <?= i18n("Permission") ?>: <select name="permission[]" multiple>
+        <?= i18n("Permission") ?>: <select  name="permission[]" multiple="multiple">
         <?php foreach($permissions as $permission) {?>
         <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
         <?php }?>
         </select>
-        
 	    <input type="submit" name="submit" value=<?= i18n("Submit") ?>>
         </form>
-        
+
+
 <table class="table">
       <thead>
         <tr>

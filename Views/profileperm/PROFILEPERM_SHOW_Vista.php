@@ -16,9 +16,9 @@ $errors = $view->getVariable("errors");
     <div class="container">
 
 	<h1><?= i18n("List of Profile Permissions")?></h1>
-	
+
         <form class="top-buffer" action="index.php?controller=profileperm&amp;action=add" method="POST">
-        <?= i18n("Profile")?>: <select name="profile">
+        <?= i18n("Profile")?>: <select name="profile" class="basic-s">
         <?php foreach($profiles as $profile) {?>
             <option value="<?= $profile->getID()?>"><?= $profile->getProfileName()?></option>
         <?php }?>
@@ -30,7 +30,7 @@ $errors = $view->getVariable("errors");
         </select>
 	       <button type="submit" name="submit" value="submit" class="btn btn-default"><?= i18n("Submit") ?></button>
         </form>
-        
+
 <table class="table">
       <thead>
         <tr>
