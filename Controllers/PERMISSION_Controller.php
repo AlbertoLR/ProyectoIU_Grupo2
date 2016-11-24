@@ -33,9 +33,13 @@ class PERMISSION_Controller extends BaseController {
     public function show(){
         $this->checkPerms("permission", "show", $this->currentUserId);
 
-        $permissions = $this->permissionMapper->fetch_all();
         $controllers = $this->controllerMapper->fetch_all();
         $actions = $this->actionMapper->fetch_all();
+        if (isset($_GET["orderby"])) {
+            $permissions = $this->permissionMapper->fetch_all($_GET["orderby"]);
+        } else {
+            $permissions = $this->permissionMapper->fetch_all();
+        }
         $this->view->setVariable("permissions", $permissions);
         $this->view->setVariable("controllers", $controllers);
         $this->view->setVariable("actions", $actions);
@@ -49,25 +53,28 @@ class PERMISSION_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
             $permission->setController($_POST["controller"]);
-            $permission->setAction($_POST["action"]);
+            //$permission->setAction($_POST["action"]);
 
             if (empty($_POST["controller"]) || empty($_POST["action"])) {
                 $this->view->redirect("permission", "show");
             }
 
             try {
-                if (!$this->permissionMapper->nameExists($_POST["controller"], $_POST["action"])){
-                    $permission->checkIsValidForCreate();
-                    $this->permissionMapper->insert($permission);
-
-                    $this->view->setFlash(sprintf(i18n("Permission successfully added.")));
-
-                    $this->view->redirect("permission", "show");
-                } else {
-                    $errors = array();
-	                $errors["general"] = i18n("Permission already exists");
-	                $this->view->setVariable("errors", $errors);
+                foreach ($_POST["action"] as $action){
+                    if (!$this->permissionMapper->nameExists($_POST["controller"], $action)){
+                        $permission->setAction($action);
+                        $permission->checkIsValidForCreate();
+                        $this->permissionMapper->insert($permission);
+                    } else {
+                        $errors = array();
+                        $errors["general"] = i18n("Permission already exists");
+                        $this->view->setVariable("errors", $errors);
+                    }
                 }
+
+                $this->view->setFlash(sprintf(i18n("Permission successfully added.")));
+                $this->view->redirect("permission", "show");
+                
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);

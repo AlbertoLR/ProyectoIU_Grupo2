@@ -26,7 +26,7 @@ $errors = $view->getVariable("errors");
         <?php }?>
         </select>
 
-        <?= i18n("Action") ?>: <select name="action">
+        <?= i18n("Action") ?>: <select name="action[]" multiple>
         <?php foreach($actions as $action) {?>
             <option value="<?= $action->getActionName()?>"><?= $action->getActionName()?></option>
         <?php }?>
@@ -38,9 +38,9 @@ $errors = $view->getVariable("errors");
 <table class="table">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Controller</th>
-          <th>Action</th>
+          <th><a href="index.php?controller=permission&amp;action=show&amp;orderby=id">#</a></th>
+          <th><a href="index.php?controller=permission&amp;action=show&amp;orderby=controller">Controller</a></th>
+          <th><a href="index.php?controller=permission&amp;action=show&amp;orderby=action">Action</a></th>
           <th style="width: 36px;"></th>
         </tr>
       </thead>

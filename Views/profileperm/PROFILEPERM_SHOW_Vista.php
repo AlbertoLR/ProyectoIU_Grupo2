@@ -23,7 +23,7 @@ $errors = $view->getVariable("errors");
             <option value="<?= $profile->getID()?>"><?= $profile->getProfileName()?></option>
         <?php }?>
         </select>
-        <?= i18n("Permission")?>: <select name="permission">
+        <?= i18n("Permission")?>: <select name="permission[]" multiple>
         <?php foreach($permissions as $permission) {?>
         <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
         <?php }?>
@@ -34,10 +34,10 @@ $errors = $view->getVariable("errors");
 <table class="table">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Profile</th>
-          <th>Controller</th>
-          <th>Action</th>
+          <th><a href="index.php?controller=profileperm&amp;action=show&amp;orderby=id">#</a></th>
+          <th><a href="index.php?controller=profileperm&amp;action=show&amp;orderby=profilename">Profile</a></th>
+          <th><a href="index.php?controller=profileperm&amp;action=show&amp;orderby=controller">Controller</a></th>
+          <th><a href="index.php?controller=profileperm&amp;action=show&amp;orderby=action">Action</a></th>
           <th style="width: 36px;"></th>
         </tr>
       </thead>

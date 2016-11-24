@@ -34,7 +34,12 @@ class USERPERM_Controller extends BaseController {
 
         $users = $this->userMapper->fetch_all();
         $permissions = $this->permissionMapper->fetch_all();
-        $userperms = $this->userPermMapper->fetch_all();
+
+        if (isset($_GET["orderby"])) {
+            $userperms = $this->userPermMapper->fetch_all($_GET["orderby"]);
+        } else {
+            $userperms = $this->userPermMapper->fetch_all();
+        }
         $this->view->setVariable("users", $users);
         $this->view->setVariable("permissions", $permissions);
         $this->view->setVariable("userperms", $userperms);
@@ -48,25 +53,26 @@ class USERPERM_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
             $userperm->setUser($_POST["user"]);
-            $userperm->setPermission($_POST["permission"]);
+            //$userperm->setPermission($_POST["permission"]);
 
             if (empty($_POST["user"]) || empty($_POST["permission"])) {
                 $this->view->redirect("userperm", "show");
             }
 
             try {
-                if (!$this->userPermMapper->nameExists($_POST["user"], $_POST["permission"])){
-
-                    $this->userPermMapper->insert($userperm);
-
-                    $this->view->setFlash(sprintf(i18n("User permission successfully added.")));
-
-                    $this->view->redirect("userperm", "show");
-                } else {
-                    $errors = array();
-	                $errors["general"] = "UserPerm already exists";
-	                $this->view->setVariable("errors", $errors);
+                foreach ($_POST["permission"] as $permission) {
+                    if (!$this->userPermMapper->nameExists($_POST["user"], $permission)){
+                        $userperm->setPermission($permission);
+                        $this->userPermMapper->insert($userperm);
+                    } else {
+                        $errors = array();
+                        $errors["general"] = "UserPerm already exists";
+                        $this->view->setVariable("errors", $errors);
+                    }
                 }
+
+                $this->view->setFlash(sprintf(i18n("User permission successfully added.")));
+                $this->view->redirect("userperm", "show");
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);

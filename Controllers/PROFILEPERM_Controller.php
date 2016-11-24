@@ -34,7 +34,11 @@ class PROFILEPERM_Controller extends BaseController {
 
         $profiles = $this->profileMapper->fetch_all();
         $permissions = $this->permissionMapper->fetch_all();
-        $profileperms = $this->profilePermMapper->fetch_all();
+        if (isset($_GET["orderby"])) {
+            $profileperms = $this->profilePermMapper->fetch_all($_GET["orderby"]);
+        } else {
+            $profileperms = $this->profilePermMapper->fetch_all();
+        }
         $this->view->setVariable("profiles", $profiles);
         $this->view->setVariable("permissions", $permissions);
         $this->view->setVariable("profileperms", $profileperms);
@@ -48,24 +52,25 @@ class PROFILEPERM_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
             $profileperm->setProfile($_POST["profile"]);
-            $profileperm->setPermission($_POST["permission"]);
+            //$profileperm->setPermission($_POST["permission"]);
 
             if (empty($_POST["profile"]) || empty($_POST["permission"])) {
                 $this->view->redirect("profileperm", "show");
             }
 
             try {
-                if (!$this->profilePermMapper->nameExists($_POST["profile"], $_POST["permission"])){
-                    $this->profilePermMapper->insert($profileperm);
-
-                    $this->view->setFlash(sprintf(i18n("Profile permission successfully added.")));
-
-                    $this->view->redirect("profileperm", "show");
-                } else {
-                    $errors = array();
-	                $errors["general"] = i18n("Profile permissions already exists");
-	                $this->view->setVariable("errors", $errors);
+                foreach($_POST["permission"] as $permission) {
+                    if (!$this->profilePermMapper->nameExists($_POST["profile"], $permission)){
+                        $profileperm->setPermission($permission);
+                        $this->profilePermMapper->insert($profileperm);
+                    } else {
+                        $errors = array();
+                        $errors["general"] = i18n("Profile permissions already exists");
+                        $this->view->setVariable("errors", $errors);
+                    }
                 }
+                $this->view->setFlash(sprintf(i18n("Profile permission successfully added.")));
+                $this->view->redirect("profileperm", "show");
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);

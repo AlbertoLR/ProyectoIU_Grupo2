@@ -22,7 +22,7 @@ $errors = $view->getVariable("errors");
         <?php }?>
         </select>
 
-        <?= i18n("Permission") ?>: <select name="permission">
+        <?= i18n("Permission") ?>: <select name="permission[]" multiple>
         <?php foreach($permissions as $permission) {?>
         <option value="<?= $permission->getID()?>"><?= $permission->getController()." ".$permission->getAction() ?></option>
         <?php }?>
@@ -34,10 +34,10 @@ $errors = $view->getVariable("errors");
 <table class="table">
       <thead>
         <tr>
-          <th>#</th>
-          <th><?= i18n("User") ?></th>
-          <th><?= i18n("Controller") ?></th>
-          <th><?= i18n("Action") ?></th>
+          <th><a href="index.php?controller=userperm&amp;action=show&amp;orderby=id">#</a></th>
+          <th><a href="index.php?controller=userperm&amp;action=show&amp;orderby=user"><?= i18n("User") ?></a></th>
+          <th><a href="index.php?controller=userperm&amp;action=show&amp;orderby=controller"><?= i18n("Controller") ?></a></th>
+          <th><a href="index.php?controller=userperm&amp;action=show&amp;orderby=action"><?= i18n("Action") ?></a></th>
           <th style="width: 36px;"></th>
         </tr>
       </thead>

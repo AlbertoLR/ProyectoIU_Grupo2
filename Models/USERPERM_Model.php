@@ -10,8 +10,8 @@ class USERPERM_Model {
         $this->db = PDOConnection::getInstance();
     }
 
-    public function fetch_all(){
-        $join = "SELECT user_perms.id as id, user.username as username, permission.controller as controller, permission.action as action FROM user_perms, user, permission WHERE user_perms.user = user.id AND user_perms.permission = permission.id ORDER BY username";
+    public function fetch_all($orderby ="username"){
+        $join = "SELECT user_perms.id as id, user.username as username, permission.controller as controller, permission.action as action FROM user_perms, user, permission WHERE user_perms.user = user.id AND user_perms.permission = permission.id ORDER BY ".htmlspecialchars($orderby);
         $sql = $this->db->prepare($join);
         $sql->execute();
         $userperms_db = $sql->fetchAll(PDO::FETCH_ASSOC);

@@ -10,8 +10,8 @@ class PERMISSION_Model {
         $this->db = PDOConnection::getInstance();
     }
 
-    public function fetch_all(){
-        $sql = $this->db->prepare("SELECT * FROM permission ORDER BY controller");
+    public function fetch_all($orderby = "controller"){
+        $sql = $this->db->prepare("SELECT * FROM permission ORDER BY ".htmlspecialchars($orderby));
         $sql->execute();
         $permissions_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 

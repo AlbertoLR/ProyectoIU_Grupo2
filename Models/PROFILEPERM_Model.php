@@ -10,8 +10,8 @@ class PROFILEPERM_Model {
         $this->db = PDOConnection::getInstance();
     }
 
-    public function fetch_all(){
-        $join = "SELECT profile_perms.id as id, profile.profilename as profilename, permission.controller as controller, permission.action as action FROM profile_perms, profile, permission WHERE profile_perms.profile = profile.id AND profile_perms.permission = permission.id ORDER BY profilename";
+    public function fetch_all($orderby = "profilename") {
+        $join = "SELECT profile_perms.id as id, profile.profilename as profilename, permission.controller as controller, permission.action as action FROM profile_perms, profile, permission WHERE profile_perms.profile = profile.id AND profile_perms.permission = permission.id ORDER BY ".htmlspecialchars($orderby);
         $sql = $this->db->prepare($join);
         $sql->execute();
         $profileperms_db = $sql->fetchAll(PDO::FETCH_ASSOC);
