@@ -6,9 +6,9 @@ require_once(__DIR__."/../Models/CONTROLLER_Model.php");
 require_once(__DIR__."/../Controllers/BaseController.php");
 
 class CONTROLLER_Controller extends BaseController {
-    
+
     private $controllerMapper;
-  
+
     public function __construct() {
         parent::__construct();
         $this->controllerMapper = new CONTROLLER_Model();
@@ -17,7 +17,7 @@ class CONTROLLER_Controller extends BaseController {
 
     public function show(){
         $this->checkPerms("controller", "show", $this->currentUserId);
-        
+
         $controllers = $this->controllerMapper->fetch_all();
         $this->view->setVariable("controllers", $controllers);
         $this->view->render("controller", "CONTROLLER_SHOW_Vista");
@@ -25,16 +25,16 @@ class CONTROLLER_Controller extends BaseController {
 
     public function showone(){
         $this->checkPerms("controller", "showone", $this->currentUserId);
-        
+
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("A controller id is mandatory");
+            throw new Exception(i18n("A controller id is mandatory"));
         }
 
         $controllerid = $_REQUEST["id"];
         $controller = $this->controllerMapper->fetch($controllerid);
-        
+
         if ($controller == NULL) {
-            throw new Exception("no such controller with id: ".$controllerid);
+            throw new Exception(i18n("No such controller with id: ").$controllerid);
         }
 
         $this->view->setVariable("controller", $controller);
@@ -43,26 +43,26 @@ class CONTROLLER_Controller extends BaseController {
 
     public function add(){
         $this->checkPerms("controller", "add", $this->currentUserId);
-    
+
         $controller = new Controller();
-    
-        if (isset($_POST["submit"])) { 
+
+        if (isset($_POST["submit"])) {
             $controller->setControllerName($_POST["controllername"]);
             try {
                 if (!$this->controllerMapper->nameExists($_POST["controllername"])){
                     $controller->checkIsValidForCreate();
                     $this->controllerMapper->insert($controller);
-	
+
                     $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully added."), $controller->getControllerName()));
-	
+
                     $this->view->redirect("controller", "show");
                 } else {
                     $errors = array();
-	                $errors["general"] = "Controller already exists";
+	                $errors["general"] = i18n("Controller already exists");
 	                $this->view->setVariable("errors", $errors);
                 }
-            }catch(ValidationException $ex) {      
-                $errors = $ex->getErrors();	
+            }catch(ValidationException $ex) {
+                $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
             }
         }
@@ -73,30 +73,30 @@ class CONTROLLER_Controller extends BaseController {
 
     public function edit() {
         $this->checkPerms("controller", "edit", $this->currentUserId);
-        
+
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("A Controller id is mandatory");
+            throw new Exception(i18n("A controller id is mandatory"));
         }
 
         $controllerid = $_REQUEST["id"];
         $controller = $this->controllerMapper->fetch($controllerid);
-    
+
         if ($controller == NULL) {
-            throw new Exception("no such controller with id: ".$controllerid);
+            throw new Exception(i18n("No such controller with id: ").$controllerid);
         }
-    
+
         if (isset($_POST["submit"])) {
             $controller->setControllerName($_POST["controllername"]);
-      
+
             try {
                 if (!$this->controllerMapper->nameExists($_POST["controllername"])){
                     $controller->checkIsValidForCreate();
-                    $this->controllerMapper->update($controller);                
+                    $this->controllerMapper->update($controller);
                     $this->view->setFlash(sprintf(i18n("Controller \"%s\" successfully updated."), $controller->getControllerName()));
                     $this->view->redirect("controller", "show");
                 } else {
                     $errors = array();
-	                $errors["general"] = "Controller already exists";
+	                $errors["general"] = i18n("Controller already exists");
 	                $this->view->setVariable("errors", $errors);
                 }
             } catch(ValidationException $ex) {
@@ -106,21 +106,21 @@ class CONTROLLER_Controller extends BaseController {
         }
 
         $this->view->setVariable("controller", $controller);
-        $this->view->render("controller", "CONTROLLER_EDIT_Vista");    
+        $this->view->render("controller", "CONTROLLER_EDIT_Vista");
     }
 
     public function delete() {
         $this->checkPerms("controller", "delete", $this->currentUserId);
-        
+
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("id is mandatory");
+            throw new Exception(i18n("Id is mandatory"));
         }
-    
+
         $controllerid = $_REQUEST["id"];
         $controller = $this->controllerMapper->fetch($controllerid);
-    
+
         if ($controller == NULL) {
-            throw new Exception("no such controller with id: ".$controllerid);
+            throw new Exception(i18n("No such controller with id: ").$controllerid);
         }
 
         if (isset($_POST["submit"])) {
@@ -133,5 +133,5 @@ class CONTROLLER_Controller extends BaseController {
         $this->view->setVariable("controller", $controller);
         $this->view->render("controller", "CONTROLLER_DELETE_Vista");
     }
-  
+
 }

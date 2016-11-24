@@ -16,11 +16,11 @@ require_once(__DIR__."/../Controllers/BaseController.php");
  * Esta taboa relacion perfil con permisos.
  */
 class PROFILEPERM_Controller extends BaseController {
-    
+
     private $profileMapper;
     private $permissionMapper;
     private $profilePermMapper;
-  
+
     public function __construct() {
         parent::__construct();
         $this->profileMapper = new PROFILE_Model();
@@ -31,7 +31,7 @@ class PROFILEPERM_Controller extends BaseController {
 
     public function show(){
         $this->checkPerms("profileperm", "show", $this->currentUserId);
-        
+
         $profiles = $this->profileMapper->fetch_all();
         $permissions = $this->permissionMapper->fetch_all();
         $profileperms = $this->profilePermMapper->fetch_all();
@@ -43,9 +43,9 @@ class PROFILEPERM_Controller extends BaseController {
 
     public function add(){
         $this->checkPerms("profileperm", "add", $this->currentUserId);
-    
+
         $profileperm = new ProfilePerm();
-    
+
         if (isset($_POST["submit"])) {
             $profileperm->setProfile($_POST["profile"]);
             $profileperm->setPermission($_POST["permission"]);
@@ -53,21 +53,21 @@ class PROFILEPERM_Controller extends BaseController {
             if (empty($_POST["profile"]) || empty($_POST["permission"])) {
                 $this->view->redirect("profileperm", "show");
             }
-            
+
             try {
                 if (!$this->profilePermMapper->nameExists($_POST["profile"], $_POST["permission"])){
                     $this->profilePermMapper->insert($profileperm);
-                    
-                    $this->view->setFlash(sprintf(i18n("Profile Permission \"%s\" \"%s\" successfully added."), $profileperm->getProfile(), $profileperm->getPermission()));
-	
+
+                    $this->view->setFlash(sprintf(i18n("Profile permission successfully added.")));
+
                     $this->view->redirect("profileperm", "show");
                 } else {
                     $errors = array();
-	                $errors["general"] = "ProfilePerm already exists";
+	                $errors["general"] = i18n("Profile permissions already exists");
 	                $this->view->setVariable("errors", $errors);
                 }
-            }catch(ValidationException $ex) { 
-                $errors = $ex->getErrors();	
+            }catch(ValidationException $ex) {
+                $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
             }
         }
@@ -77,22 +77,22 @@ class PROFILEPERM_Controller extends BaseController {
 
     public function delete() {
         $this->checkPerms("profileperm", "delete", $this->currentUserId);
-        
+
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("id is mandatory");
+            throw new Exception(i18n("Id is mandatory"));
         }
-    
+
         $profilepermid = $_REQUEST["id"];
         $profileperm = $this->profilePermMapper->fetch($profilepermid);
-    
+
         if ($profileperm == NULL) {
-            throw new Exception("no such profile perm with id: ".$profilepermid);
+            throw new Exception(i18n("No such profile permission with id: ").$profilepermid);
         }
 
         if (isset($_POST["submit"])) {
             if ($_POST["submit"] == "yes"){
                 $this->profilePermMapper->delete($profileperm);
-                $this->view->setFlash(sprintf(i18n("profilePerm \"%s\" \"%s\" successfully deleted."), $profileperm->getProfile(), $profileperm->getPermission()));
+                $this->view->setFlash(sprintf(i18n("Profile permissions successfully deleted.")));
             }
             $this->view->redirect("profileperm", "show");
         }

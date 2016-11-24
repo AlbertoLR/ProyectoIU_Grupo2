@@ -17,11 +17,11 @@ require_once(__DIR__."/../Controllers/BaseController.php");
  * a usuarios e perfis de usuario.
  */
 class PERMISSION_Controller extends BaseController {
-    
+
     private $controllerMapper;
     private $actionMapper;
     private $permissionMapper;
-  
+
     public function __construct() {
         parent::__construct();
         $this->controllerMapper = new CONTROLLER_Model();
@@ -32,7 +32,7 @@ class PERMISSION_Controller extends BaseController {
 
     public function show(){
         $this->checkPerms("permission", "show", $this->currentUserId);
-        
+
         $permissions = $this->permissionMapper->fetch_all();
         $controllers = $this->controllerMapper->fetch_all();
         $actions = $this->actionMapper->fetch_all();
@@ -44,9 +44,9 @@ class PERMISSION_Controller extends BaseController {
 
     public function add(){
         $this->checkPerms("permission", "add", $this->currentUserId);
-    
+
         $permission = new Permission();
-    
+
         if (isset($_POST["submit"])) {
             $permission->setController($_POST["controller"]);
             $permission->setAction($_POST["action"]);
@@ -54,22 +54,22 @@ class PERMISSION_Controller extends BaseController {
             if (empty($_POST["controller"]) || empty($_POST["action"])) {
                 $this->view->redirect("permission", "show");
             }
-            
+
             try {
                 if (!$this->permissionMapper->nameExists($_POST["controller"], $_POST["action"])){
                     $permission->checkIsValidForCreate();
                     $this->permissionMapper->insert($permission);
-	
-                    $this->view->setFlash(sprintf(i18n("Permission \"%s\" \"%s\" successfully added."), $permission->getController(), $permission->getAction()));
-	
+
+                    $this->view->setFlash(sprintf(i18n("Permission successfully added.")));
+
                     $this->view->redirect("permission", "show");
                 } else {
                     $errors = array();
-	                $errors["general"] = "Permission already exists";
+	                $errors["general"] = i18n("Permission already exists");
 	                $this->view->setVariable("errors", $errors);
                 }
-            }catch(ValidationException $ex) {      
-                $errors = $ex->getErrors();	
+            }catch(ValidationException $ex) {
+                $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
             }
         }
@@ -79,27 +79,27 @@ class PERMISSION_Controller extends BaseController {
 
     public function delete() {
         $this->checkPerms("permission", "delete", $this->currentUserId);
-        
+
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("id is mandatory");
+            throw new Exception(i18n("Id is mandatory"));
         }
-    
+
         $permissionid = $_REQUEST["id"];
         $permission = $this->permissionMapper->fetch($permissionid);
-    
+
         if ($permission == NULL) {
-            throw new Exception("no such permission with id: ".$permissionid);
+            throw new Exception(i18n("No such permission with id: ").$permissionid);
         }
 
         if (isset($_POST["submit"])) {
             if ($_POST["submit"] == "yes"){
                 $this->permissionMapper->delete($permission);
-                $this->view->setFlash(sprintf(i18n("Permission \"%s\" \"%s\" successfully deleted."), $permission->getController(), $permission->getAction()));
+                $this->view->setFlash(sprintf(i18n("Permission successfully deleted.")));
             }
             $this->view->redirect("permission", "show");
         }
         $this->view->setVariable("permission", $permission);
         $this->view->render("permission", "PERMISSION_DELETE_Vista");
     }
-  
+
 }

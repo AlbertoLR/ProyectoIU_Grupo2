@@ -26,12 +26,12 @@ class USER_Controller extends BaseController {
                 $this->view->redirect("user", "login");
             }else{
                 $errors = array();
-                $errors["general"] = "Username is not valid";
+                $errors["general"] = i18n("Username is not valid");
                 $this->view->setVariable("errors", $errors);
             }
         }
 
-        $this->view->setVariable("user_controllers", $this->user_controllers($this->currentUserId)); 
+        $this->view->setVariable("user_controllers", $this->user_controllers($this->currentUserId));
         $this->view->render("user", "USER_LOGIN_Vista");
     }
 
@@ -58,14 +58,14 @@ class USER_Controller extends BaseController {
         $this->checkPerms("user", "showone", $this->currentUserId);
 
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("An user id is mandatory");
+            throw new Exception(i18n("An user id is mandatory"));
         }
 
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
 
         if ($user == NULL) {
-            throw new Exception("no such user with id: ".$userid);
+            throw new Exception(i18n("No such user with id: ").$userid);
         }
 
         $this->view->setVariable("user", $user);
@@ -89,12 +89,12 @@ class USER_Controller extends BaseController {
             move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
             }else{
               $errors = array();
-              $errors["general"] = "Only formats: jpg/jpeg/png/gif";
+              $errors["general"] = i18n("Only formats: jpg/jpeg/png/gif");
               $this->view->setVariable("errors", $errors);
             }
           } else {
           $errors = array();
-          $errors["general"] = "Image too large";
+          $errors["general"] = i18n("Image too large");
           $this->view->setVariable("errors", $errors);
         }
 
@@ -132,12 +132,12 @@ class USER_Controller extends BaseController {
                         $this->view->redirect("user", "show");
                     } else {
                         $errors = array();
-                        $errors["general"] = "Username already exists";
+                        $errors["general"] = i18n("Username already exists");
                         $this->view->setVariable("errors", $errors);
                     }
                 } else {
                     $errors = array();
-                    $errors["general"] = "DNI already exists or NULL";
+                    $errors["general"] = i18n("DNI already exists or NULL");
                     $this->view->setVariable("errors", $errors);
                 }
             }catch(ValidationException $ex) {
@@ -155,14 +155,14 @@ class USER_Controller extends BaseController {
 
     public function edit() {
         $this->checkPerms("user", "edit", $this->currentUserId);
-        
+
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("An user id is mandatory");
+            throw new Exception(i18n("An user id is mandatory"));
         }
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
         if ($user == NULL) {
-            throw new Exception("no such user with id: ".$userid);
+            throw new Exception(i18n("No such user with id: ").$userid);
         }
         if (isset($_POST["submit"])) {
 		  $image_name = $_FILES["foto"]["name"];
@@ -174,12 +174,12 @@ class USER_Controller extends BaseController {
             move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
             }else{
               $errors = array();
-              $errors["general"] = "Only formats: jpg/jpeg/png/gif";
+              $errors["general"] = i18n("Only formats: jpg/jpeg/png/gif");
               $this->view->setVariable("errors", $errors);
             }
           } else {
           $errors = array();
-          $errors["general"] = "Image too large";
+          $errors["general"] =i18n("Image too large");
           $this->view->setVariable("errors", $errors);
         }
           if (empty($_POST["profile"])) {
@@ -221,12 +221,12 @@ class USER_Controller extends BaseController {
                             $this->view->redirect("user", "show");
                         } else {
                             $errors = array();
-                            $errors["general"] = "Username already exists";
+                            $errors["general"] = i18n("Username already exists");
                             $this->view->setVariable("errors", $errors);
                         }
                     } else{
                         $errors = array();
-                        $errors["general"] = "DNI already exists or NULL";
+                        $errors["general"] = i18n("DNI already exists or NULL");
                         $this->view->setVariable("errors", $errors);
                     }
                 }
@@ -246,14 +246,14 @@ class USER_Controller extends BaseController {
         $this->checkPerms("user", "delete", $this->currentUserId);
 
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("id is mandatory");
+            throw new Exception(i18n("Id is mandatory"));
         }
 
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
 
         if ($user == NULL) {
-            throw new Exception("no such user with id: ".$userid);
+            throw new Exception(i18n("No such user with id: ").$userid);
         }
 
         if (isset($_POST["submit"])) {
@@ -273,14 +273,14 @@ class USER_Controller extends BaseController {
         $this->checkPerms("user", "delete", $this->currentUserId);
 
         if (!isset($_REQUEST["id"])) {
-            throw new Exception("id is mandatory");
+            throw new Exception(i18n("Id is mandatory"));
         }
 
         $userid = $_REQUEST["id"];
         $user = $this->userMapper->fetch($userid);
 
         if ($user == NULL) {
-            throw new Exception("no such user with id: ".$userid);
+            throw new Exception(i18n("No such user with id: ").$userid);
         }
 
         if (isset($_POST["submit"])) {

@@ -16,11 +16,11 @@ require_once(__DIR__."/../Controllers/BaseController.php");
  * Esta taboa relaciona un usuario con permisos.
  */
 class USERPERM_Controller extends BaseController {
-    
+
     private $userMapper;
     private $permissionMapper;
     private $userPermMapper;
-  
+
     public function __construct() {
         parent::__construct();
         $this->userMapper = new USER_Model();
@@ -31,7 +31,7 @@ class USERPERM_Controller extends BaseController {
 
     public function show(){
         $this->checkPerms("userperm", "show", $this->currentUserId);
-        
+
         $users = $this->userMapper->fetch_all();
         $permissions = $this->permissionMapper->fetch_all();
         $userperms = $this->userPermMapper->fetch_all();
@@ -43,32 +43,32 @@ class USERPERM_Controller extends BaseController {
 
     public function add(){
         $this->checkPerms("userperm", "add", $this->currentUserId);
-    
+
         $userperm = new UserPerm();
-    
+
         if (isset($_POST["submit"])) {
             $userperm->setUser($_POST["user"]);
             $userperm->setPermission($_POST["permission"]);
-            
+
             if (empty($_POST["user"]) || empty($_POST["permission"])) {
                 $this->view->redirect("userperm", "show");
             }
-            
-            try {                
+
+            try {
                 if (!$this->userPermMapper->nameExists($_POST["user"], $_POST["permission"])){
-                    
+
                     $this->userPermMapper->insert($userperm);
-	
-                    $this->view->setFlash(sprintf(i18n("User Permission \"%s\" \"%s\" successfully added."), $userperm->getUser(), $userperm->getPermission()));
-	
+
+                    $this->view->setFlash(sprintf(i18n("User permission successfully added.")));
+
                     $this->view->redirect("userperm", "show");
                 } else {
                     $errors = array();
 	                $errors["general"] = "UserPerm already exists";
 	                $this->view->setVariable("errors", $errors);
                 }
-            }catch(ValidationException $ex) { 
-                $errors = $ex->getErrors();	
+            }catch(ValidationException $ex) {
+                $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
             }
         }
@@ -78,14 +78,14 @@ class USERPERM_Controller extends BaseController {
 
     public function delete() {
         $this->checkPerms("userperm", "delete", $this->currentUserId);
-        
+
         if (!isset($_REQUEST["id"])) {
             throw new Exception("id is mandatory");
         }
-    
+
         $userpermid = $_REQUEST["id"];
         $userperm = $this->userPermMapper->fetch($userpermid);
-    
+
         if ($userperm == NULL) {
             throw new Exception("no such user perm with id: ".$userpermid);
         }
@@ -93,7 +93,7 @@ class USERPERM_Controller extends BaseController {
         if (isset($_POST["submit"])) {
             if ($_POST["submit"] == "yes"){
                 $this->userPermMapper->delete($userperm);
-                $this->view->setFlash(sprintf(i18n("UserPerm \"%s\" \"%s\" successfully deleted."), $userperm->getUser(), $userperm->getPermission()));
+                $this->view->setFlash(sprintf(i18n("User permission successfully deleted.")));
             }
             $this->view->redirect("userperm", "show");
         }
