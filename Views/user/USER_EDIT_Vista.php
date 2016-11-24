@@ -19,7 +19,7 @@ $errors = $view->getVariable("errors");
       <form action="index.php?controller=user&amp;action=edit" method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <label><?= i18n("DNI") ?>:</label>
-          <input type="text" name="dni" class="form-control" value="<?= $user->getDni()?>"  minlength="9" maxlength="9" required="required" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" >
+          <input type="text" name="dni" class="form-control" value="<?= $user->getDni()?>"  minlength="9" maxlength="9" required="required" pattern="(([X-Zx-z]{1})([-]?)(\d{7})([-]?)([A-Za-z]{1}))|((\d{8})([-]?)([A-Za-z]{1}))" >
         </div>
         <div class="form-group">
           <label><?= i18n("Username") ?>:</label>
@@ -60,7 +60,7 @@ $errors = $view->getVariable("errors");
         </div>
         <div class="form-group">
           <label><?= i18n("Bank account") ?>:</label>
-           <input type="text" name="num_cuenta" class="form-control" value="<?= $user->getNumCuenta()?>" minlength="24" maxlength="24" pattern="(ES[0-9]{22})">
+           <input type="text" name="num_cuenta" class="form-control" value="<?= $user->getNumCuenta()?>" minlength="24" maxlength="24" pattern="([Ee][Ss][0-9]{22})">
         </div>
         <div class="form-group">
           <label><?= i18n("Contract") ?>:</label>

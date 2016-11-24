@@ -159,11 +159,15 @@ class USER_Controller extends BaseController {
         if (!isset($_REQUEST["id"])) {
             throw new Exception(i18n("An user id is mandatory"));
         }
+        
         $userid = $_REQUEST["id"];
+        
         $user = $this->userMapper->fetch($userid);
+
         if ($user == NULL) {
             throw new Exception(i18n("No such user with id: ").$userid);
         }
+        
         if (isset($_POST["submit"])) {
 		  $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
@@ -187,8 +191,6 @@ class USER_Controller extends BaseController {
           } else {
               $user->setProfile($_POST["profile"]);
           }
-          $user->setDni($_POST["dni"]);
-          $user->setUsername($_POST["username"]);
           $user->setName($_POST["name"]);
           $user->setSurname($_POST["surname"]);
           $user->setFechaNac($_POST["fecha_nac"]);
@@ -198,37 +200,62 @@ class USER_Controller extends BaseController {
           $user->setTipoContrato($_POST["tipo_contrato"]);
           $user->setEmail($_POST["email"]);
           $user->setFoto($_FILES["foto"]["name"]);
-          if($_POST["activo"] == "Yes"){
+          
+          if($_POST["activo"] == "Yes") {
             $user->setActivo(TRUE);
-          }
-          else{
+          } else {
             $user->setActivo(FALSE);
           }
+
           $user->setPasswd($_POST["passwd"]);
+          
             try {
-                if ($user->getUsername() == $_POST["username"]){
+                if ($user->getUsername() == $_POST["username"] && $user->getDni() == $_POST["dni"]) {
                     $user->checkIsValidForCreate();
                     $this->userMapper->update($user);
                     $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
                     $this->view->redirect("user", "show");
-                } else {
-                    if(!$this->userMapper->dniExists($_POST["dni"]) && !empty($_POST["dni"])){
-                        if (!$this->userMapper->usernameExists($_POST["username"])){
-                            $user->setUsername($_POST["username"]);
-                            $user->checkIsValidForCreate();
-                            $this->userMapper->update($user);
-                            $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
-                            $this->view->redirect("user", "show");
-                        } else {
-                            $errors = array();
-                            $errors["general"] = i18n("Username already exists");
-                            $this->view->setVariable("errors", $errors);
-                        }
-                    } else{
+                } else if ($user->getUsername() == $_POST["username"] && $user->getDni() != $_POST["dni"]) {
+                    if(!$this->userMapper->dniExists($_POST["dni"]) && !empty($_POST["dni"])) {
+                        $user->setDni($_POST["dni"]);
+                        $user->checkIsValidForCreate();
+                        $this->userMapper->update($user);
+                        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
+                        $this->view->redirect("user", "show");
+                    } else {
                         $errors = array();
                         $errors["general"] = i18n("DNI already exists or NULL");
                         $this->view->setVariable("errors", $errors);
                     }
+                } else if ($user->getUsername() != $_POST["username"] && $user->getDni() == $_POST["dni"]) {
+                    if(!$this->userMapper->usernameExists($_POST["dni"]) && !empty($_POST["username"])) {
+                        $user->setUsername($_POST["username"]);
+                        $user->checkIsValidForCreate();
+                        $this->userMapper->update($user);
+                        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
+                        $this->view->redirect("user", "show");
+                    } else {
+                        $errors = array();
+                        $errors["general"] = i18n("Username already exists or NULL");
+                        $this->view->setVariable("errors", $errors);
+                    }
+                } else if(!$this->userMapper->dniExists($_POST["dni"]) && !empty($_POST["dni"])) {
+                    if (!$this->userMapper->usernameExists($_POST["username"] && !empty($_POST["username"]))){
+                        $user->setDni($_POST["dni"]);
+                        $user->setUsername($_POST["username"]);
+                        $user->checkIsValidForCreate();
+                        $this->userMapper->update($user);
+                        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully updated."),$user->getUsername()));
+                        $this->view->redirect("user", "show");
+                    } else {
+                        $errors = array();
+                        $errors["general"] = i18n("Username already exists");
+                        $this->view->setVariable("errors", $errors);
+                    }
+                } else{
+                    $errors = array();
+                    $errors["general"] = i18n("DNI already exists or NULL");
+                    $this->view->setVariable("errors", $errors);
                 }
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
