@@ -20,7 +20,7 @@ $errors = $view->getVariable("errors");
 
         <h1><?= i18n("List of Controller Actions")?></h1>
         <form class="top-buffer" action="index.php?controller=permission&amp;action=add" method="POST">
-        <?= i18n("Controller") ?>: <select name="controller" class="basic-s">
+        <?= i18n("Controller") ?>: <select name="controller">
         <?php foreach($controllers as $controller) {?>
             <option value="<?= $controller->getControllerName()?>"><?= $controller->getControllerName()?></option>
         <?php }?>
@@ -34,7 +34,7 @@ $errors = $view->getVariable("errors");
 
 	       <button type="submit" name="submit" value="submit" class="btn btn-default"><?= i18n("Submit") ?></button>
         </form>
-
+        
 <table class="table">
       <thead>
         <tr>
