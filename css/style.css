@@ -67,3 +67,7 @@ body {
 .tt-query, .tt-hint {
     font-size: 13px!important;
 }
+
+.basic-s{
+  width: 600px !important;
+}
