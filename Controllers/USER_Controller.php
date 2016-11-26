@@ -79,7 +79,7 @@ class USER_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
 
-		  $image_name = $_FILES["foto"]["name"];
+		      $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
           $folder = $_SERVER['DOCUMENT_ROOT'] . '/pictures/';
@@ -159,17 +159,17 @@ class USER_Controller extends BaseController {
         if (!isset($_REQUEST["id"])) {
             throw new Exception(i18n("An user id is mandatory"));
         }
-        
+
         $userid = $_REQUEST["id"];
-        
+
         $user = $this->userMapper->fetch($userid);
 
         if ($user == NULL) {
             throw new Exception(i18n("No such user with id: ").$userid);
         }
-        
+
         if (isset($_POST["submit"])) {
-		  $image_name = $_FILES["foto"]["name"];
+		      $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
           $folder = $_SERVER['DOCUMENT_ROOT'] . '/pictures/';
@@ -200,7 +200,7 @@ class USER_Controller extends BaseController {
           $user->setTipoContrato($_POST["tipo_contrato"]);
           $user->setEmail($_POST["email"]);
           $user->setFoto($_FILES["foto"]["name"]);
-          
+
           if($_POST["activo"] == "Yes") {
             $user->setActivo(TRUE);
           } else {
@@ -208,7 +208,7 @@ class USER_Controller extends BaseController {
           }
 
           $user->setPasswd($_POST["passwd"]);
-          
+
             try {
                 if ($user->getUsername() == $_POST["username"] && $user->getDni() == $_POST["dni"]) {
                     $user->checkIsValidForCreate();

@@ -46,10 +46,10 @@ $currentuser = $view->getVariable("currentusername");
               include(__DIR__."/language_select_element.php");
             ?>
 			    <div class="form-group">
-  				<input type="text" placeholder="<?= i18n("Username")?>" class="form-control" name="username">
+  				<input type="text" placeholder="<?= i18n("Username")?>" class="form-control" name="username" maxlength="14">
   			    </div>
   			    <div class="form-group">
-  				<input type="password" placeholder="<?= i18n("Password")?>" class="form-control" name ="passwd">
+  				<input type="password" placeholder="<?= i18n("Password")?>" class="form-control" name ="passwd" maxlength="14">
   			    </div>
   			    <button type="submit" class="btn btn-success"><?= i18n("Login") ?></button>
 
