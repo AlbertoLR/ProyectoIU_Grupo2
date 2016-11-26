@@ -83,9 +83,9 @@ $errors = $view->getVariable("errors");
           <label><?= i18n("Operating") ?>:</label>
           <select name="activo" class="form-control">
 	      <?php if ($user->getActivo() == TRUE): ?>
-		  <option value="Yes" <?php echo "selected" ?>>Yes</option>
+		  <option value="Yes" <?php echo "selected" ?>><?= i18n("Yes") ?></option>
 		  <?php else: ?>
-		  <option value="No" <?php echo "selected" ?>>No</option>
+		  <option value="No" <?php echo "selected" ?>><?= i18n("No") ?></option>
 		  <?php endif ?>
           </select>
         </div>

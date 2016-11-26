@@ -72,8 +72,8 @@ $errors = $view->getVariable("errors");
           <div class="form-group">
             <label><?= i18n("Operating") ?>:</label>
             <select name="activo" class="form-control">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="Yes"><?= i18n("Yes") ?></option>
+              <option value="No"><?= i18n("No") ?></option>
             </select>
           </div>
           <div class="form-group">

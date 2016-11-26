@@ -69,9 +69,9 @@ $errors = $view->getVariable("errors");
           <tr>
             <th><?= i18n("Operating")?>:</th>
               <?php if($user->getActivo()){ ?>
-              <td>Yes</td>
+              <td><?= i18n("Yes") ?></td>
               <?php } else { ?>
-              <td>No</td>
+              <td><?= i18n("No") ?></td>
               <?php } ?>
           </tr>
           <tr class="active">
