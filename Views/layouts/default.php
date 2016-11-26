@@ -10,8 +10,9 @@ $currentuser = $view->getVariable("currentusername");
 	<title><?= $view->getVariable("title", "no title") ?></title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker3.min.css" type="text/css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker3.min.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<?= $view->getFragment("css") ?>
 	<?= $view->getFragment("javascript") ?>
@@ -45,10 +46,10 @@ $currentuser = $view->getVariable("currentusername");
               include(__DIR__."/language_select_element.php");
             ?>
 			    <div class="form-group">
-  				<input type="text" placeholder="<?= i18n("Username")?>" class="form-control" name="username">
+  				<input type="text" placeholder="<?= i18n("Username")?>" class="form-control" name="username" maxlength="14">
   			    </div>
   			    <div class="form-group">
-  				<input type="password" placeholder="<?= i18n("Password")?>" class="form-control" name ="passwd">
+  				<input type="password" placeholder="<?= i18n("Password")?>" class="form-control" name ="passwd" maxlength="14">
   			    </div>
   			    <button type="submit" class="btn btn-success"><?= i18n("Login") ?></button>
 
@@ -74,15 +75,18 @@ $currentuser = $view->getVariable("currentusername");
 	<!-- Bootstrap core JavaScript
 	     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-datepicker.min.js"></script>
-    <script src="js/datepicker.js"></script>
+	    <script src="js/jquery.min.js"></script>
+  	  <script src="js/bootstrap.min.js"></script>
+      <script src="js/bootstrap-datepicker.min.js"></script>
+      <script src="js/datepicker.js"></script>
+      <script src="js/bootstrap-multiselect.js"></script>
+      <script src="js/multiselect-custom.js"></script>
 
     <!-- Typeahead core JavaScript
 	     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/typeahead.bundle.js"></script>
-    <script src="js/filter_users.js"></script>       
+      <script src="js/typeahead.bundle.js"></script>
+      <script src="js/filter_users.js"></script>
+
     </body>
 </html>

@@ -20,22 +20,32 @@ $errors = $view->getVariable("errors");
 
         <h1><?= i18n("List of Controller Actions")?></h1>
         <form class="top-buffer" action="index.php?controller=permission&amp;action=add" method="POST">
-        <?= i18n("Controller") ?>: <select name="controller">
+          <div>
+            <div class="col-xs-2">
+              <div>
+                <?= i18n("Controller") ?>:
+              </div>
+        <select name="controller" class="form-control" id="ex1">
         <?php foreach($controllers as $controller) {?>
             <option value="<?= $controller->getControllerName()?>"><?= $controller->getControllerName()?></option>
         <?php }?>
         </select>
+      </div>
+        <div>
+          <?= i18n("Action") ?>:
+        </div>
 
-        <?= i18n("Action") ?>: <select name="action[]" multiple>
+        <select name="action[]" multiple id="example-getting-started">
         <?php foreach($actions as $action) {?>
             <option value="<?= $action->getActionName()?>"><?= $action->getActionName()?></option>
         <?php }?>
         </select>
-
 	       <button type="submit" name="submit" value="submit" class="btn btn-default"><?= i18n("Submit") ?></button>
         </form>
-        
-<table class="table">
+      </div>
+
+      <div class="top-buffer">
+      <table class="table">
       <thead>
         <tr>
           <th><a href="index.php?controller=permission&amp;action=show&amp;orderby=id">#</a></th>
