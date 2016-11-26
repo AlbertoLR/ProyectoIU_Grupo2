@@ -79,10 +79,10 @@ class USER_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
 
-		      $image_name = $_FILES["foto"]["name"];
+		  $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
-          $folder = $_SERVER['DOCUMENT_ROOT'] . '/pictures/';
+          $folder = __DIR__ . '/../pictures/';
 
           if($image_size < 100000000 ){ /*100MB*/
             if($image_type == ("image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif")){
@@ -169,10 +169,10 @@ class USER_Controller extends BaseController {
         }
 
         if (isset($_POST["submit"])) {
-		      $image_name = $_FILES["foto"]["name"];
+		  $image_name = $_FILES["foto"]["name"];
           $image_type = $_FILES["foto"]["type"];
           $image_size = $_FILES["foto"]["size"];
-          $folder = $_SERVER['DOCUMENT_ROOT'] . '/pictures/';
+          $folder = __DIR__ . '/../pictures/';
           if($image_size < 100000000 ){ /*100MB*/
             if($image_type == ("image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif")){
             move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
