@@ -110,6 +110,8 @@
     "Action \"%s\" successfully added." => "Accion añadida correctamente.",
     "Action already exists" => "Accion existente",
     "Action \"%s\" successfully updated." => "Accion actualizada correctamente.",
-    "Action \"%s\" successfully deleted." => "Accion eliminada correctamente."
+    "Action \"%s\" successfully deleted." => "Accion eliminada correctamente.",
+    "1 or more permission already exists for this user or profile: \"%s\"" => "Ya existen 1 o mas permisos para este usuario o el perfil: \"%s\"",
+    "1 or more permission already exists" => "Xa existen 1 ou máis permisos"
   )
 ?>

@@ -52,7 +52,7 @@ class PROFILEPERM_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
             $profileperm->setProfile($_POST["profile"]);
-            //$profileperm->setPermission($_POST["permission"]);
+            $added = 1;
 
             if (empty($_POST["profile"]) || empty($_POST["permission"])) {
                 $this->view->redirect("profileperm", "show");
@@ -64,12 +64,15 @@ class PROFILEPERM_Controller extends BaseController {
                         $profileperm->setPermission($permission);
                         $this->profilePermMapper->insert($profileperm);
                     } else {
-                        $errors = array();
-                        $errors["general"] = i18n("Profile permissions already exists");
-                        $this->view->setVariable("errors", $errors);
+                        $added = 0;
                     }
                 }
-                $this->view->setFlash(sprintf(i18n("Profile permission successfully added.")));
+                
+                if ($added) {
+                    $this->view->setFlash(sprintf(i18n("Profile permission successfully added.")));
+                } else {
+                    $this->view->setFlash(sprintf(i18n("1 or more permission already exists")));
+                }
                 $this->view->redirect("profileperm", "show");
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();

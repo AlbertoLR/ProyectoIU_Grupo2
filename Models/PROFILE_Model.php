@@ -36,6 +36,18 @@ class PROFILE_Model {
         }
     }
 
+    public function fetch_by_profilename($profilename){
+        $sql = $this->db->prepare("SELECT * FROM profile WHERE profilename=?");
+        $sql->execute(array($profilename));
+        $profile = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if ($profile != NULL) {
+            return new Profile($profile["id"], $profile["profilename"]);
+        } else {
+            return NULL;
+        }
+    }
+
     public function insert(Profile $profile) {
         $sql = $this->db->prepare("INSERT INTO profile(profilename) values (?)");
         $sql->execute(array($profile->getProfileName()));

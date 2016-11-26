@@ -53,7 +53,7 @@ class PERMISSION_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
             $permission->setController($_POST["controller"]);
-            //$permission->setAction($_POST["action"]);
+            $added = 1;
 
             if (empty($_POST["controller"]) || empty($_POST["action"])) {
                 $this->view->redirect("permission", "show");
@@ -66,13 +66,15 @@ class PERMISSION_Controller extends BaseController {
                         $permission->checkIsValidForCreate();
                         $this->permissionMapper->insert($permission);
                     } else {
-                        $errors = array();
-                        $errors["general"] = i18n("Permission already exists");
-                        $this->view->setVariable("errors", $errors);
+                        $added = 0;
                     }
                 }
 
-                $this->view->setFlash(sprintf(i18n("Permission successfully added.")));
+                if ($added) {
+                    $this->view->setFlash(sprintf(i18n("Permission successfully added.")));
+                } else {
+                    $this->view->setFlash(sprintf(i18n("1 or more permission already exists")));
+                }
                 $this->view->redirect("permission", "show");
                 
             }catch(ValidationException $ex) {

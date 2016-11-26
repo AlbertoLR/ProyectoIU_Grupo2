@@ -7,6 +7,10 @@ require_once(__DIR__."/../Models/Permission.php");
 require_once(__DIR__."/../Models/PERMISSION_Model.php");
 require_once(__DIR__."/../Models/UserPerm.php");
 require_once(__DIR__."/../Models/USERPERM_Model.php");
+require_once(__DIR__."/../Models/Profile.php");
+require_once(__DIR__."/../Models/PROFILE_Model.php");
+require_once(__DIR__."/../Models/ProfilePerm.php");
+require_once(__DIR__."/../Models/PROFILEPERM_Model.php");
 require_once(__DIR__."/../Controllers/BaseController.php");
 
 
@@ -26,6 +30,8 @@ class USERPERM_Controller extends BaseController {
         $this->userMapper = new USER_Model();
         $this->permissionMapper = new PERMISSION_Model();
         $this->userPermMapper = new USERPERM_Model();
+        $this->profilePermMapper = new PROFILEPERM_Model();
+        $this->profileMapper = new PROFILE_Model();
         $this->view->setLayout("default");
     }
 
@@ -53,8 +59,10 @@ class USERPERM_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
             $userperm->setUser($_POST["user"]);
-            //$userperm->setPermission($_POST["permission"]);
-
+            $user = $this->userMapper->fetch($_POST["user"]);
+            $profile = $this->profileMapper->fetch_by_profilename($user->getProfile());
+            $added = 1;
+            
             if (empty($_POST["user"]) || empty($_POST["permission"])) {
                 $this->view->redirect("userperm", "show");
             }
@@ -62,16 +70,22 @@ class USERPERM_Controller extends BaseController {
             try {
                 foreach ($_POST["permission"] as $permission) {
                     if (!$this->userPermMapper->nameExists($_POST["user"], $permission)){
-                        $userperm->setPermission($permission);
-                        $this->userPermMapper->insert($userperm);
+                        if (!$this->profilePermMapper->nameExists($profile->getID(), $permission)) {
+                            $userperm->setPermission($permission);
+                            $this->userPermMapper->insert($userperm);
+                        } else {
+                            $added = 0;
+                        }
                     } else {
-                        $errors = array();
-                        $errors["general"] = "UserPerm already exists";
-                        $this->view->setVariable("errors", $errors);
+                        $added = 0;
                     }
                 }
 
-                $this->view->setFlash(sprintf(i18n("User permission successfully added.")));
+                if ($added) {
+                    $this->view->setFlash(sprintf(i18n("User permission successfully added.")));
+                } else {
+                    $this->view->setFlash(sprintf(i18n("1 or more permission already exists for this user or profile: \"%s\""),$profile->getProfileName()));
+                }
                 $this->view->redirect("userperm", "show");
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
