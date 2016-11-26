@@ -228,7 +228,7 @@ class USER_Controller extends BaseController {
                         $this->view->setVariable("errors", $errors);
                     }
                 } else if ($user->getUsername() != $_POST["username"] && $user->getDni() == $_POST["dni"]) {
-                    if(!$this->userMapper->usernameExists($_POST["dni"]) && !empty($_POST["username"])) {
+                    if(!$this->userMapper->usernameExists($_POST["username"]) && !empty($_POST["username"])) {
                         $user->setUsername($_POST["username"]);
                         $user->checkIsValidForCreate();
                         $this->userMapper->update($user);
@@ -318,7 +318,7 @@ class USER_Controller extends BaseController {
         }
 
         $this->userMapper->recovery($user);
-        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
+        $this->view->setFlash(sprintf(i18n("User \"%s\" successfully restored."),$user->getUsername()));
         $this->view->redirect("user", "show");
     }
 
