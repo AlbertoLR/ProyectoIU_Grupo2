@@ -110,7 +110,8 @@ create table `caja` (
   `efectivo_inicial` int(11) not null,
   `cantidad` int(11) not null,
   `efectivo_final` int(11) not null,
-  `pago_id` int(11) not null
+  `pago_id` int(11) not null,
+  `descripcion` text collate utf8_spanish_ci not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -148,7 +149,8 @@ create table `cliente` (
   `alerta_falta` tinyint(1) not null default '0',
   `desempleado` tinyint(1) not null default '0',
   `estudiante` tinyint(1) not null default '0',
-  `familiar` tinyint(1) not null default '0'
+  `familiar` tinyint(1) not null default '0',
+  `num_cuenta` varchar(24) collate utf8_spanish_ci not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -207,8 +209,7 @@ drop table if exists `documento`;
 create table `documento` (
   `dni` varchar(9) collate utf8_spanish_ci default null,
   `dni_c` varchar(9) collate utf8_spanish_ci default null,
-  `id_inscripcion` int(11) default null,
-`id` int(11) not null,
+  `id` int(11) not null,
   `tipo` varchar(50) collate utf8_spanish_ci not null,
   `documento` varchar(50) collate utf8_spanish_ci not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
@@ -268,7 +269,8 @@ drop table if exists `factura`;
 create table `factura` (
 `id` int(11) not null,
   `fecha` date not null,
-  `pago_id` int(11) not null
+  `pago_id` int(11) not null,
+  `precio_total` int(8) not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -315,7 +317,8 @@ create table `hora_fisio` (
   `id_reserva` int(11) not null,
   `dia_f` date not null,
   `hora_i` time not null,
-  `hora_f` time not null
+  `hora_f` time not null,
+  `asistencia` tinyint(1) not null default '0'
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -390,7 +393,8 @@ create table `linea_factura` (
   `id_factura` int(11) not null,
   `producto` varchar(40) collate utf8_spanish_ci default null,
   `cantidad` smallint(6) default null,
-  `precio` smallint(6) default null
+  `precio` smallint(6) default null,
+  `iva` smallint(6) default null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -422,7 +426,8 @@ create table `pago` (
   `periodicidad` varchar(45) collate utf8_spanish_ci null,
   `cantidad` smallint(6) not null,
   `reserva_id` int(11) null,
-  `inscripcion_id` int(11) null
+  `inscripcion_id` int(11) null,
+  `realizado` tinyint(1) not null default '0'
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -704,7 +709,7 @@ alter table `descuento`
 -- indexes for table `documento`
 --
 alter table `documento`
- add primary key (`id`), add key `dni_c_idx` (`dni_c`), add key `id_inscripcion_idx` (`id_inscripcion`), add key `dni_idx` (`dni`);
+ add primary key (`id`), add key `dni_c_idx` (`dni_c`), add key `dni_idx` (`dni`);
 
 --
 -- indexes for table `empleado_mira`
@@ -1086,8 +1091,7 @@ add constraint `fk_descuento_categoria1` foreign key (`categoria_id`) references
 --
 alter table `documento`
 add constraint `dni` foreign key (`dni`) references `user` (`dni`) on delete cascade on update cascade,
-add constraint `dni_c` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade,
-add constraint `id_inscripcion` foreign key (`id_inscripcion`) references `inscripcion` (`id`) on delete cascade on update cascade;
+add constraint `dni_c` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade;
 
 --
 -- constraints for table `empleado_mira`
@@ -1329,9 +1333,9 @@ insert into `permission` (`id`, `controller`, `action`) values
 --
 -- dumping data for table `cliente`
 --
-insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`) values 
-(1, '12345678c', 'nombre3', 'aellidos3', '1999-11-11', 'programador', 666666666, 'calle2,numero2,piso2', 'es un negado', 'cliente1@gym.com', true, default, true, default),
-(2, '13245678d', 'nombre4', 'apellidos4', '1999-12-12', 'ingeniero', 777777777, 'calle3,numero3,piso3', 'está calvo', 'cliente2@gym.com', false, default, default, default);
+insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`num_cuenta`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`) values 
+(1, '12345678c', 'nombre3', 'aellidos3', '1999-11-11','ES9287423222928374923847', 'programador', 666666666, 'calle2,numero2,piso2', 'es un negado', 'cliente1@gym.com', true, default, true, default),
+(2, '13245678d', 'nombre4', 'apellidos4', '1999-12-12','ES9287423222928374923847', 'ingeniero', 777777777, 'calle3,numero3,piso3', 'está calvo', 'cliente2@gym.com', false, default, default, default);
 
 --
 -- dumping data for table `particular_externo`
@@ -1380,9 +1384,9 @@ insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_activ
 --
 -- dumping data for table `documento`
 --
-insert into `documento` (`dni`, `dni_c`, `id_inscripcion`, `id`, `tipo`, `documento`) values 
-(null, '12345678c', null, 1, 'lesion', 'lesion1.pdf'),
-('44849254q', null, null, 2, 'sepa', 'sepa1.pdf');
+insert into `documento` (`dni`, `dni_c`, `id`, `tipo`, `documento`) values 
+(null, '12345678c', 1, 'lesion', 'lesion1.pdf'),
+('44849254q', null, 2, 'sepa', 'sepa1.pdf');
 
 --
 -- dumping data for table `lesiones`
@@ -1430,10 +1434,10 @@ insert into `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`
 --
 -- dumping data for table `pago`
 --
-insert into `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`) values 
-(1, 'tarjeta', '2016-3-2', null, 25, null, null),
-(2, 'transferencia', '2016-4-9', 'anual', 100, 1, null),
-(3, 'tarjeta', '2016-2-3', null, 300, null, null);
+insert into `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`,`realizado`) values 
+(1, 'tarjeta', '2016-3-2', null, 25, null, null,true),
+(2, 'transferencia', '2016-4-9', 'anual', 100, 1, null,true),
+(3, 'tarjeta', '2016-2-3', null, 300, null, null,false);
 
 --
 -- dumping data for table `asistencia`
@@ -1466,17 +1470,17 @@ insert into `percibe` ( `alerta_id`, `user_id`) values (1, 1);
 --
 -- dumping data for table `hora_fisio`
 --
-insert into `hora_fisio` (`id`, `id_reserva`, `dia_f`, `hora_i`, `hora_f`) values (1, 2, '2016-11-11', '17:00', '18:00');
+insert into `hora_fisio` (`id`, `id_reserva`, `dia_f`, `hora_i`, `hora_f`,`asistencia`) values (1, 2, '2016-11-11', '17:00', '18:00',true);
 
 --
 -- dumping data for table `factura`
 --
-insert into `factura` (`id`, `pago_id`, `fecha`) values (1, 1, '2016-10-5');
+insert into `factura` (`id`, `pago_id`, `fecha`,`precio_total`) values (1, 1, '2016-10-5',40);
 
 --
 -- dumping data for table `linea_factura`
 --
-insert into `linea_factura` (`id`, `id_factura`, `producto`, `cantidad`, `precio`) values (1, 1, 'batido proteinas', 1, 10),(2, 1, 'anabolizantes', 2, 30);
+insert into `linea_factura` (`id`, `id_factura`, `producto`, `cantidad`, `precio`,`iva`) values (1, 1, 'batido proteinas', 1, 10,21),(2, 1, 'guantes', 2, 30,21);
 
 --
 -- dumping data for table `recibo`
@@ -1486,7 +1490,7 @@ insert into `recibo` (`id`, `pago_id`, `producto`, `precio`, `cantidad`) values 
 --
 -- dumping data for table `caja`
 --
-insert into `caja` (`pago_id`, `id`, `efectivo_inicial`, `cantidad`, `efectivo_final`) values (1, 1, 0, 20, 20),(2, 2, 20, -10, 10);
+insert into `caja` (`pago_id`, `id`, `efectivo_inicial`, `cantidad`, `efectivo_final`,`descripcion`) values (1, 1, 0, 20, 20,'Pagar pagaron'),(2, 2, 20, -10, 10,'Estos tambien pagaron');
 
 --
 -- dumping data for table `cliente_externo`

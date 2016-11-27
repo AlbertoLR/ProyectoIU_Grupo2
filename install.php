@@ -10,10 +10,8 @@ if (isset($_POST["submit"])){
     $mysqlUserName = $_POST["user"];
     $mysqlPasswd = $_POST["passwd"];
     $dbFile = "moovett.sql";
-    $chmod = "install.sh";
     $command='mysql -u' .$mysqlUserName .' -p' .$mysqlPasswd . ' < ' .$dbFile;
     exec($command,$output=array(),$worked);
-    exec("sh ".$chmod);
     switch($worked){
 	case 0:
             echo 'Import file <b>' .$dbFile .'</b> successfully imported to database<br />';
