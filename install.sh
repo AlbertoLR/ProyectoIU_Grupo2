@@ -1,3 +1,3 @@
-#!/usr/bin/sh
-chmod 777 pictures
+#!/bin/sh
+chmod 777 pictures/
 exit
