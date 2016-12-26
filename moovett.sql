@@ -47,7 +47,6 @@ create table `actividad` (
   `nombre` varchar(10) collate utf8_spanish_ci not null,
   `capacidad` smallint(6) not null,
   `precio` smallint(6) not null,
-  `descuento_id` int(11) not null,
   `espacio_id` int(11) not null,
   `categoria_id` int(11) not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
@@ -80,7 +79,8 @@ create table `alerta` (
 drop table if exists `aplica`;
 create table `aplica` (
   `descuento_id` int(11) not null,
-  `actividad_id` int(11) not null
+  `actividad_id` int(11) not null,
+  `extra` int(11) default null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -344,11 +344,11 @@ create table `inscripcion` (
 -- --------------------------------------------------------
 
 --
--- table structure for table `lesiones`
+-- table structure for table `lesion`
 --
 
-drop table if exists `lesiones`;
-create table `lesiones` (
+drop table if exists `lesion`;
+create table `lesion` (
 `id` int(11) not null,
   `descripcion` text collate utf8_spanish_ci not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
@@ -376,7 +376,7 @@ create table `lesion_cliente` (
 
 drop table if exists `lesion_empleado`;
 create table `lesion_empleado` (
-  `lesiones_id` int(11) not null,
+  `lesion_id` int(11) not null,
   `user_id` int(11) not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
@@ -649,7 +649,7 @@ alter table `action`
 -- indexes for table `actividad`
 --
 alter table `actividad`
- add primary key (`id`), add key `fk_actividad_descuento1_idx` (`descuento_id`), add key `fk_actividad_espacio1_idx` (`espacio_id`), add key `fk_actividad_categoria1_idx` (`categoria_id`);
+ add primary key (`id`), add key `fk_actividad_espacio1_idx` (`espacio_id`), add key `fk_actividad_categoria1_idx` (`categoria_id`);
 
 --
 -- indexes for table `alerta`
@@ -760,9 +760,9 @@ alter table `inscripcion`
  add primary key (`id`), add key `fk_inscripcion_particular_externo1_idx` (`particular_externo_id`), add key `fk_inscripcion_evento1_idx` (`evento_id`), add key `fk_inscripcion_reserva1_idx` (`reserva_id`),add key `fk_inscripcion_actividad1_idx` (`id_actividad`),add key `fk_inscripcion_descuento1_idx` (`id_descuento`),add key `fk_inscripcion_cliente1_idx` (`cliente_dni_c`);
 
 --
--- indexes for table `lesiones`
+-- indexes for table `lesion`
 --
-alter table `lesiones`
+alter table `lesion`
  add primary key (`id`);
 
 --
@@ -775,7 +775,7 @@ alter table `lesion_cliente`
 -- indexes for table `lesion_empleado`
 --
 alter table `lesion_empleado`
- add primary key (`user_id`,`lesiones_id`), add key `fk_lesion_empleado_lesiones1_idx` (`lesiones_id`),add key `fk_lesion_empleado_user1_idx` (`user_id`);
+ add primary key (`user_id`,`lesion_id`), add key `fk_lesion_empleado_lesion1_idx` (`lesion_id`),add key `fk_lesion_empleado_user1_idx` (`user_id`);
 
 --
 -- indexes for table `linea_factura`
@@ -963,9 +963,9 @@ modify `id` int(11) not null auto_increment;
 alter table `inscripcion`
 modify `id` int(11) not null auto_increment;
 --
--- auto_increment for table `lesiones`
+-- auto_increment for table `lesion`
 --
-alter table `lesiones`
+alter table `lesion`
 modify `id` int(11) not null auto_increment;
 --
 -- auto_increment for table `linea_factura`
@@ -1046,7 +1046,6 @@ modify `id` int(11) not null auto_increment,auto_increment=31;
 --
 alter table `actividad`
 add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`)  on delete cascade on update cascade,
-add constraint `fk_actividad_descuento1` foreign key (`descuento_id`) references `descuento` (`id`)  on delete cascade on update cascade,
 add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `espacio` (`id`)  on delete cascade on update cascade;
 
 --
@@ -1055,7 +1054,7 @@ add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `es
 
 
 alter table `alerta`
-add constraint `fk_alerta_asistencia1` foreign key (`asistencia_id_cliente`, `asistencia_sesion_id`) references `asistencia` (`id_cliente`,`sesion_id`) on delete no action on update no action,
+add constraint `fk_alerta_asistencia1` foreign key (`asistencia_id_cliente`, `asistencia_sesion_id`) references `asistencia` (`id_cliente`,`sesion_id`) on delete cascade on update cascade,
 add constraint `fk_alerta_pago1` foreign key (`pago_id`) references `pago` (`id`)  on delete cascade on update cascade,
 add constraint `fk_alerta_user1` foreign key (`user_id`) references `user` (`id`)  on delete cascade on update cascade;
 
@@ -1141,13 +1140,13 @@ add constraint `fk_inscripcion_descuento1` foreign key (`id_descuento`) referenc
 --
 alter table `lesion_cliente`
 add constraint `fk_lesion_cliente_cliente1` foreign key (`cliente_id`) references `cliente` (`id`) on delete cascade on update cascade,
-add constraint `id_lesion` foreign key (`id_lesion`) references `lesiones` (`id`) on delete cascade on update cascade;
+add constraint `id_lesion` foreign key (`id_lesion`) references `lesion` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `lesion_empleado`
 --
 alter table `lesion_empleado`
-add constraint `fk_lesion_empleado_lesiones1` foreign key (`lesiones_id`) references `lesiones` (`id`) on delete cascade on update cascade,
+add constraint `fk_lesion_empleado_lesion1` foreign key (`lesion_id`) references `lesion` (`id`) on delete cascade on update cascade,
 add constraint `fk_lesion_empleado_user1` foreign key (`user_id`) references `user` (`id`) on delete cascade on update cascade;
 
 --
@@ -1286,7 +1285,9 @@ insert into `controller` (`id`, `controllername`) values
 (4, 'profile'),
 (1, 'user'),
 (6, 'userperm'),
-(7, 'profileperm');
+(7, 'profileperm'),
+(8, 'injury'),
+(9, 'activity');
 
 
 --
@@ -1328,12 +1329,21 @@ insert into `permission` (`id`, `controller`, `action`) values
 (32, 'profileperm', 'delete'),
 (33, 'profileperm', 'show'),
 (34, 'profileperm', 'showone'),
-(35, 'profileperm', 'edit');
-
+(35, 'profileperm', 'edit'),
+(36, 'injury', 'add'),
+(37, 'injury', 'delete'),
+(38, 'injury', 'show'),
+(39, 'injury', 'showone'),
+(40, 'injury', 'edit'),
+(41, 'activity', 'delete'),
+(42, 'activity', 'show'),
+(43, 'activity', 'showone'),
+(44, 'activity', 'add'),
+(45, 'activity', 'edit');
 --
 -- dumping data for table `cliente`
 --
-insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`num_cuenta`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`) values 
+insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`num_cuenta`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`) values
 (1, '12345678c', 'nombre3', 'aellidos3', '1999-11-11','ES9287423222928374923847', 'programador', 666666666, 'calle2,numero2,piso2', 'es un negado', 'cliente1@gym.com', true, default, true, default),
 (2, '13245678d', 'nombre4', 'apellidos4', '1999-12-12','ES9287423222928374923847', 'ingeniero', 777777777, 'calle3,numero3,piso3', 'está calvo', 'cliente2@gym.com', false, default, default, default);
 
@@ -1370,28 +1380,28 @@ insert into `evento` (`id`, `nombre`, `espacio_id`, `precio`) values (1, 'hallow
 --
 -- dumping data for table `actividad`
 --
-insert into `actividad` (`id`, `nombre`, `espacio_id`, `descuento_id`, `capacidad`, `precio`, `categoria_id`) values
-(1, 'zumba', 1, 1, 20, 20, 1),
-(2, 'salsa', 2, 2, 13, 50, 2);
+insert into `actividad` (`id`, `nombre`, `espacio_id`, `capacidad`, `precio`, `categoria_id`) values
+(1, 'zumba', 1, 20, 20, 1),
+(2, 'salsa', 2, 13, 50, 2);
 
 --
 -- dumping data for table `inscripcion`
 --
-insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`, `id_descuento`) values 
+insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`, `id_descuento`) values
 (1, null, null, 1, null, '12345678c', '2016-5-6', 1),
 (2, 1, 1, null, null, '13245678d', '2016-4-3', null);
 
 --
 -- dumping data for table `documento`
 --
-insert into `documento` (`dni`, `dni_c`, `id`, `tipo`, `documento`) values 
+insert into `documento` (`dni`, `dni_c`, `id`, `tipo`, `documento`) values
 (null, '12345678c', 1, 'lesion', 'lesion1.pdf'),
 ('44849254q', null, 2, 'sepa', 'sepa1.pdf');
 
 --
--- dumping data for table `lesiones`
+-- dumping data for table `lesion`
 --
-insert into `lesiones` (`id`, `descripcion`) values (1, 'rodilla de golfista'),(2, 'codo de tenista');
+insert into `lesion` (`id`, `descripcion`) values (1, 'rodilla de golfista'),(2, 'codo de tenista');
 
 --
 -- dumping data for table `lesion_cliente`
@@ -1401,7 +1411,7 @@ insert into `lesion_cliente` (`id_lesion`, `cliente_id`) values (1, 1);
 --
 -- dumping data for table `lesion_empleado`
 --
-insert into `lesion_empleado` ( `lesiones_id`,  `user_id`) values (2, 1);
+insert into `lesion_empleado` ( `lesion_id`,  `user_id`) values (2, 1);
 
 --
 -- dumping data for table `empleado_mira`
@@ -1421,7 +1431,7 @@ insert into `rango_horario` (`id`, `dia_s`, `hora_apertura`, `hora_cierre`, `hor
 --
 -- dumping data for table `horas_posibles`
 --
-insert into `horas_posibles` (`id`,`dia`, `hora_inicio`, `hora_fin`,`rango_horario_id`) values 
+insert into `horas_posibles` (`id`,`dia`, `hora_inicio`, `hora_fin`,`rango_horario_id`) values
 (1,'lunes', '9:00', '10:00', 1),
 (2,'lunes', '10:00', '11:00', 1),
 (3,'lunes', '11:00', '12:00', 1);
@@ -1434,7 +1444,7 @@ insert into `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`
 --
 -- dumping data for table `pago`
 --
-insert into `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`,`realizado`) values 
+insert into `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`,`realizado`) values
 (1, 'tarjeta', '2016-3-2', null, 25, null, null,true),
 (2, 'transferencia', '2016-4-9', 'anual', 100, 1, null,true),
 (3, 'tarjeta', '2016-2-3', null, 300, null, null,false);
@@ -1448,7 +1458,7 @@ insert into `asistencia` (`id_cliente`, `sesion_id`, `asiste`) values (1, 1, fal
 --
 -- dumping data for table `alerta`
 --
-insert into `alerta` (`id`, `descripcion`, `user_id`, `pago_id`, `asistencia_id_cliente`,`asistencia_sesion_id`) values 
+insert into `alerta` (`id`, `descripcion`, `user_id`, `pago_id`, `asistencia_id_cliente`,`asistencia_sesion_id`) values
 (1, 'no acude',null,null, 1, 1),
 (2, 'no paga', null, 1, 1, null);
 
@@ -1506,7 +1516,7 @@ insert into `servicio` (`id`, `fecha`, `coste`, `pago_id`,  `cliente_externo_id`
 --
 -- dumping data for table `aplica`
 --
-insert into `aplica` (`descuento_id`,`actividad_id`) values (1, 1),(2,2);
+insert into `aplica` (`descuento_id`,`actividad_id`,`extra`) values (1, 1,2),(2,2,null);
 
 --
 -- dumping data for table `user_perms`
@@ -1554,12 +1564,25 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (32, 1, 32),
 (33, 1, 33),
 (34, 1, 34),
-(35, 1, 35);
+(35, 1, 35),
+(36, 1, 36),
+(37, 1, 37),
+(38, 1, 38),
+(39, 1, 39),
+(40, 1, 40),
+(41, 1, 41),
+(42, 1, 42),
+(43, 1, 43),
+(44, 1, 44),
+(45, 1, 45);
 
+
+GRANT USAGE ON *.* TO 'moovett'@'localhost';
+DROP USER 'moovett'@'localhost';
 
 CREATE USER 'moovett'@'localhost' IDENTIFIED BY 'moovett';
-GRANT ALL PRIVILEGES ON * . * TO 'moovett'@'localhost';					  
-								  
+GRANT ALL PRIVILEGES ON * . * TO 'moovett'@'localhost';
+
 /*!40101 set character_set_client=@old_character_set_client */;
 /*!40101 set character_set_results=@old_character_set_results */;
 /*!40101 set collation_connection=@old_collation_connection */;
