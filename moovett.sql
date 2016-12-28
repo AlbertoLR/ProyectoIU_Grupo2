@@ -1291,7 +1291,10 @@ insert into `controller` (`id`, `controllername`) values
 (9, 'activity'),
 (10, 'client'),
 (11, 'cash'),
-(12, 'externalcustomer');
+(12, 'externalcustomer'),
+(13, 'season'),
+(14, 'rankhour');
+
 
 
 
@@ -1359,7 +1362,15 @@ insert into `permission` (`id`, `controller`, `action`) values
 (57, 'externalcustomer', 'show'),
 (58, 'externalcustomer', 'showone'),
 (59, 'externalcustomer', 'add'),
-(60, 'externalcustomer', 'edit');
+(60, 'externalcustomer', 'edit'),
+(61, 'season', 'show'),
+(62, 'season', 'add'),
+(63, 'season', 'edit'),
+(64, 'season', 'delete'),
+(65, 'rankhour', 'add'),
+(66, 'rankhour', 'show'),
+(67, 'rankhour', 'delete');
+
 --
 -- dumping data for table `cliente`
 --
@@ -1463,12 +1474,20 @@ insert into `empleado_mira` (`user_id`, `lesion_cliente_cliente_id`, `lesion_cli
 --
 -- dumping data for table `horario_temporada`
 --
-insert into `horario_temporada` (`id`, `dia_inicio`, `dia_fin`, `nombre_temp`) values (1, '2016-6-15', '2016-9-15', 'verano');
+insert into `horario_temporada` (`id`, `dia_inicio`, `dia_fin`, `nombre_temp`) values
+(1, '2016-6-15', '2016-9-15', 'Verano'),
+(2, '2016-9-16', '2017-6-15', 'Invierno');
 
 --
 -- dumping data for table `rango_horario`
 --
-insert into `rango_horario` (`id`, `dia_s`, `hora_apertura`, `hora_cierre`, `horario_temporada_id`) values (1, 'lunes', '9:00', '15:00', 1);
+insert into `rango_horario` (`id`, `dia_s`, `hora_apertura`, `hora_cierre`, `horario_temporada_id`) values
+(1, 'Lunes', '9:00', '15:00', 1),
+(2, 'Martes', '9:00', '15:00', 1),
+(3, 'Miercoles', '9:00', '15:00', 1),
+(4, 'Jueves', '9:00', '15:00', 1),
+(5, 'Viernes', '9:00', '15:00', 1);
+
 
 --
 -- dumping data for table `horas_posibles`
@@ -1640,7 +1659,15 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (64, 2, 47),
 (65, 2, 48),
 (66, 2, 39),
-(67, 2, 38);
+(67, 2, 38),
+(68, 1, 61),
+(69, 1, 62),
+(70, 1, 63),
+(71, 1, 64),
+(72, 1, 65),
+(73, 1, 66),
+(74, 1, 67);
+
 
 
 
