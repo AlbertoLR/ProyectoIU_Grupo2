@@ -214,5 +214,28 @@
     "External customer \"%s\" successfully updated."=>"Cliente externo \"%s\" actualizado satisfactoriamente.",
     "External customer \"%s\" successfully deleted."=>"Cliente externo \"%s\" eliminado satisfactoriamente.",
     "List of Deleted Clients" => "Lista de Clientes Eliminados",
+
+    "List of Seasons" => "Lista de Temporadas",
+    "Create Season" => "Crear Temporada",
+    "Start Day" => "Fecha Inicio",
+    "End Day" => "Fecha Fin",
+    "Season \"%s\" successfully added." => "Temporada \"%s\" añadida correctamente.",
+    "Season \"%s\" successfully updated." => "Temporada \"%s\" actualizada correctamente.",
+    "Season \"%s\" successfully deleted." => "Temporada\"%s\" eliminada correctamente.",
+    "season" => "temporada",
+    "List of Rankhours" => "Lista de Rangos de Horarios",
+    "Create Rankhour" => "Crear Rango Horario",
+    "Day" => "Día",
+    "Opening" => "Apertura",
+    "Closing" => "Cierre",
+    "Season" => "Temporada",
+    "Rankhour \"%s\" successfully added." => "Rango \"%s\" añadido correctamente.",
+    "Monday" => "Lunes",
+    "Tuesday" => "Martes",
+    "Wednesday" => "Miércoles",
+    "Thursday" => "Jueves",
+    "Friday" => "Viernes",
+    "rankhour" => "rango horario",
+
   )
 ?>
