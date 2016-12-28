@@ -33,7 +33,7 @@ $errors = $view->getVariable("errors");
           </tr>
         </tbody>
         <tbody>
-          <tr>
+          <tr class="active">
             <th><?= i18n("Capacity")?></th>
             <td><?= $activity->getCapacity() ?></td>
           </tr>
@@ -41,14 +41,17 @@ $errors = $view->getVariable("errors");
         <tbody>
           <tr>
             <th><?= i18n("Discount")?></th>
-        	  <?php foreach($discounts as $discount => $value){ ?>
+            <?php if(!$activity->getDiscountid()){ ?>
+                <td><?= i18n("No")?></td>
+            <?} else { ?>
+            <?php foreach($discounts as $discount => $value){ ?>
               <?php if($value["id"] == $activity->getDiscountid()) {?>
               <td><?=$value["cantidad"]."%" ?></td>
-            <?php } }  ?>
+            <?php } } } ?>
           </tr>
         </tbody>
         <tbody>
-          <tr>
+          <tr class="active">
             <th><?= i18n("Extra discount")?></th>
               <?php if($activity->getExtraDiscount()!=NULL) {?>
                 <td><?=$activity->getExtraDiscount()."%" ?></td>
@@ -68,7 +71,7 @@ $errors = $view->getVariable("errors");
           </tr>
         </tbody>
         <tbody>
-          <tr>
+          <tr class="active">
             <th><?= i18n("Category")?></th>
             <?php foreach($categories as $category => $value){ ?>
               <?php if($value["id"] == $activity->getCategoryid()) {?>
