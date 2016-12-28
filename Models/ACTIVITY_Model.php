@@ -80,8 +80,7 @@ class ACTIVITY_Model {
 
     public function insert(Activity $activity) {
       if($activity->getDiscountid()[0]!=NULL){
-        $discount = substr($activity->getDiscountid()[0],0,-2);
-        $category = substr($activity->getDiscountid()[0],-1);
+        list($discount,$category) = split('[/.-]',$activity->getDiscountid()[0]);
       }else{
         $category = $activity->getCategoryid();
       }
@@ -102,9 +101,7 @@ class ACTIVITY_Model {
     public function update(Activity $activity){
 
       if($activity->getDiscountid()[0]!=NULL){
-        $discount = substr($activity->getDiscountid()[0],0,-2);
-        $category = substr($activity->getDiscountid()[0],-1);
-
+        list($discount,$category) = split('[/.-]',$activity->getDiscountid()[0]);
         $id = $activity->getID();
         $sql1 = $this->db->query("SELECT actividad_id FROM aplica where actividad_id='$id'");
         $array =  $sql1->fetchAll(PDO::FETCH_ASSOC);

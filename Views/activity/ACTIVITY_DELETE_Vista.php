@@ -37,7 +37,7 @@ $errors = $view->getVariable("errors");
           </tr>
         </tbody>
         <tbody>
-          <tr>
+          <tr class="active">
             <th><?= i18n("Capacity")?></th>
             <td><?= $activity->getCapacity() ?></td>
           </tr>
@@ -45,14 +45,17 @@ $errors = $view->getVariable("errors");
         <tbody>
           <tr>
             <th><?= i18n("Discount")?></th>
+            <?php if(!$activity->getDiscountid()){ ?>
+                <td><?= i18n("No")?></td>
+            <?} else { ?>
             <?php foreach($discounts as $discount => $value){ ?>
               <?php if($value["id"] == $activity->getDiscountid()) {?>
               <td><?=$value["cantidad"]."%" ?></td>
-            <?php } }  ?>
+            <?php } } } ?>
           </tr>
         </tbody>
         <tbody>
-          <tr>
+          <tr class="active">
             <th><?= i18n("Space")?></th>
             <?php foreach($spaces as $space => $value){ ?>
               <?php if($value["id"] == $activity->getSpaceid()) {?>

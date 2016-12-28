@@ -200,8 +200,10 @@ class USER_Controller extends BaseController {
           $user->setNumCuenta($_POST["num_cuenta"]);
           $user->setTipoContrato($_POST["tipo_contrato"]);
           $user->setEmail($_POST["email"]);
-          if(($_FILES["foto"]["name"])!= ""){
+          if($_FILES["foto"]["name"]){
             $user->setFoto($_FILES["foto"]["name"]);
+          }else{
+              $user->setFoto($user->getFoto());
           }
           if($_POST["activo"] == "Yes") {
             $user->setActivo(TRUE);

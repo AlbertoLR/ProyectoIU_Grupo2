@@ -111,7 +111,9 @@ create table `caja` (
   `cantidad` int(11) not null,
   `efectivo_final` int(11) not null,
   `pago_id` int(11) not null,
-  `descripcion` text collate utf8_spanish_ci not null
+  `tipo` varchar(11) collate utf8_spanish_ci not null,
+  `descripcion` varchar(90) collate utf8_spanish_ci not null,
+  `fecha` date not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -150,7 +152,9 @@ create table `cliente` (
   `desempleado` tinyint(1) not null default '0',
   `estudiante` tinyint(1) not null default '0',
   `familiar` tinyint(1) not null default '0',
-  `num_cuenta` varchar(24) collate utf8_spanish_ci not null
+  `num_cuenta` varchar(24) collate utf8_spanish_ci not null,
+  `activo` tinyint(1) not null default '0',
+  `foto` varchar(15) collate utf8_spanish_ci not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -226,7 +230,9 @@ create table `empleado_mira` (
   `lesion_cliente_id_lesion` int(11) not null,
   `lesion_cliente_cliente_id` int(11) not null,
   `user_id` int(11) not null,
-  `fecha_vista` date not null
+  `fecha` date not null,
+  `hora` time not null
+
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -574,7 +580,7 @@ create table `servicio` (
   `coste` int(11) not null,
   `descripcion` text collate utf8_spanish_ci,
   `pago_id` int(11) not null,
-  `cliente_externo_id` int(11) not null
+  `cliente_externo_id` int(11) default null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -715,7 +721,7 @@ alter table `documento`
 -- indexes for table `empleado_mira`
 --
 alter table `empleado_mira`
- add primary key (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`,`user_id`,`fecha_vista`), add key `fk_empleado_mira_lesion_cliente1_idx` (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`), add key `fk_empleado_mira_user1_idx` (`user_id`);
+ add primary key (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`,`user_id`,`fecha`,`hora`), add key `fk_empleado_mira_lesion_cliente1_idx` (`lesion_cliente_id_lesion`,`lesion_cliente_cliente_id`), add key `fk_empleado_mira_user1_idx` (`user_id`);
 
 --
 -- indexes for table `espacio`
@@ -1093,13 +1099,6 @@ add constraint `dni` foreign key (`dni`) references `user` (`dni`) on delete cas
 add constraint `dni_c` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade;
 
 --
--- constraints for table `empleado_mira`
---
-alter table `empleado_mira`
-add constraint `fk_empleado_mira_lesion_cliente1` foreign key (`lesion_cliente_id_lesion`, `lesion_cliente_cliente_id`) references `lesion_cliente` (`id_lesion`, `cliente_id`) on delete cascade on update cascade,
-add constraint `fk_empleado_mira_user1` foreign key (`user_id`) references `user` (`id`) on delete cascade on update cascade;
-
---
 -- constraints for table `evento`
 --
 alter table `evento`
@@ -1219,7 +1218,7 @@ add constraint `fk_reserva_cliente1` foreign key (`dni_c`) references `cliente` 
 -- constraints for table `servicio`
 --
 alter table `servicio`
-add constraint `fk_servicio_cliente_externo1` foreign key (`cliente_externo_id`) references `cliente_externo` (`id`) on delete cascade on update cascade,
+add constraint `fk_servicio_cliente_externo1` foreign key (`cliente_externo_id`) references `cliente_externo` (`id`) on delete set null on update set null,
 add constraint `fk_servicio_pago1` foreign key (`pago_id`) references `pago` (`id`) on delete cascade on update cascade;
 
 --
@@ -1252,15 +1251,17 @@ add constraint `userid` foreign key (`user`) references `user` (`id`) on delete 
 --
 
 insert into `profile` (`id`, `profilename`) values
-(1, 'admin');
+(1, 'admin'),
+(2, 'monitor');
 
 --
 -- dumping data for table `user`
 --
 
 insert into `user` (`id`, `dni`, `username`, `name`, `surname`, `fecha_nac`, `direccion`, `comentario`, `num_cuenta`, `tipo_contrato`, `email`, `foto`, `activo`, `passwd`, `profile`) values
-(1, '44849254Q', 'admin', 'administrador', 'administrador', '2016-11-01', 'Calle Emilia Pardo Bazán 5,5ºD, Ourense', 'Un saludo', 'ES9287423222928374923847', 'indefinido', 'usuario@gmail.com', '', 1, 'admin', 'admin'),
-(2, '44849299Y', 'usuario1', 'javier', 'Fernández López', '2015-12-24', 'Calle Falsa 123, Ourense', '', 'ES9287423222928374923847', 'indefinido', 'usuario@esei.uvigo.es', '', 0, 'abc123.', 'admin');
+(1, '28955163A', 'admin', 'administrador', 'administrador', '1991-11-01', 'Calle Emilia Pardo Bazán 5,5ºD, Ourense', 'Un saludo', 'ES9287423222928374923847', 'indefinido', 'usuario@gmail.com', '', 1, 'admin', 'admin'),
+(2, '44326119J', 'usuario', 'javier', 'Fernández López', '1992-12-24', 'Calle Falsa 123, Ourense', '', 'ES9287423222928374923848', 'indefinido', 'javi.f@gmail.com', '', 0, 'abc123.', 'admin'),
+(3, '34137683W', 'rosaM', 'Rosa', 'Martinez Pereira', '1990-12-25', 'Pasadizo Gaspassin, 188A 17ºE', '', 'ES9287423222928374923849', 'indefinido', 'rosa@esei.uvigo.es', '', 1, 'abc123.', 'monitor');
 
 
 --
@@ -1287,7 +1288,11 @@ insert into `controller` (`id`, `controllername`) values
 (6, 'userperm'),
 (7, 'profileperm'),
 (8, 'injury'),
-(9, 'activity');
+(9, 'activity'),
+(10, 'client'),
+(11, 'cash'),
+(12, 'externalcustomer');
+
 
 
 --
@@ -1339,14 +1344,29 @@ insert into `permission` (`id`, `controller`, `action`) values
 (42, 'activity', 'show'),
 (43, 'activity', 'showone'),
 (44, 'activity', 'add'),
-(45, 'activity', 'edit');
+(45, 'activity', 'edit'),
+(46, 'client', 'delete'),
+(47, 'client', 'show'),
+(48, 'client', 'showone'),
+(49, 'client', 'add'),
+(50, 'client', 'edit'),
+(51, 'cash', 'delete'),
+(52, 'cash', 'show'),
+(53, 'cash', 'showone'),
+(54, 'cash', 'add'),
+(55, 'cash', 'edit'),
+(56, 'externalcustomer', 'delete'),
+(57, 'externalcustomer', 'show'),
+(58, 'externalcustomer', 'showone'),
+(59, 'externalcustomer', 'add'),
+(60, 'externalcustomer', 'edit');
 --
 -- dumping data for table `cliente`
 --
-insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`num_cuenta`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`) values
-(1, '12345678c', 'nombre3', 'aellidos3', '1999-11-11','ES9287423222928374923847', 'programador', 666666666, 'calle2,numero2,piso2', 'es un negado', 'cliente1@gym.com', true, default, true, default),
-(2, '13245678d', 'nombre4', 'apellidos4', '1999-12-12','ES9287423222928374923847', 'ingeniero', 777777777, 'calle3,numero3,piso3', 'está calvo', 'cliente2@gym.com', false, default, default, default);
-
+insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`num_cuenta`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`,`activo`,`foto`) values
+(1, '65417959W', 'Jose', 'Lopez Antelo', '1993-11-11','ES928742322292837492384', 'Programador', 695478210, 'Alameda Estucava parietària emmarciria, 276B 2ºA', 'Muy activo', 'jose.lopez@gmail.com', true, default, true, default,false,null),
+(2, '81974662V', 'Elena', 'Nito Del Bosque', '1988-12-12','ES9287423222928374923847', 'Ingeniero', 632588745, 'Pasaje Remosquejades, 300A 4ºD', 'Le encanta Pilates', 'elena.nito@delbosque.com', false, default, default, default,false,null),
+(3, '68942909H', 'Manuel', 'López Fernández', '1968-11-12','ES9287423332928374923847', 'Pastelero', 698523147, 'Avenida Debanaries Enllatin Renillin, 59', 'Soy pastelero', 'manu@gmail.com', false, false, false, true,true,null);
 --
 -- dumping data for table `particular_externo`
 --
@@ -1355,12 +1375,19 @@ insert into `particular_externo` (`id`, `nombre`, `apellidos`, `telefono`) value
 --
 -- dumping data for table `espacio`
 --
-insert into `espacio` (`id`, `nombre`) values (1, 'aula1'),(2, 'aula2');
+insert into `espacio` (`id`, `nombre`) values
+(1, 'Sala 1'),
+(2, 'Sala 2'),
+(3, 'Sala cardio'),
+(4, 'Sala fitness'),
+(5, 'Sala baile 1'),
+(6, 'Sala baile 2');
+
 
 --
 -- dumping data for table `reserva`
 --
-insert into `reserva` (`id`, `id_espacio`, `dni_c`, `precio_espacio`, `precio_fisio`) values (1, 1, '12345678c', 13, null),(2, null, '13245678d', null, 25);
+insert into `reserva` (`id`, `id_espacio`, `dni_c`, `precio_espacio`, `precio_fisio`) values (1, 1, '65417959W', 13, null),(2, null, '81974662V', null, 25);
 
 --
 -- dumping data for table `categoria`
@@ -1381,32 +1408,44 @@ insert into `evento` (`id`, `nombre`, `espacio_id`, `precio`) values (1, 'hallow
 -- dumping data for table `actividad`
 --
 insert into `actividad` (`id`, `nombre`, `espacio_id`, `capacidad`, `precio`, `categoria_id`) values
-(1, 'zumba', 1, 20, 20, 1),
-(2, 'salsa', 2, 13, 50, 2);
+(1, 'zumba', 5, 20, 4, 1),
+(2, 'salsa', 6, 20, 4, 2),
+(3, 'pilates', 2, 15, 5, 1),
+(4, 'spinning', 3, 25, 3, 2);
+
 
 --
 -- dumping data for table `inscripcion`
 --
 insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`, `id_descuento`) values
-(1, null, null, 1, null, '12345678c', '2016-5-6', 1),
-(2, 1, 1, null, null, '13245678d', '2016-4-3', null);
+(1, 1, 1, null, null, '65417959W', '2016-4-3', null),
+(2, null, null, 1, null, '68942909H', '2016-4-3', null),
+(3, null, null, 2, null, '68942909H', '2016-4-4', null);
 
 --
 -- dumping data for table `documento`
 --
 insert into `documento` (`dni`, `dni_c`, `id`, `tipo`, `documento`) values
-(null, '12345678c', 1, 'lesion', 'lesion1.pdf'),
-('44849254q', null, 2, 'sepa', 'sepa1.pdf');
+(null, '65417959W', 1, 'lesion', 'lesion1.pdf'),
+('28955163A', null, 2, 'sepa', 'sepa1.pdf');
 
 --
 -- dumping data for table `lesion`
 --
-insert into `lesion` (`id`, `descripcion`) values (1, 'rodilla de golfista'),(2, 'codo de tenista');
+insert into `lesion` (`id`, `descripcion`) values
+  (1, 'Esguince de tobillo'),
+  (2, 'Distension de biceps'),
+  (3, 'Fractura de tibia'),
+  (4, 'Fractura de escafoides '),
+  (5, 'Distension de cuadriceps'),
+  (6, 'Contractura omoplato');
 
 --
 -- dumping data for table `lesion_cliente`
 --
-insert into `lesion_cliente` (`id_lesion`, `cliente_id`) values (1, 1);
+insert into `lesion_cliente` (`id_lesion`, `cliente_id`) values
+  (1, 1),
+  (1, 3);
 
 --
 -- dumping data for table `lesion_empleado`
@@ -1416,7 +1455,10 @@ insert into `lesion_empleado` ( `lesion_id`,  `user_id`) values (2, 1);
 --
 -- dumping data for table `empleado_mira`
 --
-insert into `empleado_mira` (`user_id`, `lesion_cliente_cliente_id`, `lesion_cliente_id_lesion`, `fecha_vista`) values (1, 1, 1, '2016-11-4');
+insert into `empleado_mira` (`user_id`, `lesion_cliente_cliente_id`, `lesion_cliente_id_lesion`, `fecha`,`hora`) values
+  (1, 1, 1, '2016-11-4','12:00:22'),
+  (1, 3, 1, '2016-08-28','11:04:33'),
+  (2, 3, 1, '2016-11-4','19:05:01');
 
 --
 -- dumping data for table `horario_temporada`
@@ -1445,7 +1487,7 @@ insert into `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`
 -- dumping data for table `pago`
 --
 insert into `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`,`realizado`) values
-(1, 'tarjeta', '2016-3-2', null, 25, null, null,true),
+(1, 'tarjeta', '2016-3-2', null, 20, null, null,true),
 (2, 'transferencia', '2016-4-9', 'anual', 100, 1, null,true),
 (3, 'tarjeta', '2016-2-3', null, 300, null, null,false);
 
@@ -1500,7 +1542,9 @@ insert into `recibo` (`id`, `pago_id`, `producto`, `precio`, `cantidad`) values 
 --
 -- dumping data for table `caja`
 --
-insert into `caja` (`pago_id`, `id`, `efectivo_inicial`, `cantidad`, `efectivo_final`,`descripcion`) values (1, 1, 0, 20, 20,'Pagar pagaron'),(2, 2, 20, -10, 10,'Estos tambien pagaron');
+insert into `caja` (`pago_id`, `id`, `efectivo_inicial`, `cantidad`, `efectivo_final`,`descripcion`,`tipo`,`fecha`) values
+(1, 1, 0, 20, 20,'Pagar pagaron','cash income','2016-11-11'),
+(2, 2, 20, -10, 10,'Estos tambien pagaron','payment','2016-11-11');
 
 --
 -- dumping data for table `cliente_externo`
@@ -1574,7 +1618,31 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (42, 1, 42),
 (43, 1, 43),
 (44, 1, 44),
-(45, 1, 45);
+(45, 1, 45),
+(46, 1, 46),
+(47, 1, 47),
+(48, 1, 48),
+(49, 1, 49),
+(50, 1, 50),
+(51, 1, 51),
+(52, 1, 52),
+(53, 1, 53),
+(54, 1, 54),
+(55, 1, 55),
+(56, 1, 56),
+(57, 1, 57),
+(58, 1, 58),
+(59, 1, 59),
+(60, 1, 60),
+(61, 2, 43),
+(62, 2, 42),
+(63, 2, 50),
+(64, 2, 47),
+(65, 2, 48),
+(66, 2, 39),
+(67, 2, 38);
+
+
 
 
 GRANT USAGE ON *.* TO 'moovett'@'localhost';

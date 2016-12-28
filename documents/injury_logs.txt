@@ -1,0 +1,5 @@
+
+ID usuario:3-----ID cliente:3-----Fecha:2016-12-28-----Hora:13:22:7-----DENIED ACCESS
+ID usuario:1-----ID cliente:3-----Fecha:2016-12-28-----Hora:13:22:18-----GRANTED ACCESS
+ID usuario:1-----ID cliente:3-----Fecha:2016-12-28-----Hora:14:41:1-----GRANTED ACCESS
+ID usuario:3-----ID cliente:3-----Fecha:2016-12-28-----Hora:14:41:54-----DENIED ACCESS
