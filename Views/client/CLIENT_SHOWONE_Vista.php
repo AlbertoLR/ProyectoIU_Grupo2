@@ -48,7 +48,11 @@ $errors = $view->getVariable("errors");
           </tr>
           <tr>
             <th><?= i18n("Profession")?>:</th>
+            <?php if($client->getProfession()){ ?>
             <td><?= $client->getProfession() ?></td>
+            <?php } else{ ?>
+              <td><?= i18n("No") ?></td>
+            <?php }  ?>
           </tr>
           <tr class="active">
             <th><?= i18n("Phone")?>:</th>

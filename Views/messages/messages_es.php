@@ -237,5 +237,40 @@
     "Friday" => "Viernes",
     "rankhour" => "rango horario",
 
+    "List of Hours" => "Lista de Horas",
+    "Create Hours" => "Crear Horas",
+    "Start" => "Inicio",
+    "End" => "Fin",
+    "Weekday" => "Día semana",
+    "Rank" => "Rango",
+    "From" => "Desde",
+    "To" => "Hasta",
+    "Create Hour" => "Crear Hora",
+    "Delete Hour" => "Borrar Hora",
+    "hour" => "hora",
+
+    "Day(s)" => "Días",
+    "Delete Rankhour" => "Borrar Rango de Horas",
+    "View Used Hours" => "Ver Horas Utilizadas",
+    "List of Used Hours" => "Lista de Horas Utilizadas",
+    "List of Sessions" => "Lista de Sesiones",
+    "Create Session" => "Crear Sesión",
+    "Activity/Event" => "Actividad/Evento",
+    "Hours" => "Horas",
+    "Event" => "Evento",
+    "Delete Session" => "Borrar Sesión",
+    "session" => "sesione",
+
+
+
+
+
+
+
+
+
+
+
+
   )
 ?>

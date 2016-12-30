@@ -81,12 +81,16 @@ $currentuser = $view->getVariable("currentusername");
       <script src="js/datepicker.js"></script>
       <script src="js/bootstrap-multiselect.js"></script>
       <script src="js/multiselect-custom.js"></script>
+      <script src="js/discount_change.js"></script>
+      <script src="js/activity_change.js"></script>
+
 
     <!-- Typeahead core JavaScript
 	     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
       <script src="js/typeahead.bundle.js"></script>
       <script src="js/filter_users.js"></script>
+
 
     </body>
 </html>

@@ -37,10 +37,7 @@ $errors = $view->getVariable("errors");
           <option  value="<?= $discount["id"]."-".$discount["categoria_id"]?>"><?= $discount["descripcion"]."-".$discount["cantidad"]?></option>
           <?php }?>
         </select>
-        <div class="message">
-          <p><?= i18n("Press the next button to add the category associated with the selected discount") ?></p>
-          <input type="button" class="btn btn-default" onclick="read_category()" value="<?= i18n("Asign Category") ?>" / >
-        </div>
+
       </div>
       <div class="form-group" id="extra" style="visibility: hidden; display:none">
         <label><?= i18n("Extra discount") ?>:</label>
@@ -70,28 +67,6 @@ $errors = $view->getVariable("errors");
 </div>
 
 <script>
-function read_category(){
-  var category = document.getElementById("category").value;
-  if(category!=""){
-    var capa=document.getElementById("limpiar");
-    capa.style.visibility="hidden";
-    capa.style.display="none";
-
-    var capa1=document.getElementById("extra");
-    capa1.style.visibility="visible";
-    capa1.style.display="block";
-
-  }else{
-    var capa=document.getElementById("limpiar");
-    capa.style.visibility="visible";
-    capa.style.display="block";
-
-    var capa1=document.getElementById("extra");
-    capa1.style.visibility="hidden";
-    capa1.style.display="none";
-  }
-
-}
 
 function message(){
   <?php
