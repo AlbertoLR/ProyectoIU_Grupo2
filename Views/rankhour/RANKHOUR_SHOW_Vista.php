@@ -30,7 +30,7 @@ $errors = $view->getVariable("errors");
 	  <?php foreach($rankhours as $rankhour){ ?>
           <tr>
       	  <td><?php echo $rankhour->getID(); ?></td>
-          <td><?php echo $rankhour->getDay(); ?></td>
+          <td><?php echo i18n($rankhour->getDay()); ?></td>
           <td><?php echo $rankhour->getOpening(); ?></td>
           <td><?php echo $rankhour->getClosing(); ?></td>
           <?php foreach($seasons as $season => $value){ ?>

@@ -35,11 +35,11 @@ $errors = $view->getVariable("errors");
           <div class="form-group">
             <label><?= i18n("Day(s)") ?>:</label>
             <select name="days[]" class="form-control" required multiple id="example-getting-started">
-                    <option value="<?= i18n("Monday") ?>"><?= i18n("Monday") ?></option>
-                    <option value="<?= i18n("Tuesday") ?>"><?= i18n("Tuesday") ?></option>
-                    <option value="<?= i18n("Wednesday") ?>"><?= i18n("Wednesday") ?></option>
-                    <option value="<?= i18n("Thursday") ?>"><?= i18n("Thursday") ?></option>
-                    <option value="<?= i18n("Friday") ?>"><?= i18n("Friday") ?></option>
+                    <option value="Monday"><?= i18n("Monday") ?></option>
+                    <option value="Tuesday"><?= i18n("Tuesday") ?></option>
+                    <option value="Wednesday"><?= i18n("Wednesday") ?></option>
+                    <option value="Thursday"><?= i18n("Thursday") ?></option>
+                    <option value="Friday"><?= i18n("Friday") ?></option>
           </select>
           </div>
              <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>

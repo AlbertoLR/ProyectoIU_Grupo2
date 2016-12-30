@@ -307,7 +307,8 @@ create table `horas_posibles` (
   `dia` date not null,
   `hora_inicio` time not null,
   `hora_fin` time not null,
-  `rango_horario_id` int(11) not null
+  `rango_horario_id` int(11) not null,
+  `active` tinyint(1) not null default '0'
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -1261,7 +1262,8 @@ insert into `profile` (`id`, `profilename`) values
 insert into `user` (`id`, `dni`, `username`, `name`, `surname`, `fecha_nac`, `direccion`, `comentario`, `num_cuenta`, `tipo_contrato`, `email`, `foto`, `activo`, `passwd`, `profile`) values
 (1, '28955163A', 'admin', 'administrador', 'administrador', '1991-11-01', 'Calle Emilia Pardo Bazán 5,5ºD, Ourense', 'Un saludo', 'ES9287423222928374923847', 'indefinido', 'usuario@gmail.com', '', 1, 'admin', 'admin'),
 (2, '44326119J', 'usuario', 'javier', 'Fernández López', '1992-12-24', 'Calle Falsa 123, Ourense', '', 'ES9287423222928374923848', 'indefinido', 'javi.f@gmail.com', '', 0, 'abc123.', 'admin'),
-(3, '34137683W', 'rosaM', 'Rosa', 'Martinez Pereira', '1990-12-25', 'Pasadizo Gaspassin, 188A 17ºE', '', 'ES9287423222928374923849', 'indefinido', 'rosa@esei.uvigo.es', '', 1, 'abc123.', 'monitor');
+(3, '34137683W', 'rosaM', 'Rosa', 'Martinez Pereira', '1990-12-25', 'Pasadizo Gaspassin, 188A 17ºE', '', 'ES9287423222928374923849', 'indefinido', 'rosa@esei.uvigo.es', '', 1, 'abc123.', 'monitor'),
+(4, '44787624T', 'fernandoC', 'Fernando', 'Castelo Castelo', '1980-06-05', 'Calle Noriega Alonso, 7 7ºA, Santiago, A Coruña', '', 'ES9287423222928370000000', 'indefinido', 'fernando@esei.uvigo.es', '', 1, 'abc123.', 'monitor');
 
 
 --
@@ -1293,7 +1295,9 @@ insert into `controller` (`id`, `controllername`) values
 (11, 'cash'),
 (12, 'externalcustomer'),
 (13, 'season'),
-(14, 'rankhour');
+(14, 'rankhour'),
+(15, 'hour'),
+(16, 'session');
 
 
 
@@ -1369,7 +1373,15 @@ insert into `permission` (`id`, `controller`, `action`) values
 (64, 'season', 'delete'),
 (65, 'rankhour', 'add'),
 (66, 'rankhour', 'show'),
-(67, 'rankhour', 'delete');
+(67, 'rankhour', 'delete'),
+(68, 'hour', 'add'),
+(69, 'hour', 'delete'),
+(70, 'hour', 'show'),
+(71, 'session', 'delete'),
+(72, 'session', 'show'),
+(73, 'session', 'showone'),
+(74, 'session', 'add'),
+(75, 'session', 'edit');
 
 --
 -- dumping data for table `cliente`
@@ -1377,7 +1389,11 @@ insert into `permission` (`id`, `controller`, `action`) values
 insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`num_cuenta`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`,`activo`,`foto`) values
 (1, '65417959W', 'Jose', 'Lopez Antelo', '1993-11-11','ES928742322292837492384', 'Programador', 695478210, 'Alameda Estucava parietària emmarciria, 276B 2ºA', 'Muy activo', 'jose.lopez@gmail.com', true, default, true, default,false,null),
 (2, '81974662V', 'Elena', 'Nito Del Bosque', '1988-12-12','ES9287423222928374923847', 'Ingeniero', 632588745, 'Pasaje Remosquejades, 300A 4ºD', 'Le encanta Pilates', 'elena.nito@delbosque.com', false, default, default, default,false,null),
-(3, '68942909H', 'Manuel', 'López Fernández', '1968-11-12','ES9287423332928374923847', 'Pastelero', 698523147, 'Avenida Debanaries Enllatin Renillin, 59', 'Soy pastelero', 'manu@gmail.com', false, false, false, true,true,null);
+(3, '68942909H', 'Manuel', 'López Fernández', '1968-11-12','ES9287423332928374923847', 'Pastelero', 698523147, 'Avenida Debanaries Enllatin Renillin, 59', 'Soy pastelero', 'manu@gmail.com', false, false, false, true,true,null),
+(4, '51453544Z', 'Antonio', 'Míguez Calvo', '1995-01-06','ES9287423332928371259682', null, 635921362, 'C/ Nº, Rúa Alcalde Lorenzo, 6, 15220 Bertamiráns, A Coruña', 'Pasota', 'antonio@gmail.com', false, true, true, true,true,null),
+(5, '61682944A', 'Carla', 'González González', '1994-12-28','ES1256987458965230000025', null, 698377781, 'Ronda de Outeiro, 306 - 15011 - A Coruña', 'Vaga', 'carla@gmail.com', false, true, true, true,true,null);
+
+
 --
 -- dumping data for table `particular_externo`
 --
@@ -1422,7 +1438,10 @@ insert into `actividad` (`id`, `nombre`, `espacio_id`, `capacidad`, `precio`, `c
 (1, 'zumba', 5, 20, 4, 1),
 (2, 'salsa', 6, 20, 4, 2),
 (3, 'pilates', 2, 15, 5, 1),
-(4, 'spinning', 3, 25, 3, 2);
+(4, 'spinning', 3, 25, 3, 2),
+(5, 'step', 4, 10, 4, 2),
+(6, 'hiit', 1, 20, 3, 2);
+
 
 
 --
@@ -1456,7 +1475,9 @@ insert into `lesion` (`id`, `descripcion`) values
 --
 insert into `lesion_cliente` (`id_lesion`, `cliente_id`) values
   (1, 1),
-  (1, 3);
+  (1, 3),
+  (2, 4);
+
 
 --
 -- dumping data for table `lesion_empleado`
@@ -1469,7 +1490,7 @@ insert into `lesion_empleado` ( `lesion_id`,  `user_id`) values (2, 1);
 insert into `empleado_mira` (`user_id`, `lesion_cliente_cliente_id`, `lesion_cliente_id_lesion`, `fecha`,`hora`) values
   (1, 1, 1, '2016-11-4','12:00:22'),
   (1, 3, 1, '2016-08-28','11:04:33'),
-  (2, 3, 1, '2016-11-4','19:05:01');
+  (2, 4, 2, '2016-11-4','19:05:01');
 
 --
 -- dumping data for table `horario_temporada`
@@ -1482,25 +1503,60 @@ insert into `horario_temporada` (`id`, `dia_inicio`, `dia_fin`, `nombre_temp`) v
 -- dumping data for table `rango_horario`
 --
 insert into `rango_horario` (`id`, `dia_s`, `hora_apertura`, `hora_cierre`, `horario_temporada_id`) values
-(1, 'Lunes', '9:00', '15:00', 1),
-(2, 'Martes', '9:00', '15:00', 1),
-(3, 'Miercoles', '9:00', '15:00', 1),
-(4, 'Jueves', '9:00', '15:00', 1),
-(5, 'Viernes', '9:00', '15:00', 1);
+(1, 'Monday', '9:00', '15:00', 1),
+(2, 'Tuesday', '9:00', '15:00', 1),
+(3, 'Wednesday', '9:00', '15:00', 1),
+(4, 'Thursday', '9:00', '15:00', 1),
+(5, 'Friday', '9:00', '15:00', 1);
 
 
 --
 -- dumping data for table `horas_posibles`
 --
-insert into `horas_posibles` (`id`,`dia`, `hora_inicio`, `hora_fin`,`rango_horario_id`) values
-(1,'lunes', '9:00', '10:00', 1),
-(2,'lunes', '10:00', '11:00', 1),
-(3,'lunes', '11:00', '12:00', 1);
+insert into `horas_posibles` (`id`,`dia`, `hora_inicio`, `hora_fin`,`rango_horario_id`,`active`) values
+(1,'2016-09-05', '9:00', '10:00', 1,1),
+(2,'2016-09-05', '10:00', '11:00', 1,1),
+(3,'2016-09-05', '11:00', '12:00', 1,1),
+(4,'2016-09-05', '12:00', '13:00', 1,1),
+(5,'2016-09-05', '13:00', '14:00', 1,1),
+(6,'2016-09-05', '14:00', '15:00', 1,1),
+(7,'2016-09-06', '9:00', '10:00', 2,1),
+(8,'2016-09-06', '10:00', '11:00', 2,1),
+(9,'2016-09-06', '11:00', '12:00', 2,1),
+(10,'2016-09-06', '12:00', '13:00', 2,1),
+(11,'2016-09-06', '13:00', '14:00', 2,1),
+(12,'2016-09-06', '14:00', '15:00', 2,1),
+(13,'2016-09-07', '9:00', '10:00', 3,0),
+(14,'2016-09-07', '10:00', '11:00', 3,0),
+(15,'2016-09-07', '11:00', '12:00', 3,0),
+(16,'2016-09-07', '12:00', '13:00', 3,0),
+(17,'2016-09-07', '13:00', '14:00', 3,0),
+(18,'2016-09-07', '14:00', '15:00', 3,0),
+(19,'2016-09-08', '9:00', '10:00', 4,0),
+(20,'2016-09-08', '10:00', '11:00', 4,0),
+(21,'2016-09-08', '11:00', '12:00', 4,0),
+(22,'2016-09-08', '12:00', '13:00', 4,0),
+(23,'2016-09-08', '13:00', '14:00', 4,0),
+(24,'2016-09-08', '14:00', '15:00', 4,0);
 
 --
 -- dumping data for table `sesion`
 --
-insert into `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`,`horas_posibles_id`) values (1, 1, null, 1, 1, 1),(2, 1, null, 1, 1, 2);
+insert into `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`,`horas_posibles_id`) values
+  (1, 5, null, 1, 3, 1),
+  (2, 6, null, 2, 4, 2),
+  (3, 2, null, 3, 3, 3),
+  (4, 3, null, 4, 4, 4),
+  (5, 4, null, 5, 3, 5),
+  (6, 1, null, 6, 4, 6),
+  (7, 5, null, 1, 3, 7),
+  (8, 6, null, 2, 4, 8),
+  (9, 2, null, 3, 3, 9),
+  (10, 3, null, 4, 4, 10),
+  (11, 4, null, 5, 3, 11),
+  (12, 1, null, 6, 4, 12);
+
+
 
 --
 -- dumping data for table `pago`
@@ -1666,7 +1722,15 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (71, 1, 64),
 (72, 1, 65),
 (73, 1, 66),
-(74, 1, 67);
+(74, 1, 67),
+(75, 1, 68),
+(76, 1, 69),
+(77, 1, 70),
+(78, 1, 71),
+(79, 1, 72),
+(80, 1, 73),
+(81, 1, 74),
+(82, 1, 75);
 
 
 
