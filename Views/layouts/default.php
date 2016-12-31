@@ -83,6 +83,9 @@ $currentuser = $view->getVariable("currentusername");
       <script src="js/multiselect-custom.js"></script>
       <script src="js/discount_change.js"></script>
       <script src="js/activity_change.js"></script>
+      <script src="js/particular.js"></script>
+      <script src="js/add_event.js"></script>
+      <script src="js/add_activity.js"></script>
 
 
     <!-- Typeahead core JavaScript

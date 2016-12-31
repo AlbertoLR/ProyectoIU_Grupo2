@@ -122,5 +122,43 @@ class USER_Model {
             return true;
         }
     }
-    
+    public function get_day($sessions,$hours,$activities,$events,$users,$spaces,$wd,$week){
+      $i = -1;
+      $array =  array();
+      foreach($hours as $hour => $values){
+       foreach($sessions as $session){
+          if($session->getHoursID()==$values["id"]) {
+             if( date('l', strtotime($values["dia"]))==$wd && $week == date('W', strtotime($values["dia"])) ) {
+               $i++;
+           $array[$i]["hora_inicio"] = $values["hora_inicio"];
+           $array[$i]["hora_fin"] = $values["hora_fin"];
+           $array[$i]["fecha"] = $values["dia"];
+          if($session->getActivityID()) {
+            foreach($activities as $activity => $value){
+            if($value["id"]==$session->getActivityID()) {
+              $array[$i]["actividad"] = $value["nombre"] ;
+          } } } else {
+
+            if($session->getEventID()) {
+              foreach($events as $event => $value){
+               if($value["id"]==$session->getEventID()) {
+                 $array[$i]["evento"]=$value["nombre"];
+           }
+          }
+         }
+
+          }
+          foreach($users as $user=> $value){
+           if($value["id"]==$session->getUserID()) {
+             $array[$i]["user"]=$value["name"];
+            } }
+
+         foreach($spaces as $space => $value){
+            if($value["id"]==$session->getSpaceID()) {
+             $array[$i]["space"]=$value["nombre"];
+          } }
+       } } }
+     }
+       return $array;
+   }
 }
