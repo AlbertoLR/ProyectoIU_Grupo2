@@ -262,6 +262,9 @@
     "Delete Session" => "Borrar Sesión",
     "session" => "sesión",
 
-    "Week of " => "Semana do ",
+    "Week of Monday " => "Semana do Luns ",
+    "Last week" => "Semana pasada",
+    "Next week" => "Próxima semana",
+    "Modify Session" => "Modificar Sesión",
   )
 ?>

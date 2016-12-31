@@ -137,12 +137,15 @@ class USER_Model {
             foreach($activities as $activity => $value){
             if($value["id"]==$session->getActivityID()) {
               $array[$i]["actividad"] = $value["nombre"] ;
+              $array[$i]["actividad_id"] = $value["id"] ;
           } } } else {
 
             if($session->getEventID()) {
               foreach($events as $event => $value){
                if($value["id"]==$session->getEventID()) {
+                 $array[$i]["actividad"] = NULL;
                  $array[$i]["evento"]=$value["nombre"];
+                 $array[$i]["evento_id"]=$value["id"];
            }
           }
          }
@@ -151,11 +154,13 @@ class USER_Model {
           foreach($users as $user=> $value){
            if($value["id"]==$session->getUserID()) {
              $array[$i]["user"]=$value["name"];
+             $array[$i]["user_id"]=$value["id"];
             } }
 
          foreach($spaces as $space => $value){
             if($value["id"]==$session->getSpaceID()) {
              $array[$i]["space"]=$value["nombre"];
+             $array[$i]["space_id"]=$value["id"];
           } }
        } } }
      }

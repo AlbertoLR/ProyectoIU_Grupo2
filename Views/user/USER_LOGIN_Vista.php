@@ -17,7 +17,7 @@ $permissions = $view->getVariable("permissions");
 
 <?= isset($errors["general"])?$errors["general"]:"" ?>
 
-<?php $view->moveToDefaultFragment(); echo $week?>
+<?php $view->moveToDefaultFragment();?>
   <div class="jumbotrone">
 	   <div class="container">
 	      <?php if (isset($currentuser)): ?>
@@ -26,9 +26,11 @@ $permissions = $view->getVariable("permissions");
         <?php  foreach ($days1 as $day => $value) {
               $c++;
               if($c<1){
-                echo "<h3>Week of Monday ".$value["fecha"]."</h3>";
-              }
-          }?>
+                $date = new dateTime($value["fecha"]);
+                $format = $date->format('d-m-Y');
+                ?>
+                <h3><?= i18n("Week of Monday ").$format ?></h3>
+            <?php }}?>
           <?php if ($week-1 == 0) {
             $weekA = 52;
           } else{
@@ -37,7 +39,7 @@ $permissions = $view->getVariable("permissions");
           <div class="corner top-buffer">
             <form action="index.php?controller=user&amp;action=login" method="POST">
               <input type="number" name="wk" value="<?= $weekA ?>" hidden=true>
-              <button type="submit" class="btn btn-default"><?= i18n("Semana Anterior") ?></button>
+              <button type="submit" class="btn btn-default"><?= i18n("Last week") ?></button>
             </form>
             <?php if ($week+1 == 53) {
               $weekN=1;
@@ -46,7 +48,7 @@ $permissions = $view->getVariable("permissions");
             } ?>
            <form action="index.php?controller=user&amp;action=login" method="POST">
              <input type="number" name="wk" value="<?= $weekN ?>" hidden=true>
-             <button type="submit" class="btn btn-default"><?= i18n("Semana Siguiente") ?></button>
+             <button type="submit" class="btn btn-default"><?= i18n("Next week") ?></button>
            </form>
        </div>
 
@@ -68,45 +70,65 @@ $permissions = $view->getVariable("permissions");
       <td>
       <?php foreach ($days1 as $day => $value) {?>
             <p><?php echo $value["hora_inicio"]." - ".$value["hora_fin"]."\n" ?></p>
-            <p><a href="#"><?php echo $value["actividad"]."\n" ?></a><p>
-            <p><a href="#"><?php echo $value["user"]."\n" ?></a><p>
-            <p><a href="#"><?php echo $value["space"]."\n" ?></a><p>
+            <?php if($value["actividad"]){?>
+              <p><a href="index.php?controller=activity&amp;action=showone&amp;id=<?php echo $value["actividad_id"] ?>"><?php echo $value["actividad"] ?></a><p>
+            <?php } else { ?>
+              <p><a href="index.php?controller=event&amp;action=showone&amp;id=<?php echo $value["evento_id"] ?>"><?php echo $value["evento"] ?></a><p>
+            <?php } ?>
+            <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"] ?></a><p>
+            <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"] ?></a><p>
             <hr>
         <?php }?>
         </td>
         <td class="active">
           <?php foreach ($days2 as $day => $value) {?>
-              <p><?php echo $value["hora_inicio"]." - ".$value["hora_fin"]."\n" ?></p>
-              <p><a href="#"><?php echo $value["actividad"]."\n" ?></a><p>
-              <p><a href="#"><?php echo $value["user"]."\n" ?></a><p>
-              <p><a href="#"><?php echo $value["space"]."\n" ?></a><p>
+              <p><?php echo $value["hora_inicio"]." - ".$value["hora_fin"] ?></p>
+              <?php if($value["actividad"]){?>
+                <p><a href="index.php?controller=activity&amp;action=showone&amp;id=<?php echo $value["actividad_id"] ?>"><?php echo $value["actividad"] ?></a><p>
+              <?php } else { ?>
+                <p><a href="index.php?controller=event&amp;action=showone&amp;id=<?php echo $value["evento_id"] ?>"><?php echo $value["evento"] ?></a><p>
+              <?php } ?>
+              <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"] ?></a><p>
+              <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"]."\n" ?></a><p>
               <hr>
           <?php }?>
         </td>
         <td>
           <?php foreach ($days3 as $day => $value) {?>
-              <p><?php echo $value["hora_inicio"]." - ".$value["hora_fin"]."\n" ?></p>
-              <p><a href="#"><?php echo $value["actividad"]."\n" ?></a><p>
-              <p><a href="#"><?php echo $value["user"]."\n" ?></a><p>
-              <p><a href="#"><?php echo $value["space"]."\n" ?></a><p>
+              <p><?php echo $value["hora_inicio"]." - ".$value["hora_fin"] ?></p>
+              <?php if($value["actividad"]){?>
+                <p><a href="index.php?controller=activity&amp;action=showone&amp;id=<?php echo $value["actividad_id"] ?>"><?php echo $value["actividad"] ?></a><p>
+              <?php } else { ?>
+                <p><a href="index.php?controller=event&amp;action=showone&amp;id=<?php echo $value["evento_id"] ?>"><?php echo $value["evento"] ?></a><p>
+              <?php } ?>
+              <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"] ?></a><p>
+              <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"]."\n" ?></a><p>
               <hr>
           <?php }?>
         </td>
         <td class="active">
           <?php foreach ($days4 as $day => $value) {?>
               <p><?php echo $value["hora_inicio"]." - ".$value["hora_fin"]."\n" ?></p>
-              <p><a href="#"><?php echo $value["actividad"]."\n" ?></a><p>
-              <p><a href="#"><?php echo $value["user"]."\n" ?></a><p>
-              <p><a href="#"><?php echo $value["space"]."\n" ?></a><p>
+              <?php if($value["actividad"]){?>
+                <p><a href="index.php?controller=activity&amp;action=showone&amp;id=<?php echo $value["actividad_id"] ?>"><?php echo $value["actividad"] ?></a><p>
+              <?php } else { ?>
+                <p><a href="index.php?controller=event&amp;action=showone&amp;id=<?php echo $value["evento_id"] ?>"><?php echo $value["evento"] ?></a><p>
+              <?php } ?>
+              <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"]."\n" ?></a><p>
+              <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"]."\n" ?></a><p>
               <hr>
           <?php }?>
         </td>
         <td>
           <?php foreach ($days5 as $day => $value) {?>
               <p><?php echo $value["hora_inicio"]." - ".$value["hora_fin"]."\n" ?></p>
-              <p><a href="#"><?php echo $value["actividad"]."\n" ?></a><p>
-              <p><a href="#"><?php echo $value["user"]."\n" ?></a><p>
-              <p><a href="#"><?php echo $value["space"]."\n" ?></a><p>
+              <?php if($value["actividad"]){?>
+                <p><a href="index.php?controller=activity&amp;action=showone&amp;id=<?php echo $value["actividad_id"] ?>"><?php echo $value["actividad"] ?></a><p>
+              <?php } else { ?>
+                <p><a href="index.php?controller=event&amp;action=showone&amp;id=<?php echo $value["evento_id"] ?>"><?php echo $value["evento"] ?></a><p>
+              <?php } ?>
+              <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"]."\n" ?></a><p>
+              <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"]."\n" ?></a><p>
               <hr>
           <?php }?>
         </td>
