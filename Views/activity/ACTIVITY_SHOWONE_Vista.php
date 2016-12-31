@@ -41,12 +41,11 @@ $errors = $view->getVariable("errors");
         <tbody>
           <tr>
             <th><?= i18n("Discount")?></th>
+            <?php $d = "-" ?>
             <?php foreach($discounts as $discount => $value){ ?>
-              <?php if($value["id"] == $activity->getDiscountid()) {?>
-              <td><?=$value["cantidad"]."%" ?></td>
-            <?php }  else {  ?>
-                <td>0%</td>
-              <?php } } ?>
+              <?php if($value["id"] == $activity->getDiscountid()) {
+                 $d=$value["cantidad"];
+               } }  ?><td><?php echo $d."%"  ?></td>
           </tr>
         </tbody>
         <tbody>
