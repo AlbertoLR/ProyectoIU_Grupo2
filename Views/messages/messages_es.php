@@ -223,6 +223,7 @@
     "Season \"%s\" successfully updated." => "Temporada \"%s\" actualizada correctamente.",
     "Season \"%s\" successfully deleted." => "Temporada\"%s\" eliminada correctamente.",
     "season" => "temporada",
+    "Delete Season" => "Borrar Temporada",
     "List of Rankhours" => "Lista de Rangos de Horarios",
     "Create Rankhour" => "Crear Rango Horario",
     "Day" => "Día",
@@ -260,6 +261,8 @@
     "Event" => "Evento",
     "Delete Session" => "Borrar Sesión",
     "session" => "sesione",
+
+    "Week of " => "Semana del ",
 
 
 

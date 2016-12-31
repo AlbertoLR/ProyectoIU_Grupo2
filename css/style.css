@@ -13,17 +13,15 @@ body {
   padding-bottom: 20px;
 }
 
+.corner {
+  display: flex;
+  justify-content: space-between;
+}
+
 .top-buffer {
   margin-top:20px;
 }
 
-
-.message p{
-  margin-top: 15px;
-  font-size: 1.2em;
-  color:#c09853;
-  background: #fcf8e3;
-}
 
 .tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
 .tt-hint {

@@ -5,6 +5,8 @@ require_once(__DIR__."/../Models/User.php");
 require_once(__DIR__."/../Models/USER_Model.php");
 require_once(__DIR__."/../Models/Profile.php");
 require_once(__DIR__."/../Models/PROFILE_Model.php");
+require_once(__DIR__."/../Models/Session.php");
+require_once(__DIR__."/../Models/SESSION_Model.php");
 require_once(__DIR__."/../Controllers/BaseController.php");
 
 class USER_Controller extends BaseController {
@@ -13,9 +15,12 @@ class USER_Controller extends BaseController {
 
     public function __construct() {
         parent::__construct();
+        $this->sessionMapper = new SESSION_Model();
         $this->userMapper = new USER_Model();
         $this->view->setLayout("default");
     }
+
+
 
     public function login() {
         if (isset($_POST["username"])){
@@ -30,6 +35,33 @@ class USER_Controller extends BaseController {
                 $this->view->setVariable("errors", $errors);
             }
         }
+        $sessions = $this->sessionMapper->fetch_all();
+        $hours = $this->sessionMapper->fetch_hours();
+        $activities = $this->sessionMapper->fetch_activities();
+        $events = $this->sessionMapper->fetch_events();
+        $users = $this->sessionMapper->fetch_users();
+        $spaces = $this->sessionMapper->fetch_spaces();
+
+        if (isset($_POST["wk"])){
+            $week=$_POST["wk"];
+        }else{
+          $array_date = getDate();
+          $date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
+          $week = date('W', strtotime($date));
+        }
+
+        $days1 = $this->userMapper->get_day($sessions,$hours,$activities,$events,$users,$spaces,"Monday", $week);
+        $days2 = $this->userMapper->get_day($sessions,$hours,$activities,$events,$users,$spaces,"Tuesday", $week);
+        $days3 = $this->userMapper->get_day($sessions,$hours,$activities,$events,$users,$spaces,"Wednesday",$week);
+        $days4 = $this->userMapper->get_day($sessions,$hours,$activities,$events,$users,$spaces,"Thursday", $week);
+        $days5 = $this->userMapper->get_day($sessions,$hours,$activities,$events,$users,$spaces,"Friday", $week);
+
+        $this->view->setVariable("days1", $days1);
+        $this->view->setVariable("days2", $days2);
+        $this->view->setVariable("days3", $days3);
+        $this->view->setVariable("days4", $days4);
+        $this->view->setVariable("days5", $days5);
+        $this->view->setVariable("week", $week);
 
         $this->view->setVariable("user_controllers", $this->user_controllers($this->currentUserId));
         $this->view->render("user", "USER_LOGIN_Vista");
@@ -349,5 +381,7 @@ class USER_Controller extends BaseController {
     private function user_controllers($userid){
         return $this->checkPerms->user_controllers($userid);
     }
+
+
 
 }
