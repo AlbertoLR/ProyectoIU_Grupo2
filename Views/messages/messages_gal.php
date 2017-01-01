@@ -270,5 +270,40 @@
     "DNI Client" => "DNI Cliente",
     "Activity Inscriptions" => "Inscripcións Actividade",
     "Client Inscriptions" => "Inscripcións Cliente",
+    "External Particular" => "Particular Externo",
+    "Reserve" => "Reserva",
+    "Reserve (It should be the same as DNI Client below)" => "Reserva (debe coincidir co DNI do cliente mais abaixo)",
+    "DNI Client" => "DNI do Cliente",
+    "Cost" => "Custo",
+    "External Client's DNI/NIF" => "DNI/NIF Cliente Externo",
+    "Payment Method" => "Método do Pago",
+    "Payment Frecuency" => "Periodicidade",
+    "Payment Recieved" => "Pago Recibido",
+
+    "Inscription Details" => "Detalles da Inscipción",
+    "List of Inscriptions" => "Lista das Inscripcions",
+    "Add Inscription" => "Engadir Inscripción",
+    "Delete Inscription" => "Eliminar Inscripción",
+    "Modify Inscription" => "Modificar Inscripción",
+
+    "Add Service" => "Engadir Servizo",
+    "Delete Service" => "Eliminar Servizo",
+    "Modify Service" => "Modificar Servizo",
+    "Service Details" => "Detalles do Servizo",
+    "List of Services" => "Lista dos Servizos",
+
+    "Inscription \"%s\" successfully added." => "Inscription \"%s\" engadido con éxito.",
+    "Inscription \"%s\" successfully updated." => "Inscripción \"%s\" modificado con éxito.",
+    "Inscription \"%s\" successfully deleted." => "Inscripción \"%s\" eliminada con éxito.",
+    "No such inscription with id: " => "Non existe un inscripción co id: ",
+    "An inscription id is mandatory" => "Un id de inscripción es obrigatório",
+
+    "A service id is mandatory" => "Un id de servizo es obrigatório",
+    "No such service with id: " => "Non existe servizo con o id: ",
+    "Service successfully added." => "Servizo engadido con éxito",
+    "A service id is mandatory" => "Un id de servizo es obrigatório",
+    "Id is mandatory" => "Id es obrigatório",
+    "inscription" => "inscripción",
+    "service" => "servicio"
   )
 ?>

@@ -343,8 +343,7 @@ create table `inscripcion` (
   `evento_id` int(11) null,
   `reserva_id` int(11) null,
   `cliente_dni_c` varchar(9) collate utf8_spanish_ci default null,
-  `id_actividad` int(11) null,
-  `id_descuento` int(11) null
+  `id_actividad` int(11) null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -764,7 +763,7 @@ alter table `hora_fisio`
 -- indexes for table `inscripcion`
 --
 alter table `inscripcion`
- add primary key (`id`), add key `fk_inscripcion_particular_externo1_idx` (`particular_externo_id`), add key `fk_inscripcion_evento1_idx` (`evento_id`), add key `fk_inscripcion_reserva1_idx` (`reserva_id`),add key `fk_inscripcion_actividad1_idx` (`id_actividad`),add key `fk_inscripcion_descuento1_idx` (`id_descuento`),add key `fk_inscripcion_cliente1_idx` (`cliente_dni_c`);
+ add primary key (`id`);
 
 --
 -- indexes for table `lesion`
@@ -1124,18 +1123,6 @@ alter table `hora_fisio`
 add constraint `id_reserva` foreign key (`id_reserva`) references `reserva` (`id`) on delete cascade on update cascade;
 
 --
--- constraints for table `inscripcion`
---
-alter table `inscripcion`
-add constraint `fk_inscripcion_cliente1` foreign key (`cliente_dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade,
-add constraint `fk_inscripcion_evento1` foreign key (`evento_id`) references `evento` (`id`) on delete cascade on update cascade,
-add constraint `fk_inscripcion_particular_externo1` foreign key (`particular_externo_id`) references `particular_externo` (`id`) on delete cascade on update cascade,
-add constraint `fk_inscripcion_reserva1` foreign key (`reserva_id`) references `reserva` (`id`) on delete cascade on update cascade,
-add constraint `fk_inscripcion_actividad1` foreign key (`id_actividad`) references `actividad` (`id`) on delete cascade on update cascade,
-add constraint `fk_inscripcion_descuento1` foreign key (`id_descuento`) references `descuento` (`id`) on delete cascade on update cascade;
-
-
---
 -- constraints for table `lesion_cliente`
 --
 alter table `lesion_cliente`
@@ -1298,7 +1285,9 @@ insert into `controller` (`id`, `controllername`) values
 (14, 'rankhour'),
 (15, 'hour'),
 (16, 'session'),
-(17, 'inscription');
+(17, 'inscription'),
+(18, 'service');
+
 
 
 
@@ -1387,7 +1376,12 @@ insert into `permission` (`id`, `controller`, `action`) values
 (77, 'inscription', 'show'),
 (78, 'inscription', 'showone'),
 (79, 'inscription', 'add'),
-(80, 'inscription', 'edit');
+(80, 'inscription', 'edit'),
+(81, 'service', 'delete'),
+(82, 'service', 'show'),
+(83, 'service', 'showone'),
+(84, 'service', 'add'),
+(85, 'service', 'edit');
 
 --
 -- dumping data for table `cliente`
@@ -1403,7 +1397,8 @@ insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`nu
 --
 -- dumping data for table `particular_externo`
 --
-insert into `particular_externo` (`id`, `nombre`, `apellidos`, `telefono`) values (1, 'nombreext', 'apellidosext', 111222333);
+insert into `particular_externo` (`id`, `nombre`, `apellidos`, `telefono`) values
+(1, 'Julián', 'Gómez Serna', 698745128);
 
 --
 -- dumping data for table `espacio`
@@ -1453,10 +1448,11 @@ insert into `actividad` (`id`, `nombre`, `espacio_id`, `capacidad`, `precio`, `c
 --
 -- dumping data for table `inscripcion`
 --
-insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`, `id_descuento`) values
-(1, 1, 1, null, null, '65417959W', '2016-4-3', null),
-(2, null, null, 1, null, '68942909H', '2016-4-3', null),
-(3, null, null, 2, null, '68942909H', '2016-4-4', null);
+insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`) values
+(1, null, 1, null, null, '61682944A', '2017-4-3'),
+(2, null, null, 1, null, '68942909H', '2017-4-3'),
+(3, null, null, 2, null, '68942909H', '2017-4-4'),
+(4, 1, null, null, null, null, '2017-4-4');
 
 --
 -- dumping data for table `documento`
@@ -1809,7 +1805,7 @@ insert into `caja` (`pago_id`, `id`, `efectivo_inicial`, `cantidad`, `efectivo_f
 -- dumping data for table `cliente_externo`
 --
 insert into `cliente_externo` (`id`, `dni_nif`, `nombre`, `apellido`, `telefono`, `email`) values
-(1, '12345678f', 'externo', 'apellidoext', 888888888, 'exte@rno.com');
+(1, '41487890F', 'Felipe', 'Palleiro Gómez', 693250147, 'exte@rno.com');
 
 --
 -- dumping data for table `servicio`
@@ -1919,7 +1915,12 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (84, 1, 77),
 (85, 1, 78),
 (86, 1, 79),
-(87, 1, 80);
+(87, 1, 80),
+(88, 1, 81),
+(89, 1, 82),
+(90, 1, 83),
+(91, 1, 84),
+(92, 1, 85);
 
 
 
