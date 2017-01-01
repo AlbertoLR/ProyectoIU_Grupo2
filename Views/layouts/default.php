@@ -86,6 +86,7 @@ $currentuser = $view->getVariable("currentusername");
       <script src="js/particular.js"></script>
       <script src="js/add_event.js"></script>
       <script src="js/add_activity.js"></script>
+      <script src="js/dni_validator.js"></script>
 
 
     <!-- Typeahead core JavaScript

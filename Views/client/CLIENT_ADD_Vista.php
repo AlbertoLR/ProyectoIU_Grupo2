@@ -24,7 +24,7 @@ $errors = $view->getVariable("errors");
         <form action="index.php?controller=client&amp;action=add" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label><?= i18n("DNI") ?>:</label>
-            <input type="text" name="dni" class="form-control"  placeholder="ej: 00000000A" minlength="9" maxlength="9" required="required" pattern="(([X-Zx-z]{1})([-]?)(\d{7})([-]?)([A-Za-z]{1}))|((\d{8})([-]?)([A-Za-z]{1}))" >
+            <input type="text" name="dni" class="form-control" id="dni" placeholder="ej: 00000000A" minlength="9" maxlength="9" required="required" pattern="(([X-Zx-z]{1})([-]?)(\d{7})([-]?)([A-Za-z]{1}))|((\d{8})([-]?)([A-Za-z]{1}))" >
           </div>
           <div class="form-group">
             <label><?= i18n("Name") ?>:</label>
