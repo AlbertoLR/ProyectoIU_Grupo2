@@ -11,12 +11,20 @@ $errors = $view->getVariable("errors");
 <?php $view->moveToDefaultFragment(); ?>
 
 <div class="jumbotron">
+  <div class="design">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="index.php?controller=user&amp;action=login"><?= i18n("Home") ?></a></li>
+    <li class="breadcrumb-item"><a href="index.php?controller=season&amp;action=show"><?= i18n("List of Seasons") ?></a></li>
+    <li class="breadcrumb-item active"><?= i18n("Create Season") ?></li>
+  </ol>
+  </div>
     <div class="container">
+
       <h1><?= i18n("Create Season")?></h1>
         <form action="index.php?controller=season&amp;action=add" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label><?= i18n("Name") ?>:</label>
-             <input type="text" name="description" class="form-control"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
+             <input type="text" name="description" class="form-control" minlength="2" maxlength="16"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
           </div>
           <div class="form-group">
             <label><?= i18n("Start Day") ?>:</label>

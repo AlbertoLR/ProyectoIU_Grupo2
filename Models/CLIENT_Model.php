@@ -150,6 +150,8 @@ class CLIENT_Model {
                                 $client->getEmail(), $client->getAlert(), $client->getUnemPloyed(), $client->getStudent(),$client->getFamily(),
                                 $client->getAccount(),$client->getActive(),$client->getPhoto(), $client->getID()));
 
+
+        if($client->getInjury()){
           $id_cliente = $client->getID();
           $id_lesion = $client->getInjury();
           $sql1 = $this->db->query("SELECT cliente_id FROM lesion_cliente where cliente_id='$id_cliente'");
@@ -166,6 +168,7 @@ class CLIENT_Model {
             $sql3 = $this->db->prepare("INSERT INTO empleado_mira(lesion_cliente_id_lesion,lesion_cliente_cliente_id,user_id,fecha,hora) values (?,?,?,?,?)");
             $sql3->execute(array($id_lesion,$id_cliente,$currentUserId,$date,$time));
           }
+        }
 
     }
 

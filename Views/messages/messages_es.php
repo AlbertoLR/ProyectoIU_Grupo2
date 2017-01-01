@@ -266,6 +266,7 @@
     "Last week" => "Semana pasada",
     "Next week" => "Próxima semana",
     "Modify Session" => "Modificar Sesión",
+    "Modify Season" => "Modificar Temporada"
 
 
 

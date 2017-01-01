@@ -12,6 +12,13 @@ $errors = $view->getVariable("errors");
 <?php $view->moveToDefaultFragment(); ?>
 
 <div class="jumbotron">
+  <div class="design">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.php?controller=user&amp;action=login"><?= i18n("Home") ?></a></li>
+      <li class="breadcrumb-item"><a href="index.php?controller=client&amp;action=show"><?= i18n("List of Clients") ?></a></li>
+      <li class="breadcrumb-item active"><?= i18n("Modify Client") ?></li>
+    </ol>
+  </div>
     <div class="container">
       <h1><?= i18n("Modify Client")?></h1>
         <form action="index.php?controller=client&amp;action=edit" method="POST" enctype="multipart/form-data">
@@ -21,11 +28,11 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Name") ?>:</label>
-             <input type="text" name="name" class="form-control" value="<?= $client->getName()?>"  placeholder="ej: Juan"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
+             <input type="text" name="name" class="form-control" value="<?= $client->getName()?>"  placeholder="ej: Juan" minlength="3" maxlength="16"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
           </div>
           <div class="form-group">
             <label><?= i18n("Surname") ?>:</label>
-             <input type="text" name="surname" class="form-control" value="<?= $client->getSurname()?>" placeholder="ej: Fernández López"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
+             <input type="text" name="surname" class="form-control" value="<?= $client->getSurname()?>" placeholder="ej: Fernández López" minlength="3" maxlength="25"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
           </div>
           <div class="form-group">
             <label><?= i18n("Birthdate") ?>:</label>
@@ -33,11 +40,11 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Profession") ?>:</label>
-             <input type="text" name="profession" value="<?= $client->getProfession()?>" class="form-control">
+             <input type="text" name="profession" value="<?= $client->getProfession()?>" placeholder="ej: Camarero" minlength="3" maxlength="30" class="form-control">
           </div>
           <div class="form-group">
             <label><?= i18n("Phone") ?>:</label>
-             <input type="number" name="phone" value="<?= $client->getPhone()?>" class="form-control">
+             <input type="number" name="phone" value="<?= $client->getPhone()?>" placeholder="ej: 666777888" min="100000000" max="999999999" class="form-control">
           </div>
           <div class="form-group">
             <label><?= i18n("Address") ?>:</label>

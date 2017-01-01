@@ -11,6 +11,13 @@ $errors = $view->getVariable("errors");
 <?php $view->moveToDefaultFragment(); ?>
 
 <div class="jumbotron">
+  <div class="design">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.php?controller=user&amp;action=login"><?= i18n("Home") ?></a></li>
+      <li class="breadcrumb-item"><a href="index.php?controller=controller&amp;action=show"><?= i18n("List of Controllers") ?></a></li>
+      <li class="breadcrumb-item active"><?= i18n("Modify Controller") ?></li>
+    </ol>
+  </div>
     <div class="container">
       <h1><?= i18n("Update Controller")?></h1>
       <form action="index.php?controller=controller&amp;action=edit" method="POST">

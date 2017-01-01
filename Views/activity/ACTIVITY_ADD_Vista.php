@@ -14,27 +14,34 @@ $errors = $view->getVariable("errors");
 <?php $view->moveToDefaultFragment(); ?>
 
 <div class="jumbotron">
+  <div class="design">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="index.php?controller=user&amp;action=login"><?= i18n("Home") ?></a></li>
+    <li class="breadcrumb-item"><a href="index.php?controller=activity&amp;action=show"><?= i18n("List of Activities") ?></a></li>
+    <li class="breadcrumb-item active"><?= i18n("Create Activity") ?></li>
+  </ol>
+  </div>
     <div class="container">
       <h1><?= i18n("Create Activity")?></h1>
       <form activity="index.php?controller=activity&amp;action=add" method="POST">
       <div class="form-group">
         <label><?= i18n("Name") ?>:</label>
-         <input type="text" name="name" class="form-control" minlength="2" required="required">
+         <input type="text" name="name" class="form-control" minlength="2" maxlength="25" required="required">
       </div>
       <div class="form-group">
         <label><?= i18n("Capacity") ?>:</label>
-         <input type="number" name="capacity" class="form-control" minlength="2" required="required">
+         <input type="number" name="capacity" class="form-control" min="1" max="99" required="required">
       </div>
       <div class="form-group">
         <label><?= i18n("Price") ?>:</label>
-         <input type="number" name="price" class="form-control" minlength="2" required="required">
+         <input type="number" name="price" class="form-control" min="0" max="99" required="required">
       </div>
       <div class="form-group">
         <label><?= i18n("Discount") ?>: <a onclick="message()">(Info)</a></label>
         <select name="discounts[]"  class="form-control" id="category" >
           <option  value=""></option>
           <?php foreach($discounts as $discount) {?>
-          <option  value="<?= $discount["id"]."-".$discount["categoria_id"]?>"><?= $discount["descripcion"]."-".$discount["cantidad"]?></option>
+          <option  value="<?= $discount["id"]."-".$discount["categoria_id"]?>"><?= $discount["descripcion"]."-".$discount["cantidad"]."%"?></option>
           <?php }?>
         </select>
 

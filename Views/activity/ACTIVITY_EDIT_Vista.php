@@ -14,20 +14,27 @@ $errors = $view->getVariable("errors");
 <?php $view->moveToDefaultFragment(); ?>
 
 <div class="jumbotron">
+  <div class="design">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.php?controller=user&amp;action=login"><?= i18n("Home") ?></a></li>
+      <li class="breadcrumb-item"><a href="index.php?controller=activity&amp;action=show"><?= i18n("List of Activities") ?></a></li>
+      <li class="breadcrumb-item active"><?= i18n("Modify Activity") ?></li>
+    </ol>
+  </div>
     <div class="container">
       <h1><?= i18n("Modify Activity")?></h1>
       <form activity="index.php?controller=activity&amp;action=edit" method="POST">
       <div class="form-group">
         <label><?= i18n("Name") ?>:</label>
-         <input type="text" name="name" class="form-control" value="<?= $activity->getActivityName()?>" minlength="2" required="required">
+         <input type="text" name="name" class="form-control" value="<?= $activity->getActivityName()?>" minlength="2" maxlength="25" required="required">
       </div>
       <div class="form-group">
         <label><?= i18n("Capacity") ?>:</label>
-         <input type="number" name="capacity" class="form-control" value="<?= $activity->getCapacity()?>" minlength="2" required="required">
+         <input type="number" name="capacity" class="form-control" value="<?= $activity->getCapacity()?>" min="1" max="99" required="required">
       </div>
       <div class="form-group">
         <label><?= i18n("Price") ?>:</label>
-         <input type="number" name="price" class="form-control" value="<?= $activity->getPrice()?>" minlength="2" required="required">
+         <input type="number" name="price" class="form-control" value="<?= $activity->getPrice()?>" min="0" max="99" required="required">
       </div>
       <div class="form-group">
         <label><?= i18n("Discount") ?>:</label>
@@ -48,12 +55,12 @@ $errors = $view->getVariable("errors");
       <?php if($activity->getDiscountid()==NULL) {?>
       <div class="form-group" id="extra" style="visibility: hidden; display:none">
         <label><?= i18n("Extra discount") ?>:</label>
-          <input type="number" name="extra" class="form-control" value="<?= $activity->getExtraDiscount()?>" minlength="2" >
+          <input type="number" name="extra" class="form-control" value="<?= $activity->getExtraDiscount()."%"?>" min="2" max="100" >
       </div>
       <?php } else{?>
         <div class="form-group" id="extra">
           <label><?= i18n("Extra discount") ?>:</label>
-            <input type="number" name="extra" class="form-control" value="<?= $activity->getExtraDiscount()?>" minlength="2" >
+            <input type="number" name="extra" class="form-control" value="<?= $activity->getExtraDiscount()."%"?>" min="2" max="100" >
         </div>
       <?php } ?>
       <div class="form-group">

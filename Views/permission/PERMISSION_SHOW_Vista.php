@@ -13,6 +13,12 @@ $errors = $view->getVariable("errors");
 <?php $view->moveToDefaultFragment(); ?>
 
 <div class="jumbotron">
+  <div class="design">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="index.php?controller=user&amp;action=login"><?= i18n("Home") ?></a></li>
+    <li class="breadcrumb-item active"><?= i18n("List of Controller Actions") ?></li>
+  </ol>
+  </div>
     <div class="container">
 
             <a href="index.php?controller=userperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Manage User Permissions")?></a>
