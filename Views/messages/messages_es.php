@@ -266,7 +266,11 @@
     "Last week" => "Semana pasada",
     "Next week" => "Próxima semana",
     "Modify Session" => "Modificar Sesión",
-    "Modify Season" => "Modificar Temporada"
+    "Modify Season" => "Modificar Temporada",
+    "Name Client" => "Nombre Cliente",
+    "DNI Client" => "DNI Cliente",
+    "Activity Inscriptions" => "Inscripciones Actividad",
+    "Client Inscriptions" => "Inscripciones Cliente",
 
 
 

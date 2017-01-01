@@ -14,7 +14,7 @@ $errors = $view->getVariable("errors");
   <div class="design">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="index.php?controller=user&amp;action=login"><?= i18n("Home") ?></a></li>
-      <li class="breadcrumb-item"><a href="index.php?controller=season&amp;action=show"><?= i18n("Show Seasons") ?></a></li>
+      <li class="breadcrumb-item"><a href="index.php?controller=season&amp;action=show"><?= i18n("List of Seasons") ?></a></li>
       <li class="breadcrumb-item active"><?= i18n("Modify Season") ?></li>
     </ol>
   </div>

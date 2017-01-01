@@ -170,4 +170,20 @@ class ACTIVITY_Controller extends BaseController {
         $this->view->render("activity", "ACTIVITY_DELETE_Vista");
     }
 
+    public function inscriptions() {
+        $this->checkPerms("activity", "show", $this->currentUserId);
+
+        if (!isset($_REQUEST["id"])) {
+            throw new Exception(i18n("Id is mandatory"));
+        }
+
+        $activityid = $_REQUEST["id"];
+        $activity = $this->activityMapper->fetch($activityid);
+        $inscriptions= $this->activityMapper->fetch_inscriptions($activityid);
+
+        $this->view->setVariable("activity", $activity);
+        $this->view->setVariable("inscriptions", $inscriptions);
+        $this->view->render("activity", "Activity_INSCRIPTION_Vista");
+    }
+
 }

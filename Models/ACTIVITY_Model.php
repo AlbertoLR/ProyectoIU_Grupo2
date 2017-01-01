@@ -78,6 +78,19 @@ class ACTIVITY_Model {
         }
     }
 
+    public function fetch_inscriptions($activityID){
+        $sql = $this->db->prepare("SELECT inscripcion.id,actividad.nombre as actividad,inscripcion.fecha,espacio.nombre,cliente.nombre_c,cliente.dni_c FROM cliente,inscripcion,actividad,espacio
+                                  WHERE actividad.id=? AND cliente.dni_c=inscripcion.cliente_dni_c AND actividad.id=inscripcion.id_actividad AND actividad.espacio_id=espacio.id");
+        $sql->execute(array($activityID));
+        $list_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        if($list_db != NULL) {
+            return $list_db;
+        } else {
+            return NULL;
+        }
+    }
+
     public function insert(Activity $activity) {
       if($activity->getDiscountid()[0]!=NULL){
         list($discount,$category) = split('[/.-]',$activity->getDiscountid()[0]);

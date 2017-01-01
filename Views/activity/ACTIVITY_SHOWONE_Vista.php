@@ -25,6 +25,7 @@ $errors = $view->getVariable("errors");
   	  <div class="row">
       <h1><?= i18n("Activity")?></h1>
       </div>
+      <a href="index.php?controller=activity&amp;action=inscriptions&amp;id=<?=$activity->getID()?>" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("View Inscriptions") ?></a>
       <div class="row top-buffer">
         <table class="table">
         <tbody>

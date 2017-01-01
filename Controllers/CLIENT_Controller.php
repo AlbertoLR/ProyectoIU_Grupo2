@@ -347,7 +347,9 @@ class CLIENT_Controller extends BaseController {
 
         $clientid = $_REQUEST["id"];
         $inscriptions= $this->clientMapper->fetch_inscriptions($clientid);
+        $client = $this->clientMapper->fetch($clientid);
 
+        $this->view->setVariable("client", $client);
         $this->view->setVariable("inscriptions", $inscriptions);
         $this->view->render("client", "CLIENT_INSCRIPTION_Vista");
     }

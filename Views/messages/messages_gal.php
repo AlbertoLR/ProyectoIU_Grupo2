@@ -266,5 +266,9 @@
     "Last week" => "Semana pasada",
     "Next week" => "Próxima semana",
     "Modify Session" => "Modificar Sesión",
+    "Name Client" => "Nombre Cliente",
+    "DNI Client" => "DNI Cliente",
+    "Activity Inscriptions" => "Inscripcións Actividade",
+    "Client Inscriptions" => "Inscripcións Cliente",
   )
 ?>

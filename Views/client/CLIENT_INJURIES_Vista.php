@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
-$view->setVariable("title", "Create Client");
+$view->setVariable("title", "Client Injuries");
 $injuries = $view->getVariable("injuries");
 $errors = $view->getVariable("errors");
 ?>
