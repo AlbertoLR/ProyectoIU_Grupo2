@@ -110,7 +110,7 @@ create table `caja` (
   `efectivo_inicial` int(11) not null,
   `cantidad` int(11) not null,
   `efectivo_final` int(11) not null,
-  `pago_id` int(11) not null,
+  `pago_id` int(11) default null,
   `tipo` varchar(11) collate utf8_spanish_ci not null,
   `descripcion` varchar(90) collate utf8_spanish_ci not null,
   `fecha` date not null
@@ -1286,7 +1286,8 @@ insert into `controller` (`id`, `controllername`) values
 (15, 'hour'),
 (16, 'session'),
 (17, 'inscription'),
-(18, 'service');
+(18, 'service'),
+(19,'externalparticular');
 
 
 
@@ -1381,7 +1382,12 @@ insert into `permission` (`id`, `controller`, `action`) values
 (82, 'service', 'show'),
 (83, 'service', 'showone'),
 (84, 'service', 'add'),
-(85, 'service', 'edit');
+(85, 'service', 'edit'),
+(86, 'externalparticular', 'delete'),
+(87, 'externalparticular', 'show'),
+(88, 'externalparticular', 'showone'),
+(89, 'externalparticular', 'add'),
+(90, 'externalparticular', 'edit');
 
 --
 -- dumping data for table `cliente`
@@ -1920,7 +1926,13 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (89, 1, 82),
 (90, 1, 83),
 (91, 1, 84),
-(92, 1, 85);
+(92, 1, 85),
+(93, 1, 86),
+(94, 1, 87),
+(95, 1, 88),
+(96, 1, 89),
+(97, 1, 90);
+
 
 
 

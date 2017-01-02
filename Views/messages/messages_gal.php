@@ -304,6 +304,19 @@
     "A service id is mandatory" => "Un id de servizo es obrigatório",
     "Id is mandatory" => "Id es obrigatório",
     "inscription" => "inscripción",
-    "service" => "servicio"
+    "service" => "servicio",
+
+    "External particular"=>"Particular Externo",
+  "Create External Particular" => "Crear Particular Externo",
+  "List of External Particulars"=>"Lista de Particulares Externos",
+  "Update External Particular"=>"Actualizar Particular Externo",
+  "Delete External Particular:"=>"Eliminar Particular Externo:",
+  "An external particular id is mandatory"=>"Identificador de particular externo obrigatorio",
+  "No such external particular with id: "=>"Particular externo non atopado con el identificador: ",
+  "External particular \"%s\" successfully added."=>"Particular externo \"%s\" creado satisfactoriamente.",
+  "An external particular id is mandatory"=>"Particular externo obrigatorio",
+  "External particular \"%s\" successfully updated."=>"Particular externo \"%s\" actualizado satisfactoriamente.",
+  "External particular \"%s\" successfully deleted."=>"Particular externo \"%s\" eliminado satisfactoriamente.",
+  "externalparticular" =>"particulares externo"
   )
 ?>
