@@ -1287,7 +1287,9 @@ insert into `controller` (`id`, `controllername`) values
 (16, 'session'),
 (17, 'inscription'),
 (18, 'service'),
-(19,'externalparticular');
+(19,'externalparticular'),
+(20,'category');
+
 
 
 
@@ -1387,7 +1389,13 @@ insert into `permission` (`id`, `controller`, `action`) values
 (87, 'externalparticular', 'show'),
 (88, 'externalparticular', 'showone'),
 (89, 'externalparticular', 'add'),
-(90, 'externalparticular', 'edit');
+(90, 'externalparticular', 'edit'),
+(91, 'category', 'delete'),
+(92, 'category', 'show'),
+(93, 'category', 'showone'),
+(94, 'category', 'add'),
+(95, 'category', 'edit');
+
 
 --
 -- dumping data for table `cliente`
@@ -1931,7 +1939,12 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (94, 1, 87),
 (95, 1, 88),
 (96, 1, 89),
-(97, 1, 90);
+(97, 1, 90),
+(98, 1, 91),
+(99, 1, 92),
+(100, 1, 93),
+(101, 1, 94),
+(102, 1, 95);
 
 
 
