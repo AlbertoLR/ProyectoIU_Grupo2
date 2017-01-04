@@ -27,6 +27,7 @@ $errors = $view->getVariable("errors");
 	<a href="index.php?controller=user&amp;action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create User") ?></a>
     <a href="index.php?controller=userperm&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Manage Permissions") ?></a>
     <a href="index.php?controller=user&amp;action=showdeleted" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("View Deleted Users") ?></a>
+    <a href="index.php?controller=user&amp;action=search" class="btn btn-default"><i class="fa fa-search-plus" aria-hidden="true"></i> <?= i18n("Advanced Search") ?></a>
     <form action="index.php?controller=user&amp;action=showone" method="POST">
     <div class=" tt-dropdown-menu .tt-menu form-group top-buffer">
 	   <?= i18n("Search") ?>: <input type="text" name="id" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false">

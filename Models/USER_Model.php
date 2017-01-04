@@ -122,6 +122,24 @@ class USER_Model {
             return true;
         }
     }
+
+    public function search($query) {
+        $search_query = "SELECT * FROM user WHERE ". $query;
+        $sql = $this->db->prepare($search_query);
+        $sql->execute();
+        $users_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = array();
+
+        foreach ($users_db as $user) {
+            array_push($users, new User($user["id"], $user["profile"], $user["dni"], $user["username"], $user["name"],
+                                        $user["surname"],$user["fecha_nac"],$user["direccion"],$user["comentario"],
+                                        $user["num_cuenta"],$user["tipo_contrato"], $user["email"],$user["foto"],$user["activo"],NULL ));
+        }
+
+        return $users;
+    }
+    
     public function get_day($sessions,$hours,$activities,$events,$users,$spaces,$wd,$week){
       $i = -1;
       $array =  array();

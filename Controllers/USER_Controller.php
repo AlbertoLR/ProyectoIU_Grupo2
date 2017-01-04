@@ -201,22 +201,22 @@ class USER_Controller extends BaseController {
         }
 
         if (isset($_POST["submit"])) {
-		      $image_name = $_FILES["foto"]["name"];
-          $image_type = $_FILES["foto"]["type"];
-          $image_size = $_FILES["foto"]["size"];
-          $folder = __DIR__ . '/../pictures/';
-          if($image_size < 100000000 ){ /*100MB*/
-            if($image_type == ("image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif")){
-            move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
-            }else{
-              $errors = array();
-              $errors["general"] = i18n("Only formats: jpg/jpeg/png/gif");
-              $this->view->setVariable("errors", $errors);
-            }
-          } else {
-          $errors = array();
-          $errors["general"] =i18n("Image too large");
-          $this->view->setVariable("errors", $errors);
+            $image_name = $_FILES["foto"]["name"];
+            $image_type = $_FILES["foto"]["type"];
+            $image_size = $_FILES["foto"]["size"];
+            $folder = __DIR__ . '/../pictures/';
+            if($image_size < 100000000 ){ /*100MB*/
+                if($image_type == ("image/jpeg" || $image_type == "image/jpg" || $image_type == "image/png" || $image_type == "image/gif")){
+                    move_uploaded_file($_FILES["foto"]["tmp_name"], $folder.$image_name);
+                }else{
+                    $errors = array();
+                    $errors["general"] = i18n("Only formats: jpg/jpeg/png/gif");
+                    $this->view->setVariable("errors", $errors);
+                }
+            } else {
+                $errors = array();
+                $errors["general"] =i18n("Image too large");
+                $this->view->setVariable("errors", $errors);
         }
 
           if (empty($_POST["profile"])) {
@@ -361,6 +361,80 @@ class USER_Controller extends BaseController {
     public function logout() {
         session_destroy();
         $this->view->redirect("user", "login");
+    }
+
+    public function search() {
+        $this->checkPerms("user", "show", $this->currentUserId);
+
+        if (isset($_POST["submit"])) {
+            $query = "";
+            $flag = 0;
+
+            if ($_POST["dni"]){                
+                $query .= "dni='". $_POST["dni"]."'";
+                $flag = 1;
+            }
+
+            if ($_POST["username"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "username LIKE '%". $_POST["username"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["profile"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "profile='". $_POST["profile"]."'";
+                $flag = 1;
+            }
+
+            if ($_POST["name"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "name LIKE '%". $_POST["name"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["surname"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "surname LIKE '%". $_POST["surname"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["tipo_contrato"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "tipo_contrato='". $_POST["tipo_contrato"] ."'";
+                $flag = 1;
+            }
+
+            if ($_POST["email"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "email LIKE '%". $_POST["email"] ."%'";
+            }
+            if (empty($query)) {
+                $users = $this->userMapper->fetch_all();
+            } else {
+                $users = $this->userMapper->search($query);
+            }
+            $this->view->setVariable("users", $users);
+            $this->view->render("user", "USER_SHOW_Vista");
+        }
+        else {
+            $profileMapper = new PROFILE_Model();
+            $profiles = $profileMapper->fetch_all();
+            $this->view->setVariable("profiles", $profiles);
+            $this->view->render("user", "USER_SEARCH_Vista");
+        }
     }
 
     private function users_to_json($users){
