@@ -54,11 +54,53 @@ class USER_Model {
         }
     }
 
+    public function fetch_injuries(){
+        $sql = $this->db->prepare("SELECT * FROM lesion");
+        $sql->execute();
+        $list_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        if($list_db != NULL) {
+            return $list_db;
+        } else {
+            return NULL;
+        }
+    }
+
+    public function fetch_user_injuries($userID){
+        $sql = $this->db->prepare("SELECT lesion_empleado.user_id,lesion_empleado.fecha,lesion_empleado.hora,user.name,user.dni,user.surname,user.username,lesion.descripcion
+                                   FROM user,lesion_empleado,lesion
+                                   WHERE user.id=? AND lesion_empleado.lesion_id=lesion.id
+                                                  AND user.id=lesion_empleado.user_id");
+
+        $sql->execute(array($userID));
+        $list_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+          if($list_db != NULL) {
+            return $list_db;
+        } else {
+            return NULL;
+        }
+    }
+
     public function insert(User $user) {
         $sql = $this->db->prepare("INSERT INTO user(profile,dni,username,name,surname,fecha_nac,direccion,comentario,num_cuenta,tipo_contrato,email,foto,activo,passwd) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $sql->execute(array($user->getProfile(), $user->getDni(), $user->getUsername(), $user->getName(),
                             $user->getSurname(), $user->getFechaNac(), $user->getDireccion(), $user->getComentario(), $user->getNumCuenta(),
                             $user->getTipoContrato(), $user->getEmail(), $user->getFoto(), $user->getActivo(),$user->getPasswd()));
+
+        $array_date=getDate();
+        $date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
+        $time=$array_date['hours'].":".$array_date['minutes'].":".$array_date['seconds'];
+
+        if($user->getInjury()!=NULL){
+          $id_lesion=$user->getInjury();
+          $dni = $user->getDni();
+          $sql1 = $this->db->query("SELECT id FROM user where dni='$dni'");
+          foreach ($sql1 as $key ) {
+            $id_user = $key[0];
+          }
+          $sql2 = $this->db->prepare("INSERT INTO lesion_empleado(lesion_id,user_id,fecha,hora) values (?,?,?,?)");
+          $sql2->execute(array($id_lesion,$id_user,$date,$time));
+        }
     }
 
     public function update(User $user){
@@ -77,6 +119,15 @@ class USER_Model {
             $sql->execute(array($user->getProfile(), $user->getDni(), $user->getUsername(), $user->getName(),
                                 $user->getSurname(), $user->getFechaNac(), $user->getDireccion(), $user->getComentario(), $user->getNumCuenta(),
                                 $user->getTipoContrato(), $user->getEmail(), $user->getFoto(), $user->getActivo(), $user->getID()));
+        }
+
+        $array_date=getDate();
+        $date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
+        $time=$array_date['hours'].":".$array_date['minutes'].":".$array_date['seconds'];
+
+        if($user->getInjury()){
+            $sql2 = $this->db->prepare("INSERT INTO lesion_empleado(lesion_id,user_id,fecha,hora) values (?,?,?,?)");
+            $sql2->execute(array($user->getInjury(),$user->getID(),$date,$time));
         }
     }
 
@@ -139,7 +190,7 @@ class USER_Model {
 
         return $users;
     }
-    
+
     public function get_day($sessions,$hours,$activities,$events,$users,$spaces,$wd,$week){
       $i = -1;
       $array =  array();

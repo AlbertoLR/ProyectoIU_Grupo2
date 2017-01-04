@@ -32,7 +32,6 @@ class ACTIVITY_Controller extends BaseController {
 
         $activityid = $_REQUEST["id"];
         $activity = $this->activityMapper->fetch($activityid);
-        $spaces = $this->activityMapper->fetchSpaces();
         $discounts = $this->activityMapper->fetchDiscounts();
         $categories = $this->activityMapper->fetchCategories();
 
@@ -40,7 +39,6 @@ class ACTIVITY_Controller extends BaseController {
             throw new Exception(i18n("No such activity with id: ").$activityid);
         }
         $this->view->setVariable("categories", $categories);
-        $this->view->setVariable("spaces", $spaces);
         $this->view->setVariable("discounts", $discounts);
         $this->view->setVariable("activity", $activity);
         $this->view->render("activity", "ACTIVITY_SHOWONE_Vista");
@@ -50,7 +48,6 @@ class ACTIVITY_Controller extends BaseController {
         $this->checkPerms("activity", "add", $this->currentUserId);
 
         $activity = new Activity();
-        $spaces = $this->activityMapper->fetchSpaces();
         $discounts = $this->activityMapper->fetchDiscounts();
         $categories = $this->activityMapper->fetchCategories();
 
@@ -60,7 +57,6 @@ class ACTIVITY_Controller extends BaseController {
             $activity->setCapacity($_POST["capacity"]);
             $activity->setPrice($_POST["price"]);
             $activity->setDiscountid($_POST["discounts"]);
-            $activity->setSpaceid($_POST["spaces"]);
             $activity->setCategoryid($_POST["categories"]);
             $activity->setExtraDiscount($_POST["extra"]);
 
@@ -83,7 +79,6 @@ class ACTIVITY_Controller extends BaseController {
             }
         }
         $this->view->setVariable("categories", $categories);
-        $this->view->setVariable("spaces", $spaces);
         $this->view->setVariable("discounts", $discounts);
         $this->view->setVariable("activity", $activity);
         $this->view->render("activity", "ACTIVITY_ADD_Vista");
@@ -99,7 +94,6 @@ class ACTIVITY_Controller extends BaseController {
 
         $activityid = $_REQUEST["id"];
         $activity = $this->activityMapper->fetch($activityid);
-        $spaces = $this->activityMapper->fetchSpaces();
         $discounts = $this->activityMapper->fetchDiscounts();
         $categories = $this->activityMapper->fetchCategories();
 
@@ -112,7 +106,6 @@ class ACTIVITY_Controller extends BaseController {
           $activity->setCapacity($_POST["capacity"]);
           $activity->setPrice($_POST["price"]);
           $activity->setDiscountid($_POST["discounts"]);
-          $activity->setSpaceid($_POST["spaces"]);
           $activity->setCategoryid($_POST["categories"]);
           $activity->setExtraDiscount($_POST["extra"]);
 
@@ -133,7 +126,6 @@ class ACTIVITY_Controller extends BaseController {
             }
         }
         $this->view->setVariable("categories", $categories);
-        $this->view->setVariable("spaces", $spaces);
         $this->view->setVariable("discounts", $discounts);
         $this->view->setVariable("activity", $activity);
         $this->view->render("activity", "ACTIVITY_EDIT_Vista");
@@ -148,7 +140,6 @@ class ACTIVITY_Controller extends BaseController {
 
         $activityid = $_REQUEST["id"];
         $activity = $this->activityMapper->fetch($activityid);
-        $spaces = $this->activityMapper->fetchSpaces();
         $discounts = $this->activityMapper->fetchDiscounts();
         $categories = $this->activityMapper->fetchCategories();
 
@@ -164,7 +155,6 @@ class ACTIVITY_Controller extends BaseController {
             $this->view->redirect("activity", "show");
         }
         $this->view->setVariable("categories", $categories);
-        $this->view->setVariable("spaces", $spaces);
         $this->view->setVariable("discounts", $discounts);
         $this->view->setVariable("activity", $activity);
         $this->view->render("activity", "ACTIVITY_DELETE_Vista");

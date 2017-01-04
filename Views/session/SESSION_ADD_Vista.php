@@ -38,24 +38,32 @@ $spaces = $view->getVariable("spaces");
 
           <div class="form-group">
             <label><?= i18n("Activity") ?>:</label>
-            <select name="activity[]" class="form-control" id="activity">
+            <select name="activity" class="form-control" id="activity">
               <option value=""></option>
             <?php foreach($activities as $activity => $value){ ?>
-              <option value="<?php echo $value["id"]."-". $value["espacio_id"]?>" ><?php echo i18n($value["nombre"])?></option>
+              <option value="<?php echo $value["id"]?>" ><?php echo i18n($value["nombre"])?></option>
              <?php }   ?>
              </select>
           </div>
 
           <div class="form-group" id="limpiar">
             <label><?= i18n("Event") ?>:</label>
-            <select name="event[]" class="form-control" >
+            <select name="event" class="form-control" >
               <option value=""></option>
             <?php foreach($events as $event => $value){ ?>
-              <option value="<?php echo $value["id"]."-". $value["espacio_id"]?>" ><?php echo i18n($value["nombre"])?></option>
+              <option value="<?php echo $value["id"]?>" ><?php echo i18n($value["nombre"])?></option>
              <?php }   ?>
              </select>
           </div>
-
+          <div class="form-group">
+            <label><?= i18n("Space") ?>:</label>
+            <select name="spaces" class="form-control" id="ex1">
+              <option value=""></option>
+              <?php foreach($spaces as $space) {?>
+                  <option value="<?= $space["id"]?>"><?= $space["nombre"]?></option>
+              <?php }?>
+            </select>
+          </div>
           <div class="form-group">
             <label><?= i18n("User") ?>:</label>
             <select name="user" class="form-control" required="required">

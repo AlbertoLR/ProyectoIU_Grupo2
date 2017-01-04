@@ -63,17 +63,6 @@ $errors = $view->getVariable("errors");
             <input type="number" name="extra" class="form-control" value="<?= $activity->getExtraDiscount()."%"?>" min="2" max="100" >
         </div>
       <?php } ?>
-      <div class="form-group">
-        <label><?= i18n("Space") ?>:</label>
-        <select name="spaces" class="form-control" id="ex1">
-          <?php foreach($spaces as $space) {?>
-          <?php if($space["id"] == $activity->getSpaceid()) {?>
-            <option value="<?= $space["id"]?>"selected><?= $space["nombre"]?></option>
-          <?php }else{ ?>
-          <option value="<?= $space["id"]?>"><?= $space["nombre"]?></option>
-          <?php } }?>
-        </select>
-      </div>
       <div class="form-group" id="limpiar">
         <label><?= i18n("Category") ?>:</label>
         <select name="categories" class="form-control" >

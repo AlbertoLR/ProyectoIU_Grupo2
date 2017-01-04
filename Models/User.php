@@ -21,12 +21,13 @@ class User {
     private $foto;
     private $activo;
     private $passwd;
+    private $injury;
 
 
 
     public function __construct($id=NULL, $profile=NULL, $dni=NULL, $username=NULL, $name=NULL, $surname=NULL,
                                 $fecha_nac=NULL, $direccion=NULL, $comentario=NULL, $num_cuenta=NULL, $tipo_contrato=NULL,
-                                $email=NULL, $foto=NULL, $activo=NULL, $passwd=NULL) {
+                                $email=NULL, $foto=NULL, $activo=NULL, $passwd=NULL,$injury=NULL) {
      $this->id = $id;
      $this->profile = $profile;
      $this->dni = $dni;
@@ -42,6 +43,7 @@ class User {
      $this->foto = $foto;
      $this->activo = $activo;
      $this->passwd = $passwd;
+     $this->injury = $injury;
     }
 
     public function getID() {
@@ -160,6 +162,14 @@ class User {
 
     public function setPasswd($passwd) {
         $this->passwd = $passwd;
+    }
+
+    public function getInjury() {
+        return $this->injury;
+    }
+
+    public function setInjury($injury) {
+        $this->injury = $injury;
     }
 
     public function checkIsValidForCreate() {

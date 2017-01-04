@@ -4,6 +4,7 @@ $view = ViewManager::getInstance();
 $view->setVariable("title", "Update User");
 $user = $view->getVariable("user");
 $profiles = $view->getVariable("profiles");
+$injuries = $view->getVariable("injuries");
 $errors = $view->getVariable("errors");
 ?>
 
@@ -38,7 +39,7 @@ $errors = $view->getVariable("errors");
         </div>
         <div class="form-group">
           <label><?= i18n("Profile") ?>:</label>
-          <select name="profile" class="form-control">
+          <select name="profile" class="form-control" id="profile">
             <option value=""></option>
             <?php foreach($profiles as $profile) {?>
                 <?php if ($profile->getProfileName() == $user->getProfile()): ?>
@@ -94,6 +95,15 @@ $errors = $view->getVariable("errors");
 		  <?php else: ?>
 		  <option value="No" <?php echo "selected" ?>><?= i18n("No") ?></option>
 		  <?php endif ?>
+          </select>
+        </div>
+        <div class="form-group" id="show">
+          <label><?= i18n("Asign Injury") ?>:</label>
+          <select name="injury" class="form-control" >
+              <option  value="" selected=""></option>
+            <?php foreach($injuries as $injury) {?>
+            <option value="<?= $injury["id"]?>"><?= $injury["descripcion"]?></option>
+            <?php } ?>
           </select>
         </div>
         <div class="form-group">

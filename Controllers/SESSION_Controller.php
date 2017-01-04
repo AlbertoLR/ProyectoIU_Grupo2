@@ -48,6 +48,7 @@ class SESSION_Controller extends BaseController {
                     $session->setActivityID($_POST["activity"]);
                     $session->setEventID($_POST["event"]);
                     $session->setUserID($_POST["user"]);
+                    $session->setSpaceID($_POST["spaces"]);
 
                     $this->sessionMapper->insert($session);
 
@@ -71,6 +72,7 @@ class SESSION_Controller extends BaseController {
         $this->view->setVariable("activities", $activities);
         $this->view->setVariable("events", $events);
         $this->view->setVariable("users", $users);
+        $this->view->setVariable("spaces", $spaces);
         $this->view->setVariable("sessions", $sessions);
         $this->view->render("session", "SESSION_ADD_Vista");
     }
@@ -98,6 +100,7 @@ class SESSION_Controller extends BaseController {
                 $session->setActivityID($_POST["activity"]);
                 $session->setEventID($_POST["event"]);
                 $session->setUserID($_POST["user"]);
+                $session->setSpaceID($_POST["spaces"]);
 
                 $this->sessionMapper->update($session);
 
@@ -119,6 +122,7 @@ class SESSION_Controller extends BaseController {
         $this->view->setVariable("activities", $activities);
         $this->view->setVariable("events", $events);
         $this->view->setVariable("users", $users);
+        $this->view->setVariable("spaces", $spaces);
         $this->view->setVariable("session", $session);
         $this->view->render("session", "SESSION_EDIT_Vista");
     }

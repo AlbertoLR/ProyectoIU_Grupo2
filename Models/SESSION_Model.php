@@ -121,17 +121,23 @@ class SESSION_Model {
     }
 
     public function insert(Session $session) {
-        if($session->getActivityID()[0]!=""){
-        list($activity,$space) = split('[/.-]',$session->getActivityID()[0]);
+
+      if($session->getEventID() == ""){
         $event=NULL;
-      }else{
-      if($session->getEventID()[0]!=""){
-        list($event,$space) = split('[/.-]',$session->getEventID()[0]);
+      }
+      else{
+        $event = $session->getEventID();
+      }
+
+      if($session->getActivityID() == ""){
         $activity=NULL;
       }
-    }
+      else{
+        $activity = $session->getActivityID();
+      }
+
         $sql = $this->db->prepare("INSERT INTO sesion(actividad_id,horas_posibles_id,evento_id,user_id,espacio_id) values (?,?,?,?,?)");
-        $sql->execute(array($activity,$session->getHoursID(),$event,$session->getUserID(),$space));
+        $sql->execute(array($activity,$session->getHoursID(),$event,$session->getUserID(),$session->getSpaceID()));
 
         $sql1 = $this->db->prepare("UPDATE horas_posibles SET active=true where id=?");
         $sql1->execute(array($session->getHoursID()));
@@ -139,17 +145,22 @@ class SESSION_Model {
 
     public function update(Session $session){
 
-      if($session->getActivityID()[0]!=""){
-      list($activity,$space) = split('[/.-]',$session->getActivityID()[0]);
-      $event=NULL;
-    }else{
-    if($session->getEventID()[0]!=""){
-      list($event,$space) = split('[/.-]',$session->getEventID()[0]);
-      $activity=NULL;
-    }
-  }
+      if($session->getEventID() == ""){
+        $event=NULL;
+      }
+      else{
+        $event = $session->getEventID();
+      }
+
+      if($session->getActivityID() == ""){
+        $activity=NULL;
+      }
+      else{
+        $activity = $session->getActivityID();
+      }
+
       $sql = $this->db->prepare("UPDATE sesion SET actividad_id=?,horas_posibles_id=?,evento_id=?,user_id=?,espacio_id=? where id=?");
-      $sql->execute(array($activity,$session->getHoursID(),$event,$session->getUserID(),$space,$session->getID()));
+      $sql->execute(array($activity,$session->getHoursID(),$event,$session->getUserID(),$session->getSpaceID(),$session->getID()));
 
       $sql1 = $this->db->prepare("UPDATE horas_posibles SET active=true where id=?");
       $sql1->execute(array($session->getHoursID()));

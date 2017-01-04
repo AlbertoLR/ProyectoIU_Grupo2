@@ -49,7 +49,7 @@ $errors = $view->getVariable("errors");
         <tbody>
           <tr>
             <th><?= i18n("Discount")?></th>
-            <?php $d = "-" ?>
+            <?php $d = "0" ?>
             <?php foreach($discounts as $discount => $value){ ?>
               <?php if($value["id"] == $activity->getDiscountid()) {
                  $d=$value["cantidad"];
@@ -69,15 +69,6 @@ $errors = $view->getVariable("errors");
         </tbody>
         <tbody>
           <tr>
-            <th><?= i18n("Space")?></th>
-            <?php foreach($spaces as $space => $value){ ?>
-              <?php if($value["id"] == $activity->getSpaceid()) {?>
-              <td><?=$value["nombre"] ?></td>
-            <?php } }  ?>
-          </tr>
-        </tbody>
-        <tbody>
-          <tr class="active">
             <th><?= i18n("Category")?></th>
             <?php foreach($categories as $category => $value){ ?>
               <?php if($value["id"] == $activity->getCategoryid()) {?>

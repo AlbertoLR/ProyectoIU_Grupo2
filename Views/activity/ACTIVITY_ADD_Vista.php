@@ -50,15 +50,6 @@ $errors = $view->getVariable("errors");
         <label><?= i18n("Extra discount") ?>:</label>
           <input type="number" name="extra" class="form-control" value="<?= $activity->getExtraDiscount()?>" minlength="2" >
       </div>
-      <div class="form-group">
-        <label><?= i18n("Space") ?>:</label>
-        <select name="spaces" class="form-control" id="ex1">
-          <option  value=""></option>
-          <?php foreach($spaces as $space) {?>
-          <option value="<?= $space["id"]?>"><?= $space["nombre"]?></option>
-          <?php }?>
-        </select>
-      </div>
       <div class="form-group" id="limpiar">
         <label><?= i18n("Category") ?>:</label>
         <select name="categories" class="form-control" id="ex1">

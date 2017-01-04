@@ -47,7 +47,6 @@ create table `actividad` (
   `nombre` varchar(10) collate utf8_spanish_ci not null,
   `capacidad` smallint(6) not null,
   `precio` smallint(6) not null,
-  `espacio_id` int(11) not null,
   `categoria_id` int(11) not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
@@ -383,7 +382,9 @@ create table `lesion_cliente` (
 drop table if exists `lesion_empleado`;
 create table `lesion_empleado` (
   `lesion_id` int(11) not null,
-  `user_id` int(11) not null
+  `user_id` int(11) not null,
+  `fecha` date not null,
+  `hora` time not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -655,7 +656,7 @@ alter table `action`
 -- indexes for table `actividad`
 --
 alter table `actividad`
- add primary key (`id`), add key `fk_actividad_espacio1_idx` (`espacio_id`), add key `fk_actividad_categoria1_idx` (`categoria_id`);
+ add primary key (`id`), add key `fk_actividad_categoria1_idx` (`categoria_id`);
 
 --
 -- indexes for table `alerta`
@@ -781,7 +782,7 @@ alter table `lesion_cliente`
 -- indexes for table `lesion_empleado`
 --
 alter table `lesion_empleado`
- add primary key (`user_id`,`lesion_id`), add key `fk_lesion_empleado_lesion1_idx` (`lesion_id`),add key `fk_lesion_empleado_user1_idx` (`user_id`);
+ add primary key (`user_id`,`lesion_id`,`fecha`,`hora`), add key `fk_lesion_empleado_lesion1_idx` (`lesion_id`),add key `fk_lesion_empleado_user1_idx` (`user_id`);
 
 --
 -- indexes for table `linea_factura`
@@ -1051,8 +1052,7 @@ modify `id` int(11) not null auto_increment,auto_increment=31;
 -- constraints for table `actividad`
 --
 alter table `actividad`
-add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`)  on delete cascade on update cascade,
-add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `espacio` (`id`)  on delete cascade on update cascade;
+add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`)  on delete cascade on update cascade;
 
 --
 -- constraints for table `alerta`
@@ -1287,7 +1287,9 @@ insert into `controller` (`id`, `controllername`) values
 (16, 'session'),
 (17, 'inscription'),
 (18, 'service'),
-(19,'externalparticular');
+(19,'externalparticular'),
+(20,'category');
+
 
 
 
@@ -1387,7 +1389,13 @@ insert into `permission` (`id`, `controller`, `action`) values
 (87, 'externalparticular', 'show'),
 (88, 'externalparticular', 'showone'),
 (89, 'externalparticular', 'add'),
-(90, 'externalparticular', 'edit');
+(90, 'externalparticular', 'edit'),
+(91, 'category', 'delete'),
+(92, 'category', 'show'),
+(93, 'category', 'showone'),
+(94, 'category', 'add'),
+(95, 'category', 'edit');
+
 
 --
 -- dumping data for table `cliente`
@@ -1441,13 +1449,13 @@ insert into `evento` (`id`, `nombre`, `espacio_id`, `precio`) values (1, 'hallow
 --
 -- dumping data for table `actividad`
 --
-insert into `actividad` (`id`, `nombre`, `espacio_id`, `capacidad`, `precio`, `categoria_id`) values
-(1, 'zumba', 5, 20, 4, 1),
-(2, 'salsa', 6, 20, 4, 2),
-(3, 'pilates', 2, 15, 5, 1),
-(4, 'spinning', 3, 25, 3, 2),
-(5, 'step', 4, 10, 4, 2),
-(6, 'hiit', 1, 20, 3, 2);
+insert into `actividad` (`id`, `nombre`,  `capacidad`, `precio`, `categoria_id`) values
+(1, 'zumba', 20, 4, 1),
+(2, 'salsa', 20, 4, 2),
+(3, 'pilates',  15, 5, 1),
+(4, 'spinning', 25, 3, 2),
+(5, 'step', 10, 4, 2),
+(6, 'hiit', 20, 3, 2);
 
 
 
@@ -1490,7 +1498,8 @@ insert into `lesion_cliente` (`id_lesion`, `cliente_id`) values
 --
 -- dumping data for table `lesion_empleado`
 --
-insert into `lesion_empleado` ( `lesion_id`,  `user_id`) values (2, 1);
+insert into `lesion_empleado` ( `lesion_id`,  `user_id`,`fecha`,`hora`)
+values (2, 4,'2016-9-15','12:00:00');
 
 --
 -- dumping data for table `empleado_mira`
@@ -1931,7 +1940,12 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (94, 1, 87),
 (95, 1, 88),
 (96, 1, 89),
-(97, 1, 90);
+(97, 1, 90),
+(98, 1, 91),
+(99, 1, 92),
+(100, 1, 93),
+(101, 1, 94),
+(102, 1, 95);
 
 
 

@@ -18,26 +18,26 @@ class ACTIVITY_Model {
         $activitys = array();
 
         foreach ($activitys_db as $activity) {
-            array_push($activitys, new Activity($activity["id"], $activity["nombre"],$activity["capacidad"],$activity["precio"],$activity["espacio_id"],$activity["categoria_id"]));
+            array_push($activitys, new Activity($activity["id"], $activity["nombre"],$activity["capacidad"],$activity["precio"],$activity["categoria_id"]));
         }
 
         return $activitys;
     }
 
     public function fetch($activityID){
-      $sql = $this->db->prepare("SELECT actividad.id,actividad.nombre,actividad.capacidad,actividad.precio,aplica.descuento_id,actividad.espacio_id,actividad.categoria_id,aplica.extra FROM actividad,aplica,descuento
+      $sql = $this->db->prepare("SELECT actividad.id,actividad.nombre,actividad.capacidad,actividad.precio,aplica.descuento_id,actividad.categoria_id,aplica.extra FROM actividad,aplica,descuento
                                  WHERE actividad.id=? AND actividad.id = aplica.actividad_id AND aplica.descuento_id = descuento.id ORDER BY nombre");
         $sql->execute(array($activityID));
         $activity = $sql->fetch(PDO::FETCH_ASSOC);
 
         if($activity != NULL) {
-            return new Activity($activity["id"], $activity["nombre"],$activity["capacidad"],$activity["precio"],$activity["descuento_id"],$activity["espacio_id"],$activity["categoria_id"],$activity["extra"]);
+            return new Activity($activity["id"], $activity["nombre"],$activity["capacidad"],$activity["precio"],$activity["descuento_id"],$activity["categoria_id"],$activity["extra"]);
         } else {
           $sql1 = $this->db->prepare("SELECT * FROM actividad WHERE actividad.id=? ORDER BY nombre");
             $sql1->execute(array($activityID));
             $activity = $sql1->fetch(PDO::FETCH_ASSOC);
             if($activity != NULL) {
-              return new Activity($activity["id"], $activity["nombre"],$activity["capacidad"],$activity["precio"],null,$activity["espacio_id"],$activity["categoria_id"]);
+              return new Activity($activity["id"], $activity["nombre"],$activity["capacidad"],$activity["precio"],null,$activity["categoria_id"]);
             }else{
               return NULL;
           }
@@ -56,16 +56,6 @@ class ACTIVITY_Model {
         }
     }
 
-    public function fetchSpaces(){
-        $sql = $this->db->query("SELECT id,nombre FROM espacio");
-        $list_db = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-        if($list_db != NULL) {
-            return $list_db;
-        } else {
-            return NULL;
-        }
-    }
 
     public function fetchCategories(){
         $sql = $this->db->query("SELECT id,tipo FROM categoria ");
@@ -79,8 +69,8 @@ class ACTIVITY_Model {
     }
 
     public function fetch_inscriptions($activityID){
-        $sql = $this->db->prepare("SELECT inscripcion.id,actividad.nombre as actividad,inscripcion.fecha,espacio.nombre,cliente.nombre_c,cliente.dni_c FROM cliente,inscripcion,actividad,espacio
-                                  WHERE actividad.id=? AND cliente.dni_c=inscripcion.cliente_dni_c AND actividad.id=inscripcion.id_actividad AND actividad.espacio_id=espacio.id");
+        $sql = $this->db->prepare("SELECT inscripcion.id,actividad.nombre as actividad,inscripcion.fecha,cliente.nombre_c,cliente.dni_c FROM cliente,inscripcion,actividad
+                                  WHERE actividad.id=? AND cliente.dni_c=inscripcion.cliente_dni_c AND actividad.id=inscripcion.id_actividad ");
         $sql->execute(array($activityID));
         $list_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -97,8 +87,8 @@ class ACTIVITY_Model {
       }else{
         $category = $activity->getCategoryid();
       }
-        $sql = $this->db->prepare("INSERT INTO actividad(nombre,capacidad,precio,espacio_id,categoria_id) values (?,?,?,?,?)");
-        $sql->execute(array($activity->getActivityName(), $activity->getCapacity(),$activity->getPrice(), $activity->getSpaceid(), $category));
+        $sql = $this->db->prepare("INSERT INTO actividad(nombre,capacidad,precio,categoria_id) values (?,?,?,?)");
+        $sql->execute(array($activity->getActivityName(), $activity->getCapacity(),$activity->getPrice(), $category));
 
         $name = $activity->getActivityName();
         $sql1 = $this->db->query("SELECT id FROM actividad where nombre='$name'");
@@ -139,8 +129,8 @@ class ACTIVITY_Model {
         }
       }
 
-        $sql = $this->db->prepare("UPDATE actividad SET nombre=?,capacidad=?,precio=?,espacio_id=?,categoria_id=? where id=?");
-        $sql->execute(array($activity->getActivityName(), $activity->getCapacity(),$activity->getPrice(), $activity->getSpaceid(), $category, $activity->getID()));
+        $sql = $this->db->prepare("UPDATE actividad SET nombre=?,capacidad=?,precio=?,categoria_id=? where id=?");
+        $sql->execute(array($activity->getActivityName(), $activity->getCapacity(),$activity->getPrice(), $category, $activity->getID()));
 
     }
 
