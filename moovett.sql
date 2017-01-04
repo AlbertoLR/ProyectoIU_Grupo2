@@ -382,7 +382,9 @@ create table `lesion_cliente` (
 drop table if exists `lesion_empleado`;
 create table `lesion_empleado` (
   `lesion_id` int(11) not null,
-  `user_id` int(11) not null
+  `user_id` int(11) not null,
+  `fecha` date not null,
+  `hora` time not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -780,7 +782,7 @@ alter table `lesion_cliente`
 -- indexes for table `lesion_empleado`
 --
 alter table `lesion_empleado`
- add primary key (`user_id`,`lesion_id`), add key `fk_lesion_empleado_lesion1_idx` (`lesion_id`),add key `fk_lesion_empleado_user1_idx` (`user_id`);
+ add primary key (`user_id`,`lesion_id`,`fecha`,`hora`), add key `fk_lesion_empleado_lesion1_idx` (`lesion_id`),add key `fk_lesion_empleado_user1_idx` (`user_id`);
 
 --
 -- indexes for table `linea_factura`
@@ -1496,7 +1498,8 @@ insert into `lesion_cliente` (`id_lesion`, `cliente_id`) values
 --
 -- dumping data for table `lesion_empleado`
 --
-insert into `lesion_empleado` ( `lesion_id`,  `user_id`) values (2, 1);
+insert into `lesion_empleado` ( `lesion_id`,  `user_id`,`fecha`,`hora`)
+values (2, 4,'2016-9-15','12:00:00');
 
 --
 -- dumping data for table `empleado_mira`

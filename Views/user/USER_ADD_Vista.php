@@ -4,6 +4,7 @@ $view = ViewManager::getInstance();
 $view->setVariable("title", "Create User");
 $user = $view->getVariable("user");
 $profiles = $view->getVariable("profiles");
+$injuries = $view->getVariable("injuries");
 $errors = $view->getVariable("errors");
 ?>
 
@@ -36,7 +37,7 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Profile") ?>:</label>
-            <select name="profile" class="form-control">
+            <select name="profile" class="form-control" id="profile">
               <option value="" selected></option>
               <?php foreach($profiles as $profile) {?>
                   <option value="<?= $profile->getProfileName()?>"><?= $profile->getProfileName()?></option>
@@ -56,7 +57,7 @@ $errors = $view->getVariable("errors");
              <input type="text" name="fecha_nac" class="form-control" placeholder="ej: 2015-12-15" id="datepicker">
           </div>
           <div class="form-group">
-            <label><?= i18n("Adress") ?>:</label>
+            <label><?= i18n("Address") ?>:</label>
              <input type="text" name="direccion" class="form-control" placeholder="ej: Avenida de la Astronomía, 24, 28830, San Fernando de Henares, Madrid-ESPAÑA ">
           </div>
           <div class="form-group">
@@ -81,6 +82,15 @@ $errors = $view->getVariable("errors");
             <select name="activo" class="form-control">
               <option value="Yes"><?= i18n("Yes") ?></option>
               <option value="No"><?= i18n("No") ?></option>
+            </select>
+          </div>
+          <div class="form-group" style="visibility: hidden; display:none" id="show">
+            <label><?= i18n("Asign Injury") ?>:</label>
+            <select name="injury" class="form-control">
+              <option  value=""></option>
+              <?php foreach($injuries as $injury) {?>
+              <option value="<?= $injury["id"]?>"><?= $injury["descripcion"]?></option>
+              <?php }?>
             </select>
           </div>
           <div class="form-group">

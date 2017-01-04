@@ -371,14 +371,14 @@ class CLIENT_Controller extends BaseController {
         }
 
         if($go){
-          $data ="ID usuario:".$this->currentUserId."-----ID cliente:".$clientid."-----Fecha:".$date."-----Hora:".$time."-----GRANTED ACCESS" .PHP_EOL ;
+          $data ="(CLIENT INJURY ACCESS) ID user:".$this->currentUserId."-----ID client:".$clientid."-----Date:".$date."-----Hour:".$time."-----GRANTED ACCESS" .PHP_EOL ;
           $fp = fopen(__DIR__ . '/../documents/injury_logs.txt', "a");
           fwrite($fp,$data);
           fclose($fp);
           $this->view->setVariable("injuries", $injuries);
           $this->view->render("client", "CLIENT_INJURIES_Vista");
         } else{
-            $data ="ID usuario:".$this->currentUserId."-----ID cliente:".$clientid."-----Fecha:".$date."-----Hora:".$time."-----DENIED ACCESS" .PHP_EOL ;
+            $data ="(CLIENT INJURY ACCESS) ID user:".$this->currentUserId."-----ID client:".$clientid."-----Date:".$date."-----Hour:".$time."-----DENIED ACCESS" .PHP_EOL ;
             $fp = fopen(__DIR__ . '/../documents/injury_logs.txt', "a");
             fwrite($fp,$data);
             fclose($fp);

@@ -147,6 +147,7 @@ class USER_Controller extends BaseController {
           $user->setTipoContrato($_POST["tipo_contrato"]);
           $user->setEmail($_POST["email"]);
           $user->setFoto($_FILES["foto"]["name"]);
+          $user->setInjury($_POST["injury"]);
           if($_POST["activo"] == "Yes"){
             $user->setActivo(TRUE);
           }
@@ -180,6 +181,9 @@ class USER_Controller extends BaseController {
 
         $profileMapper = new PROFILE_Model();
         $profiles = $profileMapper->fetch_all();
+        $injuries = $this->userMapper->fetch_injuries();
+
+        $this->view->setVariable("injuries", $injuries);
         $this->view->setVariable("user", $user);
         $this->view->setVariable("profiles", $profiles);
         $this->view->render("user", "USER_ADD_Vista");
@@ -232,6 +236,7 @@ class USER_Controller extends BaseController {
           $user->setNumCuenta($_POST["num_cuenta"]);
           $user->setTipoContrato($_POST["tipo_contrato"]);
           $user->setEmail($_POST["email"]);
+          $user->setInjury($_POST["injury"]);
           if($_FILES["foto"]["name"]){
             $user->setFoto($_FILES["foto"]["name"]);
           }else{
@@ -300,6 +305,9 @@ class USER_Controller extends BaseController {
         }
         $profileMapper = new PROFILE_Model();
         $profiles = $profileMapper->fetch_all();
+        $injuries = $this->userMapper->fetch_injuries();
+
+        $this->view->setVariable("injuries", $injuries);
         $this->view->setVariable("user", $user);
         $this->view->setVariable("profiles", $profiles);
         $this->view->render("user", "USER_EDIT_Vista");
@@ -370,7 +378,7 @@ class USER_Controller extends BaseController {
             $query = "";
             $flag = 0;
 
-            if ($_POST["dni"]){                
+            if ($_POST["dni"]){
                 $query .= "dni='". $_POST["dni"]."'";
                 $flag = 1;
             }
@@ -456,6 +464,43 @@ class USER_Controller extends BaseController {
         return $this->checkPerms->user_controllers($userid);
     }
 
+    public function injuries() {
+      $array_date=getDate();
+      $date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
+      $time=$array_date['hours'].":".$array_date['minutes'].":".$array_date['seconds'];
+      $go=false;
+      if (!isset($_REQUEST["id"])) {
+          throw new Exception(i18n("Id is mandatory"));
+      }
+      $userid = $_REQUEST["id"];
+      $user = $this->userMapper->fetch($this->currentUserId);
+      $injuries = $this->userMapper->fetch_user_injuries($userid);
 
+
+      foreach ($injuries as $key => $value) {
+        if($value["user_id"]==$this->currentUserId || $user->getProfile()=="admin" ){
+          $go=true;
+
+          }
+      }
+
+
+        if($go){
+          $data ="(INJURY MONITOR ACCESS) ID user:".$this->currentUserId."-----Date:".$date."-----Time:".$time."-----GRANTED ACCESS" .PHP_EOL ;
+          $fp = fopen(__DIR__ . '/../documents/injury_logs.txt', "a");
+          fwrite($fp,$data);
+          fclose($fp);
+          $this->view->setVariable("injuries", $injuries);
+          $this->view->render("user", "USER_INJURIES_Vista");
+        } else{
+            $data ="(INJURY MONITOR ACCESS) ID user:".$this->currentUserId."-----Date:".$date."-----Time:".$time."-----DENIED ACCESS" .PHP_EOL ;
+            $fp = fopen(__DIR__ . '/../documents/injury_logs.txt', "a");
+            fwrite($fp,$data);
+            fclose($fp);
+            $this->view->setFlash(sprintf(i18n("You don`t have permissions here")));
+            $this->view->redirect("user", "show");
+        }
+
+  }
 
 }

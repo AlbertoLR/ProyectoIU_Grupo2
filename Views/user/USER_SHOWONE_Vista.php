@@ -66,14 +66,21 @@ $errors = $view->getVariable("errors");
             <td><?= $user->getDireccion() ?></td>
           </tr>
           <tr>
-            <th><?= i18n("Bank accout")?>:</th>
+            <th><?= i18n("Bank account")?>:</th>
             <td><?= $user->getNumCuenta() ?></td>
           </tr>
           <tr class="active">
             <th><?= i18n("Contract")?>:</th>
             <td><?= $user->getTipoContrato() ?></td>
           </tr>
-          <tr>
+          <?php if($user->getProfile() == "monitor"): ?>
+          <th><?= i18n("Injury")?></th>
+            <td>
+              <a href="index.php?controller=user&amp;action=injuries&amp;id=<?=$user->getID()?>" class="btn btn-default"><i aria-hidden="true"></i> <?= i18n("View Injuries") ?></a>
+            </td>
+          <?php endif ?>
+        </tr>
+          <tr class="active">
             <th><?= i18n("Operating")?>:</th>
               <?php if($user->getActivo()){ ?>
               <td><?= i18n("Yes") ?></td>
@@ -81,7 +88,7 @@ $errors = $view->getVariable("errors");
               <td><?= i18n("No") ?></td>
               <?php } ?>
           </tr>
-          <tr class="active">
+          <tr >
             <th class="col-md-2">Comentario:</th>
             <td class="col-md-2"><?= $user->getComentario() ?></td>
           </tr>
