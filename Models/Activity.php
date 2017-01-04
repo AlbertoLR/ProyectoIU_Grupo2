@@ -9,17 +9,15 @@ class Activity {
     private $capacidad;
     private $precio;
     private $descuento_id;
-    private $espacio_id;
     private $categoria_id;
     private $extra_discount;
 
-    public function __construct($id=NULL, $nombre=NULL, $capacidad=NULL, $precio=NULL, $descuento_id=NULL, $espacio_id=NULL, $categoria_id=NULL, $extra_discount=NULL ) {
+    public function __construct($id=NULL, $nombre=NULL, $capacidad=NULL, $precio=NULL, $descuento_id=NULL, $categoria_id=NULL, $extra_discount=NULL ) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->capacidad = $capacidad;
         $this->precio = $precio;
         $this->descuento_id = $descuento_id;
-        $this->espacio_id = $espacio_id;
         $this->categoria_id = $categoria_id;
         $this->extra_discount = $extra_discount;
     }
@@ -62,14 +60,6 @@ class Activity {
 
     public function setDiscountid($descuento_id) {
         $this->descuento_id = $descuento_id;
-    }
-
-    public function getSpaceid() {
-        return $this->espacio_id;
-    }
-
-    public function setSpaceid($espacio_id) {
-        $this->espacio_id = $espacio_id;
     }
 
     public function getCategoryid() {

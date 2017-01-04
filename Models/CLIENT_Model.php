@@ -96,8 +96,8 @@ class CLIENT_Model {
     }
 
     public function fetch_inscriptions($clientID){
-        $sql = $this->db->prepare("SELECT inscripcion.id,actividad.nombre as actividad,inscripcion.fecha,espacio.nombre FROM cliente,inscripcion,actividad,espacio
-                                  WHERE cliente.id=? AND cliente.dni_c=inscripcion.cliente_dni_c AND actividad.id=inscripcion.id_actividad AND actividad.espacio_id=espacio.id");
+        $sql = $this->db->prepare("SELECT inscripcion.id,actividad.nombre as actividad,inscripcion.fecha FROM cliente,inscripcion,actividad
+                                  WHERE cliente.id=? AND cliente.dni_c=inscripcion.cliente_dni_c AND actividad.id=inscripcion.id_actividad ");
         $sql->execute(array($clientID));
         $list_db = $sql->fetchAll(PDO::FETCH_ASSOC);
 

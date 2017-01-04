@@ -47,7 +47,6 @@ create table `actividad` (
   `nombre` varchar(10) collate utf8_spanish_ci not null,
   `capacidad` smallint(6) not null,
   `precio` smallint(6) not null,
-  `espacio_id` int(11) not null,
   `categoria_id` int(11) not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
@@ -655,7 +654,7 @@ alter table `action`
 -- indexes for table `actividad`
 --
 alter table `actividad`
- add primary key (`id`), add key `fk_actividad_espacio1_idx` (`espacio_id`), add key `fk_actividad_categoria1_idx` (`categoria_id`);
+ add primary key (`id`), add key `fk_actividad_categoria1_idx` (`categoria_id`);
 
 --
 -- indexes for table `alerta`
@@ -1051,8 +1050,7 @@ modify `id` int(11) not null auto_increment,auto_increment=31;
 -- constraints for table `actividad`
 --
 alter table `actividad`
-add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`)  on delete cascade on update cascade,
-add constraint `fk_actividad_espacio1` foreign key (`espacio_id`) references `espacio` (`id`)  on delete cascade on update cascade;
+add constraint `fk_actividad_categoria1` foreign key (`categoria_id`) references `categoria` (`id`)  on delete cascade on update cascade;
 
 --
 -- constraints for table `alerta`
@@ -1449,13 +1447,13 @@ insert into `evento` (`id`, `nombre`, `espacio_id`, `precio`) values (1, 'hallow
 --
 -- dumping data for table `actividad`
 --
-insert into `actividad` (`id`, `nombre`, `espacio_id`, `capacidad`, `precio`, `categoria_id`) values
-(1, 'zumba', 5, 20, 4, 1),
-(2, 'salsa', 6, 20, 4, 2),
-(3, 'pilates', 2, 15, 5, 1),
-(4, 'spinning', 3, 25, 3, 2),
-(5, 'step', 4, 10, 4, 2),
-(6, 'hiit', 1, 20, 3, 2);
+insert into `actividad` (`id`, `nombre`,  `capacidad`, `precio`, `categoria_id`) values
+(1, 'zumba', 20, 4, 1),
+(2, 'salsa', 20, 4, 2),
+(3, 'pilates',  15, 5, 1),
+(4, 'spinning', 25, 3, 2),
+(5, 'step', 10, 4, 2),
+(6, 'hiit', 20, 3, 2);
 
 
 

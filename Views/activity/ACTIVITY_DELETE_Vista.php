@@ -3,7 +3,6 @@ require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $view->setVariable("title", "Delete Activity");
 $activity = $view->getVariable("activity");
-$spaces = $view->getVariable("spaces");
 $discounts = $view->getVariable("discounts");
 $categories = $view->getVariable("categories");
 $errors = $view->getVariable("errors");
@@ -61,15 +60,6 @@ $errors = $view->getVariable("errors");
         </tbody>
         <tbody>
           <tr class="active">
-            <th><?= i18n("Space")?></th>
-            <?php foreach($spaces as $space => $value){ ?>
-              <?php if($value["id"] == $activity->getSpaceid()) {?>
-              <td><?=$value["nombre"] ?></td>
-            <?php } }  ?>
-          </tr>
-        </tbody>
-        <tbody>
-          <tr>
             <th><?= i18n("Category")?></th>
             <?php foreach($categories as $category => $value){ ?>
               <?php if($value["id"] == $activity->getCategoryid()) {?>

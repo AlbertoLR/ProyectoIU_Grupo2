@@ -28,7 +28,6 @@ $errors = $view->getVariable("errors");
               <th>#</th>
               <th><?= i18n("Activity") ?></th>
               <th><?= i18n("Date") ?></th>
-              <th><?= i18n("Space") ?></th>
               <th><?= i18n("Name Client") ?></th>
               <th><?= i18n("DNI Client") ?></th>
               <th style="width: 72px;"></th>
@@ -41,7 +40,6 @@ $errors = $view->getVariable("errors");
             <td><?php echo $inscription["id"]; ?></td>
               <td><?php echo $inscription["actividad"]; ?></td>
               <td><?php echo $inscription["fecha"]; ?></td>
-              <td><?php echo $inscription["nombre"]; ?></td>
               <td><?php echo $inscription["nombre_c"]; ?></td>
               <td><?php echo $inscription["dni_c"]; ?></td>
               <td>
