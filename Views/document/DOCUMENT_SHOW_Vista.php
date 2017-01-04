@@ -47,7 +47,7 @@ $errors = $view->getVariable("errors");
           <td><?php echo $document->getType() ?></td>
                <td><a href=<?= basename(__FILE__).'../../files/' . $document->getDocument() ?> ><?php echo $document->getDocument() ?></a></td>
           <td>
-              <a href="index.php?controller=document&amp;action=showone&amp;id=<?php echo $document->getID();  ?>"><i class="fa fa-id-card" aria-hidden="true"></i></a>
+              <!-- <a href="index.php?controller=document&amp;action=showone&amp;id=<?php echo $document->getID();  ?>"><i class="fa fa-id-card" aria-hidden="true"></i></a> -->
               <a href="index.php?controller=document&amp;action=edit&amp;id=<?php echo $document->getID();  ?>"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
               <a href="index.php?controller=document&amp;action=delete&amp;id=<?php echo $document->getID();  ?>" role="button" data-toggle="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
           </td>
