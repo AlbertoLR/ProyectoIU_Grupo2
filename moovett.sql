@@ -126,7 +126,7 @@ create table `caja` (
 drop table if exists `categoria`;
 create table `categoria` (
 `id` int(11) not null,
-  `tipo` varchar(10) collate utf8_spanish_ci not null
+  `tipo` varchar(50) collate utf8_spanish_ci not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
