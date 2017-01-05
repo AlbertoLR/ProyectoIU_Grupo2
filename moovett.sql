@@ -324,7 +324,8 @@ create table `hora_fisio` (
   `dia_f` date not null,
   `hora_i` time not null,
   `hora_f` time not null,
-  `asistencia` tinyint(1) not null default '0'
+  `asistencia` tinyint(1) not null default '0',
+  `id_hora` int(11) not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -408,14 +409,15 @@ create table `linea_factura` (
 -- --------------------------------------------------------
 
 --
--- table structure for table `notificacion`
+-- table structure for table `posible_fisio`
 --
 
-drop table if exists `notificacion`;
-create table `notificacion` (
+drop table if exists `posible_fisio`;
+create table `posible_fisio` (
 `id` int(11) not null,
-  `descripcion` text collate utf8_spanish_ci not null,
-  `user_id` int(11) not null
+  `dia` int(1) not null,
+  `hora_i` time not null,
+  `hora_f` time not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -520,19 +522,6 @@ create table `rango_horario` (
   `hora_apertura` time not null,
   `hora_cierre` time not null,
   `horario_temporada_id` int(11) not null
-) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
-
-
--- --------------------------------------------------------
-
---
--- table structure for table `recibe`
---
-
-drop table if exists `recibe`;
-create table `recibe` (
-  `notificacion_id` int(11) not null,
-  `cliente_id` int(11) not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -791,10 +780,10 @@ alter table `linea_factura`
  add primary key (`id`,`id_factura`), add key `id_factura_idx` (`id_factura`);
 
 --
--- indexes for table `notificacion`
+-- indexes for table `posible_fisio`
 --
-alter table `notificacion`
- add primary key (`id`), add key `fk_notificacion_user1_idx` (`user_id`);
+alter table `posible_fisio`
+ add primary key (`id`);
 
 --
 -- indexes for table `pago`
@@ -837,12 +826,6 @@ alter table `profile_perms`
 --
 alter table `rango_horario`
  add primary key (`id`), add key `fk_rango_horario_horario_temporada1_idx` (`horario_temporada_id`);
-
---
--- indexes for table `recibe`
---
-alter table `recibe`
- add primary key (`notificacion_id`,`cliente_id`), add key `fk_recibe_notificacion1_idx` (`notificacion_id`), add key `fk_recibe_cliente1_idx` (`cliente_id`);
 
 --
 -- indexes for table `recibo`
@@ -980,9 +963,9 @@ modify `id` int(11) not null auto_increment;
 alter table `linea_factura`
 modify `id` int(11) not null auto_increment;
 --
--- auto_increment for table `notificacion`
+-- auto_increment for table `posible_fisio`
 --
-alter table `notificacion`
+alter table `posible_fisio`
 modify `id` int(11) not null auto_increment;
 --
 -- auto_increment for table `pago`
@@ -1120,7 +1103,8 @@ add constraint `fk_horas_posibles_rango_horario1` foreign key (`rango_horario_id
 -- constraints for table `hora_fisio`
 --
 alter table `hora_fisio`
-add constraint `id_reserva` foreign key (`id_reserva`) references `reserva` (`id`) on delete cascade on update cascade;
+add constraint `id_reserva` foreign key (`id_reserva`) references `reserva` (`id`) on delete cascade on update cascade,
+add constraint `id_hora` foreign key (`id_hora`) references `posible_fisio` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `lesion_cliente`
@@ -1141,12 +1125,6 @@ add constraint `fk_lesion_empleado_user1` foreign key (`user_id`) references `us
 --
 alter table `linea_factura`
 add constraint `id_factura` foreign key (`id_factura`) references `factura` (`id`) on delete cascade on update cascade;
-
---
--- constraints for table `notificacion`
---
-alter table `notificacion`
-add constraint `fk_notificacion_user1` foreign key (`user_id`) references `user` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `pago`
@@ -1182,12 +1160,6 @@ add constraint `profileid` foreign key (`profile`) references `profile` (`id`) o
 alter table `rango_horario`
 add constraint `fk_rango_horario_horario_temporada1` foreign key (`horario_temporada_id`) references `horario_temporada` (`id`) on delete cascade on update cascade;
 
---
--- constraints for table `recibe`
---
-alter table `recibe`
-add constraint `fk_recibe_cliente1` foreign key (`cliente_id`) references `cliente` (`id`) on delete cascade on update cascade,
-add constraint `fk_recibe_notificacion1` foreign key (`notificacion_id`) references `notificacion` (`id`) on delete cascade on update cascade;
 
 --
 -- constraints for table `recibo`
@@ -1288,7 +1260,12 @@ insert into `controller` (`id`, `controllername`) values
 (17, 'inscription'),
 (18, 'service'),
 (19,'externalparticular'),
-(20,'category');
+(20,'category'),
+(21,'physiotherapist'),
+(22,'physiotherapisthour'),
+(23,'notification'),
+(24,'document');
+
 
 
 
@@ -1394,18 +1371,34 @@ insert into `permission` (`id`, `controller`, `action`) values
 (92, 'category', 'show'),
 (93, 'category', 'showone'),
 (94, 'category', 'add'),
-(95, 'category', 'edit');
-
+(95, 'category', 'edit'),
+(96, 'physiotherapist', 'delete'),
+(97, 'physiotherapist', 'show'),
+(98, 'physiotherapist', 'showone'),
+(99, 'physiotherapist', 'add'),
+(100, 'physiotherapist', 'edit'),
+(101, 'physiotherapisthour', 'delete'),
+(102, 'physiotherapisthour', 'show'),
+(103, 'physiotherapisthour', 'showone'),
+(104, 'physiotherapisthour', 'add'),
+(105, 'physiotherapisthour', 'edit'),
+(106, 'notification', 'show'),
+(107, 'notification', 'add'),
+(108, 'document', 'delete'),
+(109, 'document', 'show'),
+(110, 'document', 'showone'),
+(111, 'document', 'add'),
+(112, 'document', 'edit');
 
 --
 -- dumping data for table `cliente`
 --
 insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`num_cuenta`, `profesion`, `telefono`, `direccion`, `comentario`, `email`, `alerta_falta`, `desempleado`, `estudiante`, `familiar`,`activo`,`foto`) values
-(1, '65417959W', 'Jose', 'Lopez Antelo', '1993-11-11','ES928742322292837492384', 'Programador', 695478210, 'Alameda Estucava parietària emmarciria, 276B 2ºA', 'Muy activo', 'jose.lopez@gmail.com', true, default, true, default,false,null),
-(2, '81974662V', 'Elena', 'Nito Del Bosque', '1988-12-12','ES9287423222928374923847', 'Ingeniero', 632588745, 'Pasaje Remosquejades, 300A 4ºD', 'Le encanta Pilates', 'elena.nito@delbosque.com', false, default, default, default,false,null),
-(3, '68942909H', 'Manuel', 'López Fernández', '1968-11-12','ES9287423332928374923847', 'Pastelero', 698523147, 'Avenida Debanaries Enllatin Renillin, 59', 'Soy pastelero', 'manu@gmail.com', false, false, false, true,true,null),
-(4, '51453544Z', 'Antonio', 'Míguez Calvo', '1995-01-06','ES9287423332928371259682', null, 635921362, 'C/ Nº, Rúa Alcalde Lorenzo, 6, 15220 Bertamiráns, A Coruña', 'Pasota', 'antonio@gmail.com', false, true, true, true,true,null),
-(5, '61682944A', 'Carla', 'González González', '1994-12-28','ES1256987458965230000025', null, 698377781, 'Ronda de Outeiro, 306 - 15011 - A Coruña', 'Vaga', 'carla@gmail.com', false, true, true, true,true,null);
+(1, '65417959W', 'Jose', 'Lopez Antelo', '1993-11-11','ES928742322292837492384', 'Programador', 695478210, 'Alameda Estucava parietària emmarciria, 276B 2ºA', 'Muy activo', 'moovettgym@gmail.com', true, default, true, default,false,null),
+(2, '81974662V', 'Elena', 'Nito Del Bosque', '1988-12-12','ES9287423222928374923847', 'Ingeniero', 632588745, 'Pasaje Remosquejades, 300A 4ºD', 'Le encanta Pilates', 'moovettgym@gmail.com', false, default, default, default,false,null),
+(3, '68942909H', 'Manuel', 'López Fernández', '1968-11-12','ES9287423332928374923847', 'Pastelero', 698523147, 'Avenida Debanaries Enllatin Renillin, 59', 'Soy pastelero', 'moovettgym@gmail.com', false, false, false, true,true,null),
+(4, '51453544Z', 'Antonio', 'Míguez Calvo', '1995-01-06','ES9287423332928371259682', null, 635921362, 'C/ Nº, Rúa Alcalde Lorenzo, 6, 15220 Bertamiráns, A Coruña', 'Pasota', 'moovettgym@gmail.com', false, true, true, true,true,null),
+(5, '61682944A', 'Carla', 'González González', '1994-12-28','ES1256987458965230000025', null, 698377781, 'Ronda de Outeiro, 306 - 15011 - A Coruña', 'Vaga', 'moovettgym@gmail.com', false, true, true, true,true,null);
 
 
 --
@@ -1775,14 +1768,13 @@ insert into `alerta` (`id`, `descripcion`, `user_id`, `pago_id`, `asistencia_id_
 (2, 'no paga', null, 1, 1, null);
 
 --
--- dumping data for table `notificacion`
+-- dumping data for table `posible_fisio`
 --
-insert into `notificacion` (`id`, `descripcion`, `user_id`) values (1, 'notifiacion1', 1);
+insert into `posible_fisio` (`id`, `dia`, `hora_i`,`hora_f`) values
+(1, '2','16:00:00','17:00:00'),
+(2, '3','17:00:00','18:00:00' ),
+(3, '4','18:00:00','19:00:00' );
 
---
--- dumping data for table `recibe`
---
-insert into `recibe` (`notificacion_id`, `cliente_id`) values (1, 1);
 
 --
 -- dumping data for table `percibe`
@@ -1792,7 +1784,8 @@ insert into `percibe` ( `alerta_id`, `user_id`) values (1, 1);
 --
 -- dumping data for table `hora_fisio`
 --
-insert into `hora_fisio` (`id`, `id_reserva`, `dia_f`, `hora_i`, `hora_f`,`asistencia`) values (1, 2, '2016-11-11', '17:00', '18:00',true);
+insert into `hora_fisio` (`id`, `id_reserva`, `dia_f`, `hora_i`, `hora_f`,`asistencia`,`id_hora`) values
+(1, 2, '2016-11-11', '17:00:00', '18:00:00',true,1);
 
 --
 -- dumping data for table `factura`
@@ -1945,8 +1938,24 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (99, 1, 92),
 (100, 1, 93),
 (101, 1, 94),
-(102, 1, 95);
-
+(102, 1, 95),
+(103, 1, 96),
+(104, 1, 97),
+(105, 1, 98),
+(106, 1, 99),
+(107, 1, 100),
+(108, 1, 101),
+(109, 1, 102),
+(110, 1, 103),
+(111, 1, 104),
+(112, 1, 105),
+(113, 1, 106),
+(114, 1, 107),
+(115, 1, 108),
+(116, 1, 109),
+(117, 1, 110),
+(118, 1, 111),
+(119, 1, 112);
 
 
 
