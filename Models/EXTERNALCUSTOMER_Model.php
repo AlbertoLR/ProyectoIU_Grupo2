@@ -60,5 +60,20 @@ class EXTERNALCUSTOMER_Model {
         if ($sql->fetchColumn() > 0) {
             return true;
         }
+    } 
+	
+	public function search($query) {//buscamos cliente externo con los parametros que deseamos
+        $search_query = "SELECT * FROM cliente_externo WHERE ". $query;
+        $sql = $this->db->prepare($search_query);
+        $sql->execute();
+        $clientesexternos_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $clientesexternos = array();
+
+        foreach ($clientesexternos_db as $clienteexterno) {
+            array_push($clientesexternos, new ExternalCustomer($clienteexterno["id"], $clienteexterno["dni_nif"], $clienteexterno["nombre"],
+                                        $clienteexterno["apellido"], $clienteexterno["telefono"],$clienteexterno["email"] ));
+        }
+        return $clientesexternos;
     }
 }

@@ -51,4 +51,19 @@ class EXTERNALPARTICULAR_Model {
 		$sql = $this->db->prepare("DELETE FROM particular_externo where id=?");
         $sql->execute(array($particularexterno->getID()));
     }
+	
+	public function search($query) {//buscamos movimiento con los parametros que deseamos
+        $search_query = "SELECT * FROM particular_externo WHERE ". $query;
+        $sql = $this->db->prepare($search_query);
+        $sql->execute();
+        $particularesexternos_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $particularesexternos = array();
+
+        foreach ($particularesexternos_db as $particularexterno) {
+            array_push($particularesexternos, new ExternalParticular($particularexterno["id"],$particularexterno["nombre"],
+                                        $particularexterno["apellidos"], $particularexterno["telefono"] ));
+        }
+        return $particularesexternos;
+    }
 }

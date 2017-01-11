@@ -391,9 +391,15 @@
   	"Edit Physiotherapist Hour"=>"Editar Hora Fisioterapia",
   	"Search Physiotherapist Hour"=>"Buscar Hora Fisioterapia",
   	"List of Physiotherapist Hours"=>"Lista de Horas Fisioterapia",
-  	"Create Hour"=>"Crear Hora Fisioterapia",
+  	"Create Physiotherapist Hour"=>"Crear Hora Fisioterapia",
+    "Create Physiotherapist Session" =>"Crear sesión fisioterapia",
   	"Show One Physiotherapist Hour"=>"Mostrar unha Hora Fisioterapia",
   	"Physiotherapist Hour"=>"Hora Fisioterapia",
-  	"physiotherapist"=>"fisioterapia"
+  	"physiotherapist"=>"fisioterapia",
+
+    "Search External Particular"=>"Buscar Particular Externo",
+    "Search External Customer"=>"Buscar Cliente Externo",
+    "Search cash"=>"Buscar movementos",
+    "Payment id (ONLY FOR CASH INCOMES)"=>"Id Pago(SÓ PARA INGRESOS)",
   )
 ?>

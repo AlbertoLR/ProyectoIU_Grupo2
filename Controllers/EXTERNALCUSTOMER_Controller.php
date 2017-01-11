@@ -157,4 +157,58 @@ class EXTERNALCUSTOMER_Controller extends BaseController {
         $this->view->setVariable("externalcustomer", $externalcustomer);
         $this->view->render("externalcustomer", "EXTERNALCUSTOMER_DELETE_Vista");
     }
+	
+	public function search() { //buscamos cliente externo con los parametros deseados
+        $this->checkPerms("externalcustomer", "show", $this->currentUserId);
+
+        if (isset($_POST["submit"])) {
+            $query = "";
+            $flag = 0;
+
+            if ($_POST["dni"]){
+                $query .= "dni_nif='". $_POST["dni"]."'";
+                $flag = 1;
+            }
+
+            if ($_POST["name"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "nombre LIKE '%". $_POST["name"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["surname"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "apellido LIKE '%". $_POST["surname"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["telephone"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "telefono='". $_POST["telephone"] ."'";
+                $flag = 1;
+            }
+
+            if ($_POST["email"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "email LIKE '%". $_POST["email"] ."%'";
+            }
+            if (empty($query)) {
+                $externalcustomers = $this->externalcustomerMapper->fetch_all();
+            } else {
+                $externalcustomers = $this->externalcustomerMapper->search($query);
+            }
+            $this->view->setVariable("externalcustomers", $externalcustomers);
+            $this->view->render("externalcustomer", "EXTERNALCUSTOMER_SHOW_Vista");
+        }else {
+            $this->view->render("externalcustomer", "EXTERNALCUSTOMER_SEARCH_Vista");
+        }
+    }
 }

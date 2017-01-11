@@ -8,7 +8,7 @@ require_once(__DIR__."/../Controllers/BaseController.php");
 
 class CASH_Controller extends BaseController {
 
-    private $cash;
+    private $cajaMapper;
 
     public function __construct() {
         parent::__construct();
@@ -117,4 +117,77 @@ class CASH_Controller extends BaseController {
         $this->view->setVariable("cash", $cash);
         $this->view->render("cash", "CASH_ADD_Vista");
 		}
+		
+		public function search() { //buscamos particular externo con los parametros deseados
+        $this->checkPerms("cash", "show", $this->currentUserId);
+
+        if (isset($_POST["submit"])) {
+            $query = "";
+            $flag = 0;
+
+            if ($_POST["cantidad"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "cantidad LIKE '%". $_POST["cantidad"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["tipo"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+				 if($_POST["tipo"]=='ingreso'){
+					$tipo = 'cash income';
+				}elseif($_POST["tipo"]=='retirada'){
+					$tipo = 'withdraw';
+				}elseif($_POST["tipo"]=='pago'){
+					$tipo = 'payment';
+				}elseif($_POST["tipo"]=='cash income'){
+					$tipo = 'cash income';
+				}elseif($_POST["tipo"]=='withdraw'){
+					$tipo = 'withdraw';
+				}else{
+					$tipo = 'payment';
+				}
+				
+                $query .= "tipo LIKE '%". $tipo ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["descripcion"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "descripcion='". $_POST["descripcion"] ."'";
+                $flag = 1;
+            }
+			
+			if ($_POST["pagoid"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "pago_id='". $_POST["pagoid"] ."'";
+                $flag = 1;
+            }
+			
+			if ($_POST["fecha"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "fecha='". $_POST["fecha"] ."'";
+                $flag = 1;
+            }
+
+            if (empty($query)) {
+                $cashes = $this->cajaMapper->fetch_all();
+            } else {
+                $cashes = $this->cajaMapper->search($query);
+            }
+            $this->view->setVariable("cashes", $cashes);
+            $this->view->render("cash", "CASH_SHOW_Vista");
+        }else {
+            $this->view->render("cash", "CASH_SEARCH_Vista");
+        }
+	}
 }

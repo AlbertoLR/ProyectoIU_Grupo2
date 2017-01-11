@@ -14,10 +14,10 @@ $errors = $view->getVariable("errors");
 <?php $view->moveToDefaultFragment(); ?>
 
 <?php
-	/*
+	/*		
 	**Busco la ultima posición del array (último movimiento) para mostrar el total de la caja (efectivo_final del ultimo movimiento)
 	**Ya no es necesario al hacer la búsqueda ordenada por fecha descendente
-
+	
 	$tamaño = (count($cashes) - 1);
 	$efectivo = $cashes[$tamaño]->getEfectivofinal();
 	echo $efectivo;
@@ -35,12 +35,13 @@ $errors = $view->getVariable("errors");
     <div class="container">
     <h1><?= i18n("List of cash") ?></h1>
 	<a href="index.php?controller=cash&amp;action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create cash") ?></a>
+	<a href="index.php?controller=cash&amp;action=search" class="btn btn-default"><i class="fa fa-search-plus" aria-hidden="true"></i> <?= i18n("Advanced Search") ?></a>
 
 <table class="table top-buffer">
       <thead>
         <tr>
-			<th><?= i18n("CURRENT CASH") ?></th>
-			<th><?php echo $cashes[0]->getEfectivoFinal(); ?> EUROS</th>
+			<th><?php if(empty($cashes)){ echo "";}else{ ?><?= i18n("CURRENT CASH") ?> <?php }?></th> <!-- controlamos cuando el efectivo es vacio en busquedas-->
+			<th><?php if(empty($cashes)){ echo "";}else{echo $cashes[0]->getEfectivoFinal()." EUROS";} ?> </th>
 		</tr>
 	</thead>
 </table>

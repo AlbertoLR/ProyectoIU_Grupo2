@@ -76,32 +76,8 @@ class CASH_Model {
         $sql->execute(array($inicial['efectivo_final'], $cantidad, $final, $cash->getTipo(),$cash->getDescripcion(),$idPago,$cash->getFecha()));
 		print_r($sql);
     }
-	
-	public function search(Cash $cash) { //busca movimientos
-		
-		$cajaid = $cash->getID();
-		$cajaefectivoinicial = $cash->getID();
-		$cajacantidad = $cash->setCantidad();
-		$cajaefectivofinal = $cash->
-		$cajapagoid = $cash->getPagoid();
-		$cajatipo = $cash->getTipo();
-		$cajadescripcion = $cash->getDescripcion();
-		$cajafecha = $cash->getFecha();
-		
-		$sql = $this->db->prepare("SELECT * FROM caja WHERE id LIKE ? AND efectivo_inicial LIKE ? AND cantidad LIKE ? AND efectivo_final LIKE ? AND pago_id LIKE ? AND tipo LIKE ? AND descripcion LIKE ? AND fecha LIKE ?");
-		$sql->execute(array($cajaid,$cajaefectivoinicial,$cajacantidad,$cajaefectivofinal,$cajapagoid,$cajatipo,$cajadescripcion,$cajafecha));
 
-        $cajas_db = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-        $cashes = array();
-
-        foreach ($cajas_db as $cash) {
-            array_push($cashes, new Cash($cash["id"], $cash["efectivo_inicial"], $cash["cantidad"],$cash["efectivo_final"], $cash["tipo"],$cash["descripcion"],$cash["pago_id"],$cash["fecha"]));
-        }
-        return $cashes;		
-    }
-
-    public function pagoIdExists($pagoId) {
+	public function pagoIdExists($pagoId) {
         $sql = $this->db->prepare("SELECT count(pago_id) FROM caja where pago_id=?");
         $sql->execute(array($pagoId));
 
@@ -109,4 +85,18 @@ class CASH_Model {
             return true;
         }
     }    
+	
+	public function search($query) {//buscamos movimiento con los parametros que deseamos
+        $search_query = "SELECT * FROM caja WHERE ". $query;
+        $sql = $this->db->prepare($search_query);
+        $sql->execute();
+        $cashes_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $cashes = array();
+
+        foreach ($cashes_db as $cash) {
+            array_push($cashes, new Cash($cash["id"], $cash["efectivo_inicial"], $cash["cantidad"],$cash["efectivo_final"], $cash["tipo"],$cash["descripcion"],$cash["pago_id"],$cash["fecha"] ));
+        }
+        return $cashes;
+    }
 }

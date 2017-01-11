@@ -7,7 +7,7 @@ require_once(__DIR__."/../Controllers/BaseController.php");
 
 class EXTERNALPARTICULAR_Controller extends BaseController {
 
-    private $externalpartticularMapper;
+    private $externalparticularMapper;
 
     public function __construct() {
         parent::__construct();
@@ -114,4 +114,47 @@ class EXTERNALPARTICULAR_Controller extends BaseController {
         $this->view->setVariable("externalparticular", $externalparticular);
         $this->view->render("externalparticular", "EXTERNALPARTICULAR_DELETE_Vista");
     }
+	
+	public function search() { //buscamos particular externo con los parametros deseados
+        $this->checkPerms("externalparticular", "show", $this->currentUserId);
+
+        if (isset($_POST["submit"])) {
+            $query = "";
+            $flag = 0;
+
+            if ($_POST["name"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "nombre LIKE '%". $_POST["name"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["surname"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "apellidos LIKE '%". $_POST["surname"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["telephone"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "telefono='". $_POST["telephone"] ."'";
+                $flag = 1;
+            }
+
+            if (empty($query)) {
+                $externalparticulars = $this->externalparticularMapper->fetch_all();
+            } else {
+                $externalparticulars = $this->externalparticularMapper->search($query);
+            }
+            $this->view->setVariable("externalparticulars", $externalparticulars);
+            $this->view->render("externalparticular", "EXTERNALPARTICULAR_SHOW_Vista");
+        }else {
+            $this->view->render("externalparticular", "EXTERNALPARTICULAR_SEARCH_Vista");
+        }
+	}
 }

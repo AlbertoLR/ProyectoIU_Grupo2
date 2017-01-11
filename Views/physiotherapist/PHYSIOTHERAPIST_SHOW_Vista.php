@@ -18,11 +18,11 @@ $errors = $view->getVariable("errors");
 		<li class="breadcrumb-item active"><?= i18n("Show Physiotherapist Sessions") ?></li>
     </ol>
     </div>
-    <div class="container">	
+    <div class="container">
 	<a href="index.php?controller=physiotherapisthour&amp;action=show" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Manage Physiotherapist Hours")?></a>
 	<a href="index.php?controller=physiotherapist&amp;action=search" class="btn btn-default"><i class="fa fa-search-plus" aria-hidden="true"></i> <?= i18n("Advanced Search") ?></a>
         <h1><?= i18n("List of Physiotherapist Sessions")?></h1>
-	<a href="index.php?controller=physiotherapist&action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create Session")?></a>
+	<a href="index.php?controller=physiotherapist&action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create Physiotherapist Session")?></a>
 <table class="table">
       <thead>
         <tr>

@@ -20,6 +20,7 @@ $errors = $view->getVariable("errors");
     <div class="container">
     <h1><?= i18n("List of External Particulars") ?></h1>
 	<a href="index.php?controller=externalparticular&amp;action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create External Particular") ?></a>
+	<a href="index.php?controller=externalparticular&amp;action=search" class="btn btn-default"><i class="fa fa-search-plus" aria-hidden="true"></i> <?= i18n("Advanced Search") ?></a>
 
 <table class="table top-buffer">
       <thead>
