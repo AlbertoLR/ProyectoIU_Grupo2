@@ -176,4 +176,46 @@ class ACTIVITY_Controller extends BaseController {
         $this->view->render("activity", "Activity_INSCRIPTION_Vista");
     }
 
+    public function search()
+    {
+        $this->checkPerms("activity", "show", $this->currentUserId);
+
+        if (isset($_POST["submit"])) {
+            $query = "";
+            $flag = 0;
+
+            if ($_POST["name"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "nombre LIKE '%". $_POST["name"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["id"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "categoria_id='". $_POST["id"] ."'";
+                $flag = 1;
+            }
+
+            if (empty($query)) {
+                $activitys = $this->activityMapper->fetch_all();
+            } else {
+                $activitys = $this->activityMapper->search($query);
+            }
+            $this->view->setVariable("activitys", $activitys);
+            $this->view->render("activity", "ACTIVITY_SHOW_Vista");
+        }
+        else {
+            $categories = $this->activityMapper->fetchCategories();
+            $activitys = $this->activityMapper->fetch_all();
+            $this->view->setVariable("activitys", $activitys);
+            $this->view->setVariable("categories", $categories);
+            $this->view->render("activity", "ACTIVITY_SEARCH_Vista");
+        }
+
+      }
+
 }

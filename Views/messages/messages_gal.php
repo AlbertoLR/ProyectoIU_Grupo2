@@ -405,7 +405,10 @@
     "Inscription successfully added." => "Inscripción engadido con exito",
     "External Client's DNI/NIE" => "DNI/NIE del Cliente Externo",
     "Service successfully deleted." => "Servizo borrado con exito.",
-    "Service successfully updated." => "Servizo modificado con exito."
+    "Service successfully updated." => "Servizo modificado con exito.",
+
+    "Search Activities" => "Buscar Actividades",
+    "Search Activity" => "Buscar Actividade",
 
   )
 ?>

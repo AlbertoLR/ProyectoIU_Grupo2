@@ -156,4 +156,18 @@ class ACTIVITY_Model {
             return true;
         }
     }
+
+    public function search($query) {
+          $search_query = "SELECT * FROM actividad WHERE ". $query;
+          $sql = $this->db->prepare($search_query);
+          $sql->execute();
+          $activities_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+          $activities = array();
+
+          foreach ($activities_db as $activity) {
+              array_push($activities, new Activity($activity["id"],$activity["nombre"],$activity["capacidad"],$activity["precio"], $activity["categoria_id"] ));
+          }
+          return $activities;
+      }
 }
