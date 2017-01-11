@@ -401,5 +401,11 @@
     "Search External Customer"=>"Buscar Cliente Externo",
     "Search cash"=>"Buscar movementos",
     "Payment id (ONLY FOR CASH INCOMES)"=>"Id Pago(SÓ PARA INGRESOS)",
+
+    "Inscription successfully added." => "Inscripción engadido con exito",
+    "External Client's DNI/NIE" => "DNI/NIE del Cliente Externo",
+    "Service successfully deleted." => "Servizo borrado con exito.",
+    "Service successfully updated." => "Servizo modificado con exito."
+
   )
 ?>

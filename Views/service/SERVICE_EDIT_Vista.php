@@ -12,6 +12,10 @@ $errors = $view->getVariable("errors");
 
 <?php $view->moveToDefaultFragment(); ?>
 
+<!--Vista/formulario para modificar un servicio. El usuario puede modificar la
+descripcion, fecha, coste, el dni del cliente externo, el metodo de pago,
+la frecuencia de pago, y si se ha recibido el pago-->
+
 <?php foreach($pagos as $pago => $value) {?>
     <?php if($value["id"]==$service->getID_Pago()) {?>
         <?php  $metodo=$value["metodo_pago"] ?>
@@ -36,7 +40,7 @@ $errors = $view->getVariable("errors");
         <form action="index.php?controller=service&amp;action=edit" method="POST">
             <div class="form-group">
                 <label><?= i18n("Description") ?>:</label>
-                <input type="text" name="descripcion" class="form-control" value="<?php echo $service->getDescripcion(); ?>" minlength="2" required="required">
+                <input type="text" name="descripcion" class="form-control" value="<?php echo $service->getDescripcion(); ?>" minlength="2" maxlength="30" required="required">
             </div>
             <div class="form-group">
                 <label><?= i18n("Date") ?>:</label>
@@ -44,10 +48,10 @@ $errors = $view->getVariable("errors");
             </div>
             <div class="form-group">
                 <label><?= i18n("Cost") ?>:</label>
-                <input type="number" name="coste" class="form-control" value="<?php echo $service->getCoste(); ?>" minlength="1" min="0" max="2500" required="required">
+                <input type="number" name="coste" class="form-control" value="<?php echo $service->getCoste(); ?>" minlength="1" maxlength="10" min="0" max="2500" required="required">
             </div>
             <div class="form-group">
-                <label><?= i18n("External Client's DNI/NIF") ?>:</label>
+                <label><?= i18n("External Client's DNI/NIE") ?>:</label>
                 <select name="external" class="form-control">
                     <option value=""></option>
                     <?php foreach($clienteEx as $client => $value) {?>
@@ -60,11 +64,11 @@ $errors = $view->getVariable("errors");
             </div>
             <div class="form-group">
                 <label><?= i18n("Payment Method") ?>:</label>
-                <input type="text" name="metodo" value="<?php echo $metodo; ?>" class="form-control" minlength="1" required="required">
+                <input type="text" name="metodo" value="<?php echo $metodo; ?>" class="form-control" minlength="2" maxlength="30" required="required">
             </div>
             <div class="form-group">
                 <label><?= i18n("Payment Frecuency") ?>:</label>
-                <input type="text" name="frecuencia" value="<?php echo $frecuencia; ?>" class="form-control" minlength="1" required="required">
+                <input type="text" name="frecuencia" value="<?php echo $frecuencia; ?>" class="form-control" minlength="2" maxlength="30" required="required">
             </div>
             <div class="form-group">
                 <label><?= i18n("Payment Recieved") ?>:</label>

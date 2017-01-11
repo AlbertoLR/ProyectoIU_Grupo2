@@ -9,12 +9,14 @@ class INSCRIPTION_Controller extends BaseController {
 
     private $inscriptionMapper;
 
+    //constructor del controlador
     public function __construct() {
         parent::__construct();
         $this->inscriptionMapper = new INSCRIPTION_Model();
         $this->view->setLayout("default");
     }
 
+    //muestra todas las inscripciones
     public function show(){
         $this->checkPerms("inscription", "show", $this->currentUserId);
 
@@ -32,7 +34,7 @@ class INSCRIPTION_Controller extends BaseController {
         $this->view->render("inscription", "INSCRIPTION_SHOW_Vista");
     }
 
-
+    //muestra una inscripción en detalle
     public function showone(){
         $this->checkPerms("inscription", "showone", $this->currentUserId);
 
@@ -62,6 +64,7 @@ class INSCRIPTION_Controller extends BaseController {
         $this->view->render("inscription", "INSCRIPTION_SHOWONE_Vista");
     }
 
+    //añade una inscripción
     public function add(){
         $this->checkPerms("inscription", "add", $this->currentUserId);
 
@@ -86,7 +89,7 @@ class INSCRIPTION_Controller extends BaseController {
                         try {
 
                                 $this->inscriptionMapper->insert($inscription);
-                                $this->view->setFlash(sprintf(i18n("Inscription \"%s\" successfully added."), $inscription->getIDInscripcion()));
+                                $this->view->setFlash(sprintf(i18n("Inscription successfully added.")));
                                 $this->view->redirect("inscription", "show");
 
 
@@ -106,7 +109,7 @@ class INSCRIPTION_Controller extends BaseController {
             $this->view->render("inscription", "INSCRIPTION_ADD_Vista");
         }
 
-
+    //modifica una inscripción
     public function edit() {
         $this->checkPerms("inscription", "edit", $this->currentUserId);
 
@@ -123,7 +126,7 @@ class INSCRIPTION_Controller extends BaseController {
         $activities = $this->inscriptionMapper->fetch_activities();
 
         if ($inscription == NULL) {
-            throw new Exception(i18n("No such inscription with id: ").$inscription);
+            throw new Exception(i18n("No such inscription with id: ").$inscription->getIDInscripcion());
         }
 
         if (isset($_POST["submit"])) {
@@ -156,6 +159,7 @@ class INSCRIPTION_Controller extends BaseController {
         $this->view->render("inscription", "INSCRIPTION_EDIT_Vista");
     }
 
+    //borra una inscripción
     public function delete() {
         $this->checkPerms("inscription", "delete", $this->currentUserId);
 

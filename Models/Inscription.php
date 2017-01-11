@@ -12,7 +12,8 @@ class Inscription {
     private $DNI_Cliente;
     private $ID_Actividad;
 
-    public function __construct($IDInscripcion=NULL, $fecha=NULL, $ID_Particular_Externo=NULL, $ID_Evento=NULL, $ID_Reserva=NULL, $DNI_Cliente=NULL, $ID_Actividad=NULL, $ID_Descuento=NULL) {
+    //constructor de la clase Inscription
+    public function __construct($IDInscripcion=NULL, $fecha=NULL, $ID_Particular_Externo=NULL, $ID_Evento=NULL, $ID_Reserva=NULL, $DNI_Cliente=NULL, $ID_Actividad=NULL) {
         $this->IDInscripcion = $IDInscripcion;
         $this->fecha = $fecha;
         $this->ID_Particular_Externo = $ID_Particular_Externo;
@@ -20,8 +21,10 @@ class Inscription {
         $this->ID_Reserva = $ID_Reserva;
         $this->DNI_Cliente = $DNI_Cliente;
         $this->ID_Actividad = $ID_Actividad;
-        $this->ID_Descuento = $ID_Descuento;
     }
+
+
+    //los getters y setters de la clase Inscription
 
     public function getIDInscripcion() {
         return $this->IDInscripcion;

@@ -11,6 +11,7 @@ private $descripcion;
 private $ID_Pago;
 private $ID_Cliente;
 
+//constructor de la clase Service
 public function __construct($IDServicio=NULL, $fecha=NULL, $coste=NULL, $descripcion=NULL, $ID_Pago=NULL, $idCliente=NULL) {
     $this->IDServicio = $IDServicio;
     $this->fecha = $fecha;
@@ -19,6 +20,8 @@ public function __construct($IDServicio=NULL, $fecha=NULL, $coste=NULL, $descrip
     $this->ID_Pago = $ID_Pago;
     $this->ID_Cliente = $idCliente;
 }
+
+//getters y setters de la clase Service
 
 public function getIDServicio() {
     return $this->IDServicio;

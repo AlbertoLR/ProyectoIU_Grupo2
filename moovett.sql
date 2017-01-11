@@ -1264,7 +1264,10 @@ insert into `controller` (`id`, `controllername`) values
 (21,'physiotherapist'),
 (22,'physiotherapisthour'),
 (23,'notification'),
-(24,'document');
+(24,'document'),
+(25,'payment'),
+(26,'discount');
+
 
 
 
@@ -1388,8 +1391,17 @@ insert into `permission` (`id`, `controller`, `action`) values
 (109, 'document', 'show'),
 (110, 'document', 'showone'),
 (111, 'document', 'add'),
-(112, 'document', 'edit');
-
+(112, 'document', 'edit'),
+(113, 'payment', 'add'),
+(114, 'payment', 'delete'),
+(115, 'payment', 'edit'),
+(116, 'payment', 'show'),
+(117, 'payment', 'showone'),
+(118, 'discount', 'add'),
+(119, 'discount', 'delete'),
+(120, 'discount', 'edit'),
+(121, 'discount', 'show'),
+(122, 'discount', 'showone');
 --
 -- dumping data for table `cliente`
 --
@@ -1955,7 +1967,17 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (116, 1, 109),
 (117, 1, 110),
 (118, 1, 111),
-(119, 1, 112);
+(119, 1, 112),
+(120, 1, 113),
+(121, 1, 114),
+(122, 1, 115),
+(123, 1, 116),
+(124, 1, 117),
+(125, 1, 118),
+(126, 1, 119),
+(127, 1, 120),
+(128, 1, 121),
+(129, 1, 122);
 
 
 

@@ -5,10 +5,12 @@ class INSCRIPTION_Model {
 
     private $db;
 
+    //constructor del modelo inscripción
     public function __construct() {
         $this->db = PDOConnection::getInstance();
     }
 
+    //devuelve todas las inscripciones
     public function fetch_all(){
         $sql = $this->db->prepare("SELECT * FROM inscripcion ORDER BY fecha");
         $sql->execute();
@@ -23,6 +25,7 @@ class INSCRIPTION_Model {
         return $inscriptions;
     }
 
+    //devuelve una inscripción por su número id
     public function fetch($IDInscripcion){
         $sql = $this->db->prepare("SELECT * FROM inscripcion WHERE id=?");
         $sql->execute(array($IDInscripcion));
@@ -36,6 +39,7 @@ class INSCRIPTION_Model {
 
     }
 
+    //devuelve todos los clientes particulares externos
     public function fetch_particular(){
         $sql = $this->db->prepare("SELECT * FROM particular_externo");
         $sql->execute();
@@ -49,6 +53,7 @@ class INSCRIPTION_Model {
 
     }
 
+    //devuelve todos los eventos
     public function fetch_events(){
         $sql = $this->db->prepare("SELECT * FROM evento");
         $sql->execute();
@@ -61,6 +66,7 @@ class INSCRIPTION_Model {
         }
     }
 
+    //devuelve todas las reservas
     public function fetch_reserve(){
         $sql = $this->db->prepare("SELECT * FROM reserva");
         $sql->execute();
@@ -73,6 +79,7 @@ class INSCRIPTION_Model {
         }
     }
 
+    //devuelve todos los clientes
     public function fetch_clients(){
         $sql = $this->db->prepare("SELECT * FROM cliente");
         $sql->execute();
@@ -85,6 +92,7 @@ class INSCRIPTION_Model {
         }
     }
 
+    //devuelve todas las actividades
     public function fetch_activities(){
         $sql = $this->db->prepare("SELECT * FROM actividad");
         $sql->execute();
@@ -97,17 +105,20 @@ class INSCRIPTION_Model {
         }
     }
 
+    //inserta un inscripción
     public function insert(Inscription $inscription) {
 
         $sql = $this->db->prepare("INSERT INTO inscripcion(fecha,particular_externo_id,evento_id,reserva_id,cliente_dni_c,id_actividad) values (?,?,?,?,?,?)");
         $sql->execute(array($inscription->getFecha(),$inscription->getID_Particular_Externo(),$inscription->getID_Evento(),$inscription->getID_Reserva(),$inscription->getDNI_Cliente(), $inscription->getID_Actividad()));
     }
 
+    //actualiza un inscripción
     public function update(Inscription $inscription){
         $sql = $this->db->prepare("UPDATE inscripcion SET fecha=?, particular_externo_id=?, evento_id=?, reserva_id=?, cliente_dni_c=?, id_actividad=?  where id=?");
         $sql->execute(array($inscription->getFecha(),$inscription->getID_Particular_Externo(),$inscription->getID_Evento(),$inscription->getID_Reserva(),$inscription->getDNI_Cliente(),$inscription->getID_Actividad(), $inscription->getIDInscripcion()));
     }
 
+    //borra un inscripción
     public function delete(Inscription $inscription){
         $sql = $this->db->prepare("DELETE FROM inscripcion where id=?");
         $sql->execute(array($inscription->getIDInscripcion()));

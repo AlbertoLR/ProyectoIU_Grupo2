@@ -13,6 +13,10 @@ $errors = $view->getVariable("errors");
 
 <?php $view->moveToDefaultFragment(); ?>
 
+<!--Vista/formulario para visualizar en detalle una inscripción. En la pantalla, se
+muestra la fecha, la particular externo, el evento, la reserva, el dni del cliente,
+y la actividad-->
+
 <div class="jumbotron">
     <div class="design">
         <ol class="breadcrumb">

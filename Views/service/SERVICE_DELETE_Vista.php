@@ -12,6 +12,10 @@ $errors = $view->getVariable("errors");
 
 <?php $view->moveToDefaultFragment(); ?>
 
+<!--Vista/formulario para borrar un servicio. En la pantalla se visualiza la
+descripcion, fecha, coste, el dni del cliente externo, el metodo de pago,
+la frecuencia de pago, y si se ha recibido el pago-->
+
 <div class="jumbotron">
   <div class="design">
     <ol class="breadcrumb">
@@ -43,7 +47,7 @@ $errors = $view->getVariable("errors");
                         <td><?= $service->getCoste() ?></td>
                     </tr>
                     <tr class="active">
-                        <th><?= i18n("External Client's DNI/NIF")?>:</th>
+                        <th><?= i18n("External Client's DNI/NIE")?>:</th>
                         <?php foreach($clienteEx as $client => $value) {?>
                             <?php if($value["id"]==$service->getIDCliente()) {?>
                                 <td><?= $value["dni_nif"] ?></td>

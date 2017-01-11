@@ -11,6 +11,10 @@ $errors = $view->getVariable("errors");
 
 <?php $view->moveToDefaultFragment(); ?>
 
+<!--Vista/formulario en la cual se visualizan todos los servicios. Para cada servicio,
+se visualiza el id del servicio, la descripción, la fecha, y si se ha recibido el pago,
+además de los botones para modificar, visualiar en detalle, o borrar cada uno-->
+
     <div class="jumbotron">
       <div class="design">
         <ol class="breadcrumb">

@@ -15,6 +15,10 @@ $errors = $view->getVariable("errors");
 
 <?php $view->moveToDefaultFragment(); ?>
 
+<!--Vista/formulario para añadir un inscripción. El usuario puede insertar la
+fecha, la particular externo, el evento, la reserva, el dni del cliente,
+y la actividad-->
+
 <div class="jumbotron">
     <div class="design">
         <ol class="breadcrumb">

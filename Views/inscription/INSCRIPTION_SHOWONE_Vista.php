@@ -15,6 +15,11 @@ $errors = $view->getVariable("errors");
 
 <?php $view->moveToDefaultFragment(); ?>
 
+<!--Vista/formulario para visualizar todas las inscripciónes. En la pantalla, se
+muestra la id de la inscripción, la fecha, el particular externo, el evento, la reserva,
+el dni del cliente, y la actividad, mas los botones de modificar, borrar y visualizar en detalle
+de cada uno-->
+
 <div class="jumbotron">
   <div class="design">
     <ol class="breadcrumb">

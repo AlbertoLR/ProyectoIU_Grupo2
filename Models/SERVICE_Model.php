@@ -6,10 +6,12 @@ class SERVICE_Model {
 
     private $db;
 
+    //constructor del modelo servicio
     public function __construct() {
         $this->db = PDOConnection::getInstance();
     }
 
+    //devuelve todos los servicios
     public function fetch_all(){
         $sql = $this->db->prepare("SELECT * FROM servicio ORDER BY fecha");
         $sql->execute();
@@ -24,6 +26,7 @@ class SERVICE_Model {
         return $services;
     }
 
+    //devuelve todos los clientes externos
     public function fetch_Cliente_Externo(){
         $sql = $this->db->prepare("SELECT * FROM cliente_externo");
         $sql->execute();
@@ -37,6 +40,7 @@ class SERVICE_Model {
 
     }
 
+    //devuelve todos los pagos
     public function fetch_Pago(){
         $sql = $this->db->prepare("SELECT * FROM pago");
         $sql->execute();
@@ -50,6 +54,7 @@ class SERVICE_Model {
 
     }
 
+    //devuelve un servicio por su numero id
     public function fetch($IDServicio){
         $sql = $this->db->prepare("SELECT * FROM servicio WHERE id=?");
         $sql->execute(array($IDServicio));
@@ -63,6 +68,7 @@ class SERVICE_Model {
 
     }
 
+    //inserto un servicio, y su pago asociado
     public function insert(Service $service, $metodo, $frecuencia, $recibido) {
 
         $sql1 = $this->db->prepare("INSERT INTO pago(metodo_pago,fecha,periodicidad,cantidad,realizado) values (?,?,?,?,?)");
@@ -80,6 +86,7 @@ class SERVICE_Model {
         $sq3->execute(array($service->getFecha(),$service->getCoste(),$service->getDescripcion(),$id,$service->getIDCliente()));
     }
 
+    //actualizo un servicio, y su pago asociado
     public function update(Service $service, $metodo, $frecuencia, $recibido){
 
         $sql = $this->db->prepare("UPDATE pago SET metodo_pago=?, fecha=?, periodicidad=?, cantidad=?, realizado=?  where id=?");
@@ -90,6 +97,7 @@ class SERVICE_Model {
         $sql2->execute(array($service->getFecha(),$service->getCoste(),$service->getDescripcion(),$service->getID_Pago(),$service->getIDCliente(),$service->getIDServicio()));
     }
 
+    //borro un servicio, y su pago asociado
     public function delete(Service $service){
         $sql = $this->db->prepare("DELETE FROM pago where id=?");
         $sql->execute(array($service->getID_Pago()));
@@ -98,12 +106,4 @@ class SERVICE_Model {
         $sql->execute(array($service->getIDServicio()));
     }
 
-/*    public function servExists($descripcion, $pago_id) {
-        $sql = $this->db->prepare("SELECT * FROM servicio where descripcion=? and pago_id=?");
-        $sql->execute(array($descripcion, $pago_id));
-
-        if ($sql->fetchColumn() > 0) {
-            return true;
-        }
-    }*/
 }

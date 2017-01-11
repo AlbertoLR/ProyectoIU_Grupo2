@@ -9,12 +9,14 @@ class SERVICE_Controller extends BaseController {
 
     private $serviceMapper;
 
+    //constructor del controlador
     public function __construct() {
         parent::__construct();
         $this->serviceMapper = new SERVICE_Model();
         $this->view->setLayout("default");
     }
 
+    //devuelve todos los servicios
     public function show(){
         $this->checkPerms("service", "show", $this->currentUserId);
 
@@ -26,6 +28,7 @@ class SERVICE_Controller extends BaseController {
         $this->view->render("service", "SERVICE_SHOW_Vista");
     }
 
+    //muestra un servicio en detalle
     public function showone(){
         $this->checkPerms("service", "showone", $this->currentUserId);
 
@@ -48,7 +51,7 @@ class SERVICE_Controller extends BaseController {
         $this->view->render("service", "SERVICE_SHOWONE_Vista");
     }
 
-
+    //añade un servicio
     public function add(){
         $this->checkPerms("service", "add", $this->currentUserId);
 
@@ -90,7 +93,7 @@ class SERVICE_Controller extends BaseController {
         $this->view->render("service", "SERVICE_ADD_Vista");
     }
 
-
+    //modifica un servicio
     public function edit() {
         $this->checkPerms("service", "edit", $this->currentUserId);
 
@@ -139,6 +142,7 @@ class SERVICE_Controller extends BaseController {
         $this->view->render("service", "SERVICE_EDIT_Vista");
     }
 
+    //borra un servicio
     public function delete() {
         $this->checkPerms("service", "delete", $this->currentUserId);
 
