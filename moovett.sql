@@ -1762,9 +1762,9 @@ insert into `sesion` (`id`, `espacio_id`, `evento_id`, `actividad_id`, `user_id`
 -- dumping data for table `pago`
 --
 insert into `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `inscripcion_id`, `reserva_id`,`realizado`) values
-(1, 'tarjeta', '2016-3-2', null, 20, null, null,true),
-(2, 'transferencia', '2016-4-9', 'anual', 100, 1, null,true),
-(3, 'tarjeta', '2016-2-3', null, 300, null, null,false);
+(1, 'Credit card', '2016-3-2', "Annual Payment", 20, 1, null,true),
+(2, 'Wire transfer', '2016-4-9', 'Cash Payment', 100, null, 1,true),
+(3, 'Cash ', '2016-2-3','Monthly Payment',300,2,null,false);
 
 --
 -- dumping data for table `asistencia`
