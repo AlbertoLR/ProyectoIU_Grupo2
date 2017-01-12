@@ -387,4 +387,113 @@ class CLIENT_Controller extends BaseController {
         }
 
   }
+
+  public function search() {
+      $this->checkPerms("client", "show", $this->currentUserId);
+
+      if (isset($_POST["submit"])) {
+          $query = "";
+          $flag = 0;
+
+          if($_POST["alerta_falta"] == "Yes"){
+            $alerta_falta = TRUE;
+          }
+          else{
+              $alerta_falta = FALSE;
+          }
+          if($_POST["desempleado"] == "Yes"){
+            $desempleado = TRUE;
+          }
+          else{
+            $desempleado = FALSE;
+          }
+          if($_POST["estudiante"] == "Yes"){
+            $estudiante = TRUE;
+          }
+          else{
+            $estudiante = FALSE;
+          }
+          if($_POST["familiar"] == "Yes"){
+            $familiar = TRUE;
+          }
+          else{
+            $familiar = FALSE;
+          }
+
+          if ($_POST["dni"]){
+              $query .= "dni_c='". $_POST["dni"]."'";
+              $flag = 1;
+          }
+
+          if ($_POST["name"]){
+              if ($flag){
+                  $query .= " AND ";
+              }
+              $query .= "nombre_c LIKE '%". $_POST["name"] ."%'";
+              $flag = 1;
+          }
+
+          if ($_POST["surname"]){
+              if ($flag){
+                  $query .= " AND ";
+              }
+              $query .= "apellidos_c LIKE '%". $_POST["surname"] ."%'";
+              $flag = 1;
+          }
+
+          if ($_POST["email"]){
+              if ($flag){
+                  $query .= " AND ";
+              }
+              $query .= "email LIKE '%". $_POST["email"] ."%'";
+          }
+
+          if ($_POST["estudiante"]){
+              if ($flag){
+                  $query .= " AND ";
+              }
+              $query .= "estudiante='". $estudiante ."'";
+              $flag = 1;
+          }
+
+          if ($_POST["desempleado"]){
+              if ($flag){
+                  $query .= " AND ";
+              }
+
+              $query .= "desempleado='". $desempleado ."'";
+              $flag = 1;
+          }
+
+          if ($_POST["familiar"]){
+              if ($flag){
+                  $query .= " AND ";
+              }
+              $query .= "familiar='". $familiar ."'";
+              $flag = 1;
+          }
+
+          if ($_POST["alerta_falta"]){
+              if ($flag){
+                  $query .= " AND ";
+              }
+              $query .= "alerta_falta='". $alerta_falta."'";
+              $flag = 1;
+          }
+
+          if (empty($query)) {
+              $clients = $this->clientMapper->fetch_all();
+          } else {
+              $clients = $this->clientMapper->search($query);
+          }
+          $this->view->setVariable("clients", $clients);
+          $this->view->render("client", "CLIENT_SHOW_Vista");
+      }
+      else {
+
+          $clients = $this->clientMapper->fetch_all();
+          $this->view->setVariable("clients", $clients);
+          $this->view->render("client", "CLIENT_SEARCH_Vista");
+      }
+  }
 }

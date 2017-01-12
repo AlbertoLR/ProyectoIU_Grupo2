@@ -192,4 +192,22 @@ class CLIENT_Model {
         }
     }
 
+    public function search($query) {
+        $search_query = "SELECT * FROM cliente WHERE ". $query;
+        $sql = $this->db->prepare($search_query);
+        $sql->execute();
+        $clients_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $clients = array();
+
+        foreach ($clients_db as $client) {
+            array_push($clients, new Client($client["id"], $client["dni_c"], $client["nombre_c"], $client["apellidos_c"],
+                                        $client["fecha_nac"],$client["profesion"],$client["telefono"],$client["direccion"],
+                                        $client["comentario"],$client["email"], $client["alerta_falta"],$client["desempleado"],
+                                        $client["estudiante"],$client["familiar"],$client["num_cuenta"],$client["activo"],$client["foto"],null ));
+        }
+
+        return $clients;
+    }
+
 }

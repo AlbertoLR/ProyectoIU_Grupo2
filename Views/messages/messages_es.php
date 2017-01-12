@@ -412,6 +412,9 @@
     "Search Activities" => "Buscar Actividades",
     "Search Activity" => "Buscar Actividad",
 
+    "Search Clients" => "Buscar Clientes",
+    "Search Client" => "Buscar Cliente",
+
 
 
   )

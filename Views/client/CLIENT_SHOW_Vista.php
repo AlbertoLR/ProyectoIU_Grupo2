@@ -24,14 +24,9 @@ $errors = $view->getVariable("errors");
   </div>
     <div class="container">
     <h1><?= i18n("List of Clients") ?></h1>
-	<a href="index.php?controller=client&amp;action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create Client") ?></a>
-    <a href="index.php?controller=client&amp;action=showdeleted" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("View Deleted Clients") ?></a>
-    <form action="index.php?controller=client&amp;action=showone" method="POST">
-    <div class=" tt-dropdown-menu .tt-menu form-group top-buffer">
-	   <?= i18n("Search") ?>: <input type="text" name="id" class="typeahead tt-query form-control" autocomplete="off" spellcheck="false">
-    <div>
-    </form>
-
+	   <a href="index.php?controller=client&amp;action=add" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("Create Client") ?></a>
+     <a href="index.php?controller=client&amp;action=showdeleted" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("View Deleted Clients") ?></a>
+     <a href="index.php?controller=client&amp;action=search" class="btn btn-default"><i class="fa fa-search-plus" aria-hidden="true"></i> <?= i18n("Advanced Search") ?></a>
 <table class="table top-buffer">
       <thead>
         <tr>
