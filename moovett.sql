@@ -259,8 +259,7 @@ drop table if exists `evento`;
 create table `evento` (
 `id` int(11) not null,
   `nombre` varchar(10) collate utf8_spanish_ci not null,
-  `precio` smallint(6) not null,
-  `espacio_id` int(11) not null
+  `precio` smallint(6) not null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -723,7 +722,7 @@ alter table `espacio`
 -- indexes for table `evento`
 --
 alter table `evento`
- add primary key (`id`), add key `fk_evento_espacio1_idx` (`espacio_id`);
+ add primary key (`id`);
 
 --
 -- indexes for table `factura`
@@ -1082,12 +1081,6 @@ add constraint `dni` foreign key (`dni`) references `user` (`dni`) on delete cas
 add constraint `dni_c` foreign key (`dni_c`) references `cliente` (`dni_c`) on delete cascade on update cascade;
 
 --
--- constraints for table `evento`
---
-alter table `evento`
-add constraint `fk_evento_espacio1` foreign key (`espacio_id`) references `espacio` (`id`) on delete cascade on update cascade;
-
---
 -- constraints for table `factura`
 --
 alter table `factura`
@@ -1266,7 +1259,9 @@ insert into `controller` (`id`, `controllername`) values
 (23,'notification'),
 (24,'document'),
 (25,'payment'),
-(26,'discount');
+(26,'discount'),
+(27,'space'),
+(28,'event');
 
 
 
@@ -1401,7 +1396,17 @@ insert into `permission` (`id`, `controller`, `action`) values
 (119, 'discount', 'delete'),
 (120, 'discount', 'edit'),
 (121, 'discount', 'show'),
-(122, 'discount', 'showone');
+(122, 'discount', 'showone'),
+(123, 'space', 'add'),
+(124, 'space', 'delete'),
+(125, 'space', 'edit'),
+(126, 'space', 'show'),
+(127, 'space', 'showone'),
+(128, 'event', 'add'),
+(129, 'event', 'delete'),
+(130, 'event', 'edit'),
+(131, 'event', 'show'),
+(132, 'event', 'showone');
 --
 -- dumping data for table `cliente`
 --
@@ -1449,7 +1454,7 @@ insert into `descuento` (`id`, `descripcion`,`categoria_id`, `cantidad`) values 
 --
 -- dumping data for table `evento`
 --
-insert into `evento` (`id`, `nombre`, `espacio_id`, `precio`) values (1, 'halloween', 1, 5),(2, 'magosto', 2, 7);
+insert into `evento` (`id`, `nombre`, `precio`) values (1, 'halloween', 5),(2, 'magosto',7);
 
 --
 -- dumping data for table `actividad`
@@ -1977,7 +1982,18 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (126, 1, 119),
 (127, 1, 120),
 (128, 1, 121),
-(129, 1, 122);
+(129, 1, 122),
+(130, 1, 123),
+(131, 1, 124),
+(132, 1, 125),
+(133, 1, 126),
+(134, 1, 127),
+(135, 1, 128),
+(136, 1, 129),
+(137, 1, 130),
+(138, 1, 131),
+(139, 1, 132);
+
 
 
 
