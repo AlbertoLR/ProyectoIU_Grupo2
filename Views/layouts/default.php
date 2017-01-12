@@ -89,6 +89,7 @@ $currentuser = $view->getVariable("currentusername");
       <script src="js/dni_validator.js"></script>
       <script src="js/profile.js"></script>
       <script src="js/week_day.js"></script>
+      <script src="js/payment.js"></script>
 
 
     <!-- Typeahead core JavaScript
