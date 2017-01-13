@@ -384,7 +384,8 @@ create table `lesion_empleado` (
   `lesion_id` int(11) not null,
   `user_id` int(11) not null,
   `fecha` date not null,
-  `hora` time not null
+  `hora` time not null,
+  `alta` date default null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -1227,7 +1228,9 @@ insert into `action` (`id`, `actionname`) values
 (5, 'delete'),
 (1, 'show'),
 (2, 'showone'),
-(4, 'edit');
+(4, 'edit'),
+(6, 'export');
+
 
 --
 -- dumping data for table `controller`
@@ -1406,7 +1409,9 @@ insert into `permission` (`id`, `controller`, `action`) values
 (129, 'event', 'delete'),
 (130, 'event', 'edit'),
 (131, 'event', 'show'),
-(132, 'event', 'showone');
+(132, 'event', 'showone'),
+(133, 'injury', 'export');
+
 --
 -- dumping data for table `cliente`
 --
@@ -1508,8 +1513,8 @@ insert into `lesion_cliente` (`id_lesion`, `cliente_id`) values
 --
 -- dumping data for table `lesion_empleado`
 --
-insert into `lesion_empleado` ( `lesion_id`,  `user_id`,`fecha`,`hora`)
-values (2, 4,'2016-9-15','12:00:00');
+insert into `lesion_empleado` ( `lesion_id`, `user_id`,`fecha`,`hora`,`alta`)
+values (2, 4,'2016-9-15','12:00:00',NULL);
 
 --
 -- dumping data for table `empleado_mira`
@@ -1992,7 +1997,8 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (136, 1, 129),
 (137, 1, 130),
 (138, 1, 131),
-(139, 1, 132);
+(139, 1, 132),
+(140, 1, 133);
 
 
 

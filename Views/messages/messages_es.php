@@ -104,7 +104,7 @@
     "Controller already exists" => "Controlador existente",
     "Controller \"%s\" successfully updated." => "Controlador actualizado correctamente.",
     "Controller \"%s\" successfully deleted." => "Controlador eliminado correctamente.",
-    "You don't have permissions here." => "Non tienes permisos",
+    "You don't have permissions here." => "No tienes permisos",
     "An action id is mandatory" => "Identificador de accion obligatorio",
     "No such action with id: " => "Accion no encontrada con el id: ",
     "Action \"%s\" successfully added." => "Accion añadida correctamente.",
@@ -473,6 +473,11 @@
     "Filter Space" => "Filtrar espacio",
     "Search Space" => "Buscar espacio",
 
-
+    "Injury Logs" => "Logs de acceso a lesiones",
+    "Download" => "Descargar",
+    "Download Logs" => "Descargar Logs",
+    "Discharge" => "Alta",
+    "Apply discharge" => "Aplicar alta",
+    "Export Logs" => "Exportar Logs",
   )
 ?>

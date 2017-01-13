@@ -71,4 +71,19 @@ class INJURY_Model {
             return true;
         }
     }
+
+    public function search($query) {
+          $search_query = "SELECT * FROM lesion WHERE ". $query;
+          $sql = $this->db->prepare($search_query);
+          $sql->execute();
+          $lesiones_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+          $lesiones = array();
+
+          foreach ($lesiones_db as $lesion) {
+              array_push($lesiones, new Injury($lesion["id"], $lesion["descripcion"]));
+          }
+
+          return $lesiones;
+      }
 }

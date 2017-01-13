@@ -14,7 +14,7 @@ $errors = $view->getVariable("errors");
 <div class="jumbotron">
   <div class="design">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="index.php?controller=event&amp;action=login"><?= i18n("Home") ?></a></li>
+    <li class="breadcrumb-item"><a href="index.php?controller=user&amp;action=login"><?= i18n("Home") ?></a></li>
     <li class="breadcrumb-item"><a href="index.php?controller=event&amp;action=show"><?= i18n("Show Events") ?></a></li>
     <li class="breadcrumb-item active"><?= i18n("Search Events") ?></li>
   </ol>

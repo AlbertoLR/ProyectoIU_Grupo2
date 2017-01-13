@@ -67,7 +67,7 @@ class USER_Model {
     }
 
     public function fetch_user_injuries($userID){
-        $sql = $this->db->prepare("SELECT lesion_empleado.user_id,lesion_empleado.fecha,lesion_empleado.hora,user.name,user.dni,user.surname,user.username,lesion.descripcion
+        $sql = $this->db->prepare("SELECT lesion_empleado.lesion_id,lesion_empleado.user_id,lesion_empleado.fecha,lesion_empleado.hora,lesion_empleado.alta,user.name,user.dni,user.surname,user.username,lesion.descripcion
                                    FROM user,lesion_empleado,lesion
                                    WHERE user.id=? AND lesion_empleado.lesion_id=lesion.id
                                                   AND user.id=lesion_empleado.user_id");
@@ -235,4 +235,13 @@ class USER_Model {
      }
        return $array;
    }
+
+     public function apply_discharge($lesion,$user,$fecha){
+       $array_date=getDate();
+       $date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
+
+       $sql = $this->db->prepare("UPDATE lesion_empleado SET alta=? where lesion_id=? and user_id=? and fecha=?");
+       $sql->execute(array($date,$lesion,$user,$fecha));
+     }
+
 }

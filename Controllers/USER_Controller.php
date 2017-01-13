@@ -502,5 +502,13 @@ class USER_Controller extends BaseController {
         }
 
   }
+      public function discharge() {
+
+        if (isset($_POST["submit"])) {
+          $user = $this->userMapper->apply_discharge($_POST["lesion_id"],$_POST["user_id"],$_POST["fecha"]);
+          $this->view->redirect("user", "injuries","id=".$_POST["user_id"]);
+        }
+      }
+
 
 }

@@ -30,6 +30,7 @@ $errors = $view->getVariable("errors");
               <th><?= i18n("Username") ?></th>
               <th><?= i18n("Date") ?></th>
               <th><?= i18n("Hour") ?></th>
+              <th><?= i18n("Discharge") ?></th>
             </tr>
           </thead>
           <tbody>
@@ -43,8 +44,18 @@ $errors = $view->getVariable("errors");
                 <td><?=$value["username"] ?></td>
                 <td><?=$value["fecha"] ?></td>
                 <td><?=$value["hora"] ?></td>
+                <td><?=$value["alta"] ?></td>
+                <td>
+                <?php  if($value["alta"]==NULL ) { ?>
+                  <form action="index.php?controller=user&amp;action=discharge" method="POST" >
+                    <input type="hidden" name="lesion_id" value="<?= $value["lesion_id"]?>">
+                    <input type="hidden" name="user_id" value="<?= $value["user_id"]?>">
+                    <input type="hidden" name="fecha" value="<?= $value["fecha"]?>">
+                    <button type="submit" name="submit"class="btn btn-default"><?= i18n("Apply discharge") ?></button>
+                  </form>
+                </td>
             </tr>
-      <?php  } } ?>
+      <?php } } } ?>
           </tbody>
     </table>
   </div>

@@ -109,6 +109,39 @@ class INJURY_Controller extends BaseController {
         $this->view->setVariable("injury", $injury);
         $this->view->render("injury", "INJURY_EDIT_Vista");
     }
+    public function search()
+    {
+        $this->checkPerms("injury", "show", $this->currentUserId);
+
+        if (isset($_POST["submit"])) {
+            $query = "";
+            $flag = 0;
+
+            if ($_POST["description"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "descripcion LIKE '%". $_POST["description"] ."%'";
+                $flag = 1;
+            }
+
+
+            if (empty($query)) {
+                $injuries = $this->injuryMapper->fetch_all();
+            } else {
+                $injuries = $this->injuryMapper->search($query);
+            }
+            $this->view->setVariable("injuries", $injuries);
+            $this->view->render("injury", "INJURY_SHOW_Vista");
+        }
+        else {
+
+            $injuries= $this->injuryMapper->fetch_all();
+            $this->view->setVariable("injuries", $injuries);
+            $this->view->render("injury", "INJURY_SEARCH_Vista");
+        }
+
+      }
 
     public function delete() {
         $this->checkPerms("injury", "delete", $this->currentUserId);
@@ -133,5 +166,10 @@ class INJURY_Controller extends BaseController {
         }
         $this->view->setVariable("injury", $injury);
         $this->view->render("injury", "INJURY_DELETE_Vista");
+    }
+
+    public function export() {
+        $this->checkPerms("injury", "export", $this->currentUserId);
+        $this->view->render("injury", "INJURY_EXPORT_Vista");
     }
 }
