@@ -27,7 +27,7 @@ $errors = $view->getVariable("errors");
         <tr>
           <th>#</th>
           <th><?= i18n("DNI") ?></th>
-          <th><?= i18n("Client?") ?></th>
+          <th><?= i18n("Client")."?" ?></th>
           <th><?= i18n("Type") ?></th>
           <th><?= i18n("Document") ?></th>
           <th style="width: 72px;"></th>

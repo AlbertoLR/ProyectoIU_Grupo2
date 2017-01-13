@@ -51,6 +51,21 @@ class DOCUMENT_Model {
         $sql->execute(array($document->getID()));
     }
 
+    public function search($query) {
+        $search_query = "SELECT * FROM documento WHERE ". $query;
+        $sql = $this->db->prepare($search_query);
+        $sql->execute();
+        $documents_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $documents = array();
+
+        foreach ($documents_db as $document) {
+            array_push($documents, new Document($document["id"], $document["dni"], $document["dni_c"], $document["tipo"], $document["documento"]));
+        }
+
+        return $documents;
+    }
+
     public function nameExists($dni, $dni_c, $type, $document) {
         $sql = $this->db->prepare("SELECT count(id) FROM documento where dni=? AND dni_c=? AND tipo=? AND documento=?");
         $sql->execute(array($dni, $dni_c, $type, $document));

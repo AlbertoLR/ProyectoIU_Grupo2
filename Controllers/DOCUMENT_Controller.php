@@ -225,4 +225,56 @@ class DOCUMENT_Controller extends BaseController {
         $this->view->render("document", "DOCUMENT_DELETE_Vista");
     }
 
+    public function search() {
+        
+        if (isset($_POST["submit"])) {
+            $query = "";
+            $flag = 0;
+
+            if ($_POST["dni"]){
+                $query .= "dni='". $_POST["dni"]."'";
+                $flag = 1;
+            }
+
+            if ($_POST["dni_c"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "dni_c LIKE '%". $_POST["dni_c"] ."%'";
+                $flag = 1;
+            }
+
+            if ($_POST["type"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "tipo='". $_POST["type"]."'";
+                $flag = 1;
+            }
+
+            if ($_POST["file"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "documento LIKE '%". $_POST["file"] ."%'";
+            }
+
+            if (empty($query)) {
+                $documents = $this->documentMapper->fetch_all();
+            } else {
+                $documents = $this->documentMapper->search($query);
+            }
+            $this->view->setVariable("documents", $documents);
+            $this->view->render("document", "DOCUMENT_SHOW_Vista");
+        }
+        else {
+
+            $user = new USER_Model();
+            $client = new CLIENT_Model();
+            $this->view->setVariable("users", $user->fetch_all());
+            $this->view->setVariable("clients", $client->fetch_all());        
+            $this->view->render("document", "DOCUMENT_SEARCH_Vista");
+        }
+    }
+
 }
