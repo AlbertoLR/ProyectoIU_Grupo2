@@ -479,5 +479,19 @@
     "Discharge" => "Alta",
     "Apply discharge" => "Aplicar alta",
     "Export Logs" => "Exportar Logs",
+
+    "category" => "categoría",
+    "List of Categories" => "Lista de categorias",
+    "Create Category" => "Crear categoría",
+    "Update Category" => "Actualizar categoría",
+    "Delete Category" => "Eliminar categoría",
+
+    "document" => "documento",
+    "Document" => "Documento",
+    "List of Documents" => "Lista de documentos",
+    "Create Document" => "Crear documento",
+    "Update Document" => "Actualizar documento",
+    "Delete Document" => "Eliminar documento",
+    
   )
 ?>
