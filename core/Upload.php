@@ -21,6 +21,8 @@ class Upload
             "odt",
             "PNG",
             "JPG",
+            "GIF",
+            "png",
             "jpg",
             "gif"
         );
