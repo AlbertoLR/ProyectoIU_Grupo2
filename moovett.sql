@@ -553,7 +553,9 @@ create table `reserva` (
   `dni_c` varchar(9) collate utf8_spanish_ci default null,
 `id` int(11) not null,
   `precio_espacio` smallint(6) default null,
-  `precio_fisio` smallint(6) default null
+  `precio_fisio` smallint(6) default null,
+  `id_sesion` int(11) default null,
+  `day` date default null
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -1264,7 +1266,10 @@ insert into `controller` (`id`, `controllername`) values
 (25,'payment'),
 (26,'discount'),
 (27,'space'),
-(28,'event');
+(28,'event'),
+(29,'invoice'),
+(30,'invoiceline'),
+(31,'reservation');
 
 
 
@@ -1410,7 +1415,22 @@ insert into `permission` (`id`, `controller`, `action`) values
 (130, 'event', 'edit'),
 (131, 'event', 'show'),
 (132, 'event', 'showone'),
-(133, 'injury', 'export');
+(133, 'injury', 'export'),
+(134,'invoice','add'),
+(135,'invoice','delete'),
+(136,'invoice','edit'),
+(137,'invoice','show'),
+(138,'invoice','showone'),
+(139,'invoiceline','add'),
+(140,'invoiceline','delete'),
+(141,'invoiceline','edit'),
+(142,'invoiceline','show'),
+(143,'invoiceline','showone'),
+(144,'reservation','add'),
+(145,'reservation','delete'),
+(146,'reservation','edit'),
+(147,'reservation','show'),
+(148,'reservation','showone');
 
 --
 -- dumping data for table `cliente`
@@ -1444,7 +1464,9 @@ insert into `espacio` (`id`, `nombre`) values
 --
 -- dumping data for table `reserva`
 --
-insert into `reserva` (`id`, `id_espacio`, `dni_c`, `precio_espacio`, `precio_fisio`) values (1, 1, '65417959W', 13, null),(2, null, '81974662V', null, 25);
+insert into `reserva` (`id`, `id_espacio`, `dni_c`, `precio_espacio`, `precio_fisio`, `id_sesion`, `day`  )
+  values (1, 1, '65417959W', 13, null,null,null),
+  (2, null, '81974662V', null, 25,null,null);
 
 --
 -- dumping data for table `categoria`
@@ -1998,7 +2020,22 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (137, 1, 130),
 (138, 1, 131),
 (139, 1, 132),
-(140, 1, 133);
+(140, 1, 133),
+(141, 1, 134),
+(142, 1, 135),
+(143, 1, 136),
+(144, 1, 137),
+(145, 1, 138),
+(146, 1, 139),
+(147, 1, 140),
+(148, 1, 141),
+(149, 1, 142),
+(150, 1, 143),
+(151, 1, 144),
+(152, 1, 145),
+(153, 1, 146),
+(154, 1, 147),
+(155, 1, 148);
 
 
 
