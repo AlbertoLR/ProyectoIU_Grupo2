@@ -559,7 +559,8 @@
 "Add Event" => "Engadir Evento",
 "Event already exist" => "Evento xa existente",
 "Space already exists" => "Espazo xa existente",
-"Search Sessions" => "Buscar Sesións"
+"Search Sessions" => "Buscar Sesións",
+"You don`t have permissions here" => "Non tes permisos",
 
   )
 ?>

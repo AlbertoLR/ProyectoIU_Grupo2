@@ -86,4 +86,13 @@ class INJURY_Model {
 
           return $lesiones;
       }
+
+      public function nameExistsUpdate($injuryName,$injuryid) {
+          $sql = $this->db->prepare("SELECT count(descripcion) FROM lesion where descripcion=? AND id<>$injuryid ");
+          $sql->execute(array($injuryName));
+
+          if ($sql->fetchColumn() > 0) {
+              return true;
+          }
+      }
 }

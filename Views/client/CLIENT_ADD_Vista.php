@@ -44,7 +44,7 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Phone") ?>:</label>
-             <input type="number" name="phone" placeholder="ej: 666777888" min="100000000" max="999999999" class="form-control">
+             <input type="number" name="phone" placeholder="ej: 666777888" pattern="^[9|8|7|6]\d{8}$" class="form-control">
           </div>
           <div class="form-group">
             <label><?= i18n("Address") ?>:</label>

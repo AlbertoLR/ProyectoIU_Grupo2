@@ -561,6 +561,7 @@
 "Add Event" => "Añadir Evento",
 "Event already exists" => "Evento ya existente",
 "Space already exists" => "Espacio ya existente",
-"Search Sessions" => "Buscar Sesiones"
+"Search Sessions" => "Buscar Sesiones",
+"You don`t have permissions here" => "No tienes permisos",
   )
 ?>

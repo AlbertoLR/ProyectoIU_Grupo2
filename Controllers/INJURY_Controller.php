@@ -90,7 +90,7 @@ class INJURY_Controller extends BaseController {
             $injury->setInjuryDescription($_POST["injurydescription"]);
 
             try {
-                if (!$this->injuryMapper->nameExists($_POST["injurydescription"])){
+                if (!$this->injuryMapper->nameExistsUpdate($_POST["injurydescription"],$injuryid)){
                 $injury->checkIsValidForCreate();
                 $this->injuryMapper->update($injury);
                 $this->view->setFlash(sprintf(i18n("Injury \"%s\" successfully updated."), $injury->getInjuryDescription()));
