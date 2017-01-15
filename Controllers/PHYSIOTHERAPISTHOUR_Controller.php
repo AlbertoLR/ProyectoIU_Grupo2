@@ -11,10 +11,11 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
 
     public function __construct() {
         parent::__construct();
+		//Se crea dinamicamente el modelo.
         $this->physiotherapisthourMapper = new PHYSIOTHERAPISTHOUR_Model();
         $this->view->setLayout("default");
     }
-
+	//Se comprueban los permisos, y envia a la vista los datos necesarios
     public function show(){
         $this->checkPerms("physiotherapisthour", "show", $this->currentUserId);
 
@@ -22,7 +23,7 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
         $this->view->setVariable("physiotherapisthours", $physiotherapisthours);
         $this->view->render("physiotherapisthour", "PHYSIOTHERAPISTHOUR_SHOW_Vista");
     }
-
+	//Comprueba permisos, comprueba que se ha seteado un id. Recupera la sesion con ese id, y devuelve a la vista.
     public function showone(){
         $this->checkPerms("physiotherapisthour", "showone", $this->currentUserId);
 
@@ -32,7 +33,7 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
 
         $physiotherapisthourid = $_REQUEST["id"];
         $physiotherapisthour = $this->physiotherapisthourMapper->fetch($physiotherapisthourid);
-
+        
 
         if ($physiotherapisthour == NULL) {
             throw new Exception(i18n("No such physiotherapist hour with id: ").$physiotherapistid);
@@ -40,7 +41,7 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
         $this->view->setVariable("physiotherapisthour", $physiotherapisthour);
         $this->view->render("physiotherapisthour", "PHYSIOTHERAPISTHOUR_SHOWONE_Vista");
     }
-
+	//Comprueba los permisos y si se ha pulsado submit. Si no, muestra la vista de add.
     public function add(){
         $this->checkPerms("physiotherapisthour", "add", $this->currentUserId);
 
@@ -54,6 +55,7 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
 
 
             try {
+				//Se llama a la funcion de comprobacion del modelo y se actua segun su salida.
 				$toret=$this->physiotherapisthourMapper->rightDayTime($_POST["day"],$_POST["stime"],$_POST["etime"]);
 				switch($toret){
 					case 1:
@@ -92,7 +94,7 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
         $this->view->render("physiotherapisthour", "PHYSIOTHERAPISTHOUR_ADD_Vista");
     }
 
-
+	//Comprueba los permisos y si se ha pulsado submit. Si no, muestra la vista de edit.
     public function edit() {
         $this->checkPerms("physiotherapisthour", "edit", $this->currentUserId);
 
@@ -102,7 +104,7 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
 
         $physiotherapisthourid = $_REQUEST["id"];
         $physiotherapisthour = $this->physiotherapisthourMapper->fetch($physiotherapisthourid);
-
+        
 
         if ($physiotherapisthour == NULL) {
             throw new Exception(i18n("No such physiotherapist hour with id: ").$physiotherapisthourid);
@@ -112,8 +114,9 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
           $physiotherapisthour->setDay($_POST["day"]);
           $physiotherapisthour->setStarttime($_POST["stime"]);
           $physiotherapisthour->setEndtime($_POST["etime"]);
-
+          
             try {
+				//Se llama a la funcion de comprobacion del modelo y se actua segun su salida.
 				$toret=$this->physiotherapisthourMapper->rightDayTime($_POST["day"],$_POST["stime"],$_POST["etime"]);
 				switch($toret){
 					case 1:
@@ -150,7 +153,7 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
         $this->view->setVariable("physiotherapisthour", $physiotherapisthour);
         $this->view->render("physiotherapisthour", "PHYSIOTHERAPISTHOUR_EDIT_Vista");
     }
-
+	//Comprueba los permisos y si se ha pulsado submit. Si no, muestra la vista de delete.
     public function delete() {
         $this->checkPerms("physiotherapisthour", "delete", $this->currentUserId);
 
@@ -166,6 +169,7 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
         }
 
         if (isset($_POST["submit"])) {
+			//Comrueba si se ha seleccionado la opcion Si en la vista de borrado. Si no, devuelve a la vista show.
             if ($_POST["submit"] == "yes"){
                 $this->physiotherapisthourMapper->delete($physiotherapisthour);
                 $this->view->setFlash(sprintf(i18n("Physiotherapist hour successfully deleted.")));
@@ -175,12 +179,14 @@ class PHYSIOTHERAPISTHOUR_Controller extends BaseController {
         $this->view->setVariable("physiotherapisthour", $physiotherapisthour);
         $this->view->render("physiotherapisthour", "PHYSIOTHERAPISTHOUR_DELETE_Vista");
     }
+	//Recoge dtos de la vista de buscador, y en caso de que exista una busqueda por un campo, lo añade a una string que envia al modelo para realiar la busqueda
 	public function search() {
         $this->checkPerms("physiotherapisthour", "show", $this->currentUserId);
+		//Si se ha pulsado submit, se comprueba la busqueda. Si no, se muestra la vista de buscador.
         if (isset($_POST["submit"])) {
             $query = "";
             $flag = 0;
-            if ($_POST["day"]){
+            if ($_POST["day"]){                
                 $query .= "dia='". $_POST["day"] ."'";
                 $flag = 1;
             }

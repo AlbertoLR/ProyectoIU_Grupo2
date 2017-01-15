@@ -116,4 +116,12 @@ class SPACE_Model {
     return $toret;
     }
 
+    public function nameExistsUpdate($spaceName,$spaceid) {
+        $sql = $this->db->prepare("SELECT count(nombre) FROM espacio where nombre=? AND id<>$spaceid ");
+        $sql->execute(array($spaceName));
+
+        if ($sql->fetchColumn() > 0) {
+            return true;
+        }
+    }
 }

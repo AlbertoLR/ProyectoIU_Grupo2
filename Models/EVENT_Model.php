@@ -88,4 +88,14 @@ class EVENT_Model {
         return $eventos;
     }
 
+    public function nameExistsUpdate($eventName,$eventid) {
+        $sql = $this->db->prepare("SELECT count(nombre) FROM evento where nombre=? AND id<>$eventid ");
+        $sql->execute(array($eventName));
+
+        if ($sql->fetchColumn() > 0) {
+            return true;
+        }
+    }
+
+
 }

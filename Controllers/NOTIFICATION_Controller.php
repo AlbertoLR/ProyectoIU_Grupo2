@@ -13,35 +13,38 @@ class NOTIFICATION_Controller extends BaseController {
 
     public function __construct() {
         parent::__construct();
+		//Se crea dinamicamente el modelo.
         $this->notificationMapper = new NOTIFICATION_Model();
         $this->view->setLayout("default");
     }
-
+	//Se comprueban los permisos, se controla el campo orderby segun las columnas de la vista, y envia a la vista los datos necesarios
     public function show(){
         $this->checkPerms("notification", "show", $this->currentUserId);
 
-		if (isset($_GET["orderby"])) {
+		if (isset($_GET["orderby"])) {            
 			$notifications = $this->notificationMapper->fetch_all($_GET["orderby"]);
-		}
+		} 
 		else {
             $notifications = $this->notificationMapper->fetch_all();
 		}
-        //$notifications = $this->notificationMapper->fetch_all();
         $this->view->setVariable("notifications", $notifications);
         $this->view->render("notification", "NOTIFICATION_SHOW_Vista");
     }
-
+	//Recoge de la vista los datos del formulario.
     public function add(){
+		//Comprueba los permisos
         $this->checkPerms("notification", "add", $this->currentUserId);
-
-
+		
+		//Comprueba que se haya seleccionado al menos un email
 		if(isset($_POST["misemails"])){
+			//Comprueba que se haya escrito un asunto y mensaje
 			if (isset($_POST["subject"]) && !empty($_POST["subject"])
 			&& isset($_POST["message"]) && !empty($_POST["message"])){
+				//Usando la clase mailer se realiza el envio del correo electrónico.
 				$subject=$_POST["subject"];
-				$message=$_POST["message"];
+				$message=$_POST["message"];		
 				$correo=$_POST['misemails'];
-
+					
 				$mail = new PHPMailer;
 				//Tell PHPMailer to use SMTP
 				$mail->isSMTP();
@@ -84,33 +87,33 @@ class NOTIFICATION_Controller extends BaseController {
 						'verify_peer' => false,
 						'verify_peer_name' => false,
 						'allow_self_signed' => true
-						));
-				foreach($correo as $email){
-					$mail->addAddress($email, $email);
+						));			
+				foreach($correo as $email){				
+					$mail->addAddress($email, $email);		  
 					}
 				if (!$mail->Send()) {
 						throw new Exception(i18n("Mailer Error"));
-						//echo( "Mailer Error: " . $mail->ErrorInfo);
 					} else {
 						echo(i18n("Message sent!"));
 					}
 				}
 			else{
-				throw new Exception(i18n("Subject or Message Empty"));
+				throw new Exception(i18n("Subject or Message Empty"));				
 				}
 			}
 		else{
 			throw new Exception(i18n("No Email Selected"));
 		}
-		//$this->view->render("notification","NOTIFICATION_Vista");
 		$this->show();
 	}
+	//Recoge dtos de la vista de buscador, y en caso de que exista una busqueda por un campo, lo añade a una string que envia al modelo para realiar la busqueda
 	public function search() {
         $this->checkPerms("notification", "show", $this->currentUserId);
-        if (isset($_POST["submit"])) {
+        //Si se ha pulsado submit, se comprueba la busqueda. Si no, se muestra la vista de buscador.
+		if (isset($_POST["submit"])) {
             $query = "";
             $flag = 0;
-            if ($_POST["name"]){
+            if ($_POST["name"]){                
                 $query .= "cliente.nombre_c LIKE '%". $_POST["name"] ."%'";
                 $flag = 1;
             }
@@ -149,5 +152,8 @@ class NOTIFICATION_Controller extends BaseController {
         }
     }
 }
-
+	  
 ?>
+  
+
+

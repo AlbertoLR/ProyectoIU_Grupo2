@@ -90,7 +90,7 @@ class SPACE_Controller extends BaseController {
             $space->setNombre($_POST["nombre"]);
 
             try {
-                if (!$this->spaceMapper->nameExists($_POST["nombre"])){
+                if (!$this->spaceMapper->nameExistsUpdate($_POST["nombre"],$spaceid)){
                 $space->checkIsValidForCreate();
                 $this->spaceMapper->update($space);
                 $this->view->setFlash(sprintf(i18n("Space \"%s\" successfully updated."), $space->getNombre()));

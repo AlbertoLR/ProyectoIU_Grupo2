@@ -92,7 +92,7 @@ class EVENT_Controller extends BaseController {
 			$event->setPrecio($_POST["precio"]);
 
             try {
-                if (!$this->eventMapper->nameExists($_POST["nombre"])){
+                if (!$this->eventMapper->nameExistsUpdate($_POST["nombre"],$eventid)){
                 $event->checkIsValidForCreate();
                 $this->eventMapper->update($event);
                 $this->view->setFlash(sprintf(i18n("Event \"%s\" successfully updated."), $event->getNombre()));
@@ -178,7 +178,7 @@ class EVENT_Controller extends BaseController {
 
       }
 
-	public function inscriptions() {
+	public function inscription() {
         $this->checkPerms("event", "show", $this->currentUserId);
 
         if (!isset($_REQUEST["id"])) {
@@ -191,6 +191,6 @@ class EVENT_Controller extends BaseController {
 
         $this->view->setVariable("event", $event);
         $this->view->setVariable("inscriptions", $inscriptions);
-        $this->view->render("event", "Event_INSCRIPTION_Vista");
+        $this->view->render("event", "EVENT_INSCRIPTION_Vista");
     }
 }

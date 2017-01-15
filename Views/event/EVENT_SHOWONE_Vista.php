@@ -30,7 +30,7 @@ $errors = $view->getVariable("errors");
 	</div>
     <div class="container">
         <h1><?= i18n("Event")?></h1>
-				<a href="index.php?controller=event&amp;action=inscriptions&amp;id=<?=$event->getID()?>" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("View Inscriptions") ?></a>
+				<a href="index.php?controller=event&amp;action=inscription&amp;id=<?=$event->getID()?>" class="btn btn-default"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= i18n("View Inscriptions") ?></a>
         <table class="table top-buffer">
         <thead>
           <tr class="active">
