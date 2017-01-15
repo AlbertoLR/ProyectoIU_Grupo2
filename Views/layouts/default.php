@@ -90,8 +90,8 @@ $currentuser = $view->getVariable("currentusername");
       <script src="js/profile.js"></script>
       <script src="js/week_day.js"></script>
       <script src="js/payment.js"></script>
-
-
+      <script src="js/datevalid.js"></script>
+      <script src="js/datevalidation.js"></script>
     <!-- Typeahead core JavaScript
 	     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->

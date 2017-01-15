@@ -371,7 +371,7 @@
   	"Search Physiotherapist Session"=>"Buscar Sesion Fisioterapia",
   	"Manage Physiotherapist Hours"=>"Xestionar Horas Fisioterapia",
   	"List of Physiotherapist Sessions"=>"Lista de Sesions Fisioterapia",
-  	"Create Session"=>"Crear Sesion Fisioterapia",
+  	"Create Physiotherapist  Session"=>"Crear Sesion Fisioterapia",
   	"Show One Physiotherapist Session"=>"Mostrar unha Sesion Fisioterapia",
   	"Physiotherapist Session"=>"Sesion Fisioterapia",
 
@@ -496,7 +496,7 @@
     "Rankour successfully deleted." => "Rango horario eliminado correctamente",
     "Hours successfully deleted." => "Horas eliminadas correctamente",
     "Hours successfully added." => "Horas engadidas correctamente",
-
+    "Add Space" => "Crear Espacio",
 
   )
 ?>

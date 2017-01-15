@@ -35,12 +35,12 @@ $date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
           </div>
           <div class="form-group">
             <label><?= i18n("Start Day") ?>:</label>
-             <input type="date" name="date_start" class="form-control" min="<?php echo $date ?>" placeholder="2016-01-17">
+             <input type="date" name="date_start" id="datevalid" class="form-control" min="<?php echo $date ?>" placeholder="2016-01-17">
           </div>
 
           <div class="form-group">
             <label><?= i18n("End Day") ?>:</label>
-             <input type="date" name="date_end" class="form-control" min="<?php echo $date ?>"  placeholder="2016-01-18">
+             <input type="date" name="date_end"  id="datevalidation" class="form-control" min="<?php echo $date ?>"  placeholder="2016-01-18">
           </div>
              <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>
         </form>

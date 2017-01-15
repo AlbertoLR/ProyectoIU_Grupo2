@@ -32,7 +32,7 @@ y la actividad-->
         <form action="index.php?controller=inscription&amp;action=add" method="POST">
             <div class="form-group">
                 <label><?= i18n("Date") ?>:</label>
-                <input type="text" name="fecha" class="form-control" required placeholder="ej: 2015-12-15" id="datepicker">
+                <input type="text" name="fecha" class="form-control" required placeholder="ej: 2015-12-15" id="datevalidation">
             </div>
             <div class="form-group">
                 <label><?= i18n("External Particular") ?>:</label>

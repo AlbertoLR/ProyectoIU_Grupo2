@@ -53,7 +53,7 @@ $date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
 
        <div class="form-group">
          <label><?= i18n("Date") ?>:</label>
-         <input type="text" name="date" class="form-control" value="<?= $date ?>" readonly required="required">
+         <input type="text" name="fecha" class="form-control" value="<?= $date ?>" readonly required="required">
        </div>
 
         <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>

@@ -45,19 +45,19 @@ $date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
           </div>
           <div class="form-group">
             <label><?= i18n("From") ?>:</label>
-             <input type="date" name="from" class="form-control" min="<?php echo $date ?>" placeholder="ej: 2015-06-15" >
+             <input type="date" name="from" class="form-control" id="datevalid" min="<?php echo $date ?>" placeholder="ej: 2015-06-15" >
           </div>
           <div class="form-group">
             <label><?= i18n("To") ?>:</label>
-             <input type="date" name="to" class="form-control" min="<?php echo $date ?>" placeholder="ej: 2015-06-16" >
+             <input type="date" name="to" class="form-control" id="datevalidation" min="<?php echo $date ?>" placeholder="ej: 2015-06-16" >
           </div>
           <div class="form-group">
             <label><?= i18n("Start") ?>:</label>
-             <input type="time" name="start" class="form-control" placeholder="ej: 10:00">
+             <input type="time" name="start" class="form-control" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" placeholder="ej: 10:00">
           </div>
           <div class="form-group">
             <label><?= i18n("End") ?>:</label>
-             <input type="time" name="end" class="form-control"placeholder="ej: 11:00" >
+             <input type="time" name="end" class="form-control" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" placeholder="ej: 11:00" >
           </div>
              <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>
         </form>
