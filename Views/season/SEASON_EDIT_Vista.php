@@ -4,7 +4,16 @@ $view = ViewManager::getInstance();
 $view->setVariable("title", "Modify Season");
 $season = $view->getVariable("season");
 $errors = $view->getVariable("errors");
+
+$array_date=getDate();
+if(strlen($array_date['mon']==1)){
+$date=$array_date['year']."-0".$array_date['mon']."-".$array_date['mday'];
+}else{
+$date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
+}
 ?>
+
+
 
 <?= isset($errors["general"])?$errors["general"]:"" ?>
 
@@ -27,12 +36,12 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("Start Day") ?>:</label>
-             <input type="date" name="date_start" class="form-control" value="<?= $season->getdateStart() ?>"  placeholder="ej: 2015-6-15" >
+             <input type="date" name="date_start" class="form-control" value="<?= $season->getdateStart() ?>" min="<?php echo $date ?>" placeholder="2016-01-17">
           </div>
 
           <div class="form-group">
             <label><?= i18n("End Day") ?>:</label>
-             <input type="date" name="date_end" class="form-control" value="<?= $season->getdateEnd() ?>"  placeholder="ej: 2015-9-15" >
+             <input type="date" name="date_end" class="form-control" value="<?= $season->getdateEnd() ?>" min="<?php echo $date ?>" placeholder="2016-01-18">
           </div>
           <input type="hidden" name="id" value="<?= $season->getID() ?>">
              <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>

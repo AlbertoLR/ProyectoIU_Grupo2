@@ -47,7 +47,23 @@ class HOUR_Controller extends BaseController {
         $hour = new Hour();
 
         if (isset($_POST["submit"])) {
+          //Comprobacción de entrada de fechas. Se comprueba qe la inicial sea menor que la final.
+          $fecha_ini = strtotime(date($_POST["from"],time()));
+          $fecha_fin = strtotime($_POST["to"]);
+          if($fecha_ini > $fecha_fin){
 
+            $this->view->setFlash(sprintf(i18n("Dates not valid.")));
+            $this->view->redirect("hour", "add");
+          }
+
+          //Comprobacción de entrada de horas. Se comprueba qe la inicial sea menor que la final.
+          $fecha_ini = strtotime(date($_POST["start"],time()));
+          $fecha_fin = strtotime($_POST["end"]);
+          if($fecha_ini > $fecha_fin){
+
+            $this->view->setFlash(sprintf(i18n("Hours not valid.")));
+            $this->view->redirect("hour", "add");
+          }
 
             try {
 
@@ -76,7 +92,7 @@ class HOUR_Controller extends BaseController {
                 }
                 }
 
-                $this->view->setFlash(sprintf(i18n("Hour \"%s\" successfully added.")));
+                $this->view->setFlash(sprintf(i18n("Hours successfully added."), $hour->getID()));
                 $this->view->redirect("hour", "show");
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
@@ -109,7 +125,7 @@ class HOUR_Controller extends BaseController {
         if (isset($_POST["submit"])) {
             if ($_POST["submit"] == "yes"){
                 $this->hourMapper->delete($hour);
-                $this->view->setFlash(sprintf(i18n("Hour \"%s\" successfully deleted.")));
+                $this->view->setFlash(sprintf(i18n("Hours successfully deleted."), $hour->getID()));
             }
             $this->view->redirect("hour", "show");
         }

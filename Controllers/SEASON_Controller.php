@@ -16,6 +16,8 @@ class SEASON_Controller extends BaseController {
     }
 
     public function show(){
+      //Se muestran las temporadas con todos sus atrbutos
+
         $this->checkPerms("season", "show", $this->currentUserId);
 
         $seasons = $this->seasonMapper->fetch_all();
@@ -24,16 +26,30 @@ class SEASON_Controller extends BaseController {
     }
 
     public function add(){
+      //Se añade una temporada
         $this->checkPerms("season", "add", $this->currentUserId);
 
         $season = new Season();
 
         if (isset($_POST["submit"])) {
+
+          //Comprobacción de entrada de fechas. Se comprueba qe la inicial sea menor que la final.
+          $fecha_ini = strtotime(date($_POST["date_start"],time()));
+          $fecha_fin = strtotime($_POST["date_end"]);
+          if($fecha_ini > $fecha_fin){
+
+            $this->view->setFlash(sprintf(i18n("Dates not valid.")));
+            $this->view->redirect("season", "add");
+          }
+
           $season->setdateStart($_POST["date_start"]);
           $season->setdateEnd($_POST["date_end"]);
           $season->setDescription($_POST["description"]);
 
+
+
             try {
+              //Comprobación de que no existe el nombre e inserción
                 if (!$this->seasonMapper->nameExists($_POST["description"])){
                     $season->checkIsValidForCreate();
                     $this->seasonMapper->insert($season);
@@ -71,6 +87,14 @@ class SEASON_Controller extends BaseController {
         }
 
         if (isset($_POST["submit"])) {
+
+          $fecha_ini = strtotime(date($_POST["date_start"],time()));
+          $fecha_fin = strtotime($_POST["date_end"]);
+          if($fecha_ini > $fecha_fin){
+
+            $this->view->setFlash(sprintf(i18n("Dates not valid.")));
+            $this->view->redirect("season", "edit","id=".$_POST["id"]);
+          }
             $season->setdateStart($_POST["date_start"]);
             $season->setdateEnd($_POST["date_end"]);
             $season->setDescription($_POST["description"]);

@@ -24,11 +24,11 @@ $errors = $view->getVariable("errors");
         <form action="index.php?controller=rankhour&amp;action=add" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label><?= i18n("Opening") ?>:</label>
-             <input type="time" name="opening" class="form-control" placeholder="ej: 2015-6-15" >
+             <input type="time" name="opening" class="form-control" placeholder="ej: 10:00" >
           </div>
           <div class="form-group">
             <label><?= i18n("Closing") ?>:</label>
-             <input type="time" name="closing" class="form-control" placeholder="ej: 2015-6-15" >
+             <input type="time" name="closing" class="form-control" placeholder="ej: 11:00" >
           </div>
 
           <div class="form-group">

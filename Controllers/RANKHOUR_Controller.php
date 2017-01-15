@@ -33,6 +33,14 @@ class RANKHOUR_Controller extends BaseController {
 
         if (isset($_POST["submit"])) {
 
+          $fecha_ini = strtotime(date($_POST["opening"],time()));
+          $fecha_fin = strtotime($_POST["closing"]);
+          if($fecha_ini > $fecha_fin){
+
+            $this->view->setFlash(sprintf(i18n("Hours not valid.")));
+            $this->view->redirect("rankhour", "add");
+          }
+
           print_r($_POST["seasonid"]);
             try {
                   foreach ($_POST["days"] as $day ){
@@ -46,7 +54,7 @@ class RANKHOUR_Controller extends BaseController {
 
                 }
 
-                $this->view->setFlash(sprintf(i18n("Rankhour \"%s\" successfully added.")));
+                $this->view->setFlash(sprintf(i18n("Rankour successfully added."), $rankhour->getID()));
                 $this->view->redirect("rankhour", "show");
             }catch(ValidationException $ex) {
                 $errors = $ex->getErrors();
@@ -77,7 +85,7 @@ class RANKHOUR_Controller extends BaseController {
         if (isset($_POST["submit"])) {
             if ($_POST["submit"] == "yes"){
                 $this->rankhourMapper->delete($rankhour);
-                $this->view->setFlash(sprintf(i18n("Rankhour \"%s\" successfully deleted.")));
+                $this->view->setFlash(sprintf(i18n("Rankour successfully deleted."), $rankhour->getID()));
             }
             $this->view->redirect("rankhour", "show");
         }

@@ -490,6 +490,13 @@
     "Create Document" => "Crear documento",
     "Update Document" => "Actualizar documento",
     "Delete Document" => "Eliminar documento",
-    
+    "Dates not valid." => "Datas non válidas",
+    "Hours not valid." => "Horas non válidas",
+    "Rankour successfully added." => "Rango horario engadido correctamente",
+    "Rankour successfully deleted." => "Rango horario eliminado correctamente",
+    "Hours successfully deleted." => "Horas eliminadas correctamente",
+    "Hours successfully added." => "Horas engadidas correctamente",
+
+
   )
 ?>

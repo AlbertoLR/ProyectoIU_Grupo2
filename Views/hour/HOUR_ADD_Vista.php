@@ -6,6 +6,13 @@ $hour = $view->getVariable("hour");
 $ranks = $view->getVariable("ranks");
 $seasons = $view->getVariable("seasons");
 $errors = $view->getVariable("errors");
+
+$array_date=getDate();
+if(strlen($array_date['mon']==1)){
+$date=$array_date['year']."-0".$array_date['mon']."-".$array_date['mday'];
+}else{
+$date=$array_date['year']."-".$array_date['mon']."-".$array_date['mday'];
+}
 ?>
 
 <?= isset($errors["general"])?$errors["general"]:"" ?>
@@ -38,19 +45,19 @@ $errors = $view->getVariable("errors");
           </div>
           <div class="form-group">
             <label><?= i18n("From") ?>:</label>
-             <input type="date" name="from" class="form-control" placeholder="ej: 2015-6-15" >
+             <input type="date" name="from" class="form-control" min="<?php echo $date ?>" placeholder="ej: 2015-06-15" >
           </div>
           <div class="form-group">
             <label><?= i18n("To") ?>:</label>
-             <input type="date" name="to" class="form-control" placeholder="ej: 2015-6-15" >
+             <input type="date" name="to" class="form-control" min="<?php echo $date ?>" placeholder="ej: 2015-06-16" >
           </div>
           <div class="form-group">
             <label><?= i18n("Start") ?>:</label>
-             <input type="time" name="start" class="form-control">
+             <input type="time" name="start" class="form-control" placeholder="ej: 10:00">
           </div>
           <div class="form-group">
             <label><?= i18n("End") ?>:</label>
-             <input type="time" name="end" class="form-control" >
+             <input type="time" name="end" class="form-control"placeholder="ej: 11:00" >
           </div>
              <button type="submit" name="submit"class="btn btn-default"><?= i18n("Submit") ?></button>
         </form>
