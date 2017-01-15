@@ -176,4 +176,18 @@ class SESSION_Model {
         $sql1->execute(array($session->getHoursID()));
     }
 
+    public function search($query) {
+          $search_query = "SELECT * FROM sesion WHERE ". $query;
+          $sql = $this->db->prepare($search_query);
+          $sql->execute();
+          $sesiones_db = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+          $sesiones = array();
+
+          foreach ($sesiones_db as $sesion) {
+              array_push($sesiones, new Session($sesion["id"],$sesion["actividad_id"],$sesion["horas_posibles_id"],$sesion["evento_id"], $sesion["user_id"],$sesion["espacio_id"]));
+          }
+          return $sesiones;
+      }
+
 }

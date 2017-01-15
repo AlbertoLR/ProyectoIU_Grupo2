@@ -151,4 +151,81 @@ class SESSION_Controller extends BaseController {
         $this->view->setVariable("session", $session);
         $this->view->render("session", "SESSION_DELETE_Vista");
     }
+
+    public function search()
+    {
+        $this->checkPerms("session", "show", $this->currentUserId);
+
+        if (isset($_POST["submit"])) {
+            $query = "";
+            $flag = 0;
+
+            if ($_POST["actividad_id"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "actividad_id='". $_POST["actividad_id"] ."'";
+                $flag = 1;
+            }
+
+            if ($_POST["evento_id"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "evento_id='". $_POST["evento_id"] ."'";
+                $flag = 1;
+            }
+
+            if ($_POST["user_id"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "user_id='". $_POST["user_id"] ."'";
+                $flag = 1;
+            }
+
+            if ($_POST["espacio_id"]){
+                if ($flag){
+                    $query .= " AND ";
+                }
+                $query .= "espacio_id='". $_POST["espacio_id"] ."'";
+                $flag = 1;
+            }
+
+            if (empty($query)) {
+                $sessions = $this->sessionMapper->fetch_all();
+            } else {
+                $sessions = $this->sessionMapper->search($query);
+            }
+
+            $hours = $this->sessionMapper->fetch_hours();
+            $activities = $this->sessionMapper->fetch_activities();
+            $events = $this->sessionMapper->fetch_events();
+            $users = $this->sessionMapper->fetch_users();
+            $spaces = $this->sessionMapper->fetch_spaces();
+
+            $this->view->setVariable("hours", $hours);
+            $this->view->setVariable("activities", $activities);
+            $this->view->setVariable("events", $events);
+            $this->view->setVariable("users", $users);
+            $this->view->setVariable("spaces", $spaces);
+            $this->view->setVariable("sessions", $sessions);
+            $this->view->render("session", "SESSION_SHOW_Vista");
+        }
+        else {
+          $hours = $this->sessionMapper->fetch_hours();
+          $activities = $this->sessionMapper->fetch_activities();
+          $events = $this->sessionMapper->fetch_events();
+          $users = $this->sessionMapper->fetch_users();
+          $spaces = $this->sessionMapper->fetch_spaces();
+
+          $this->view->setVariable("hours", $hours);
+          $this->view->setVariable("activities", $activities);
+          $this->view->setVariable("events", $events);
+          $this->view->setVariable("users", $users);
+          $this->view->setVariable("spaces", $spaces);
+          $this->view->render("session", "SESSION_SEARCH_Vista");
+        }
+
+      }
 }

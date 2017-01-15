@@ -558,5 +558,9 @@
 "Invoiceline \"%s\" successfully deleted." => "Línea de factura \"%s\" eliminada correctamente.",
 "reservation" => "reserva",
 "invoice" => "factura",
+"Add Event" => "Añadir Evento",
+"Event already exists" => "Evento ya existente",
+"Space already exists" => "Espacio ya existente",
+"Search Sessions" => "Buscar Sesiones"
   )
 ?>
