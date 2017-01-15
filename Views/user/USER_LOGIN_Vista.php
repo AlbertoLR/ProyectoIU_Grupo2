@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
-$restrictions = array('userperm', 'profileperm','physiotherapisthour');
+$restrictions = array('userperm', 'profileperm','physiotherapisthour','invoiceline');
 $currentuser = $view->getVariable("currentusername");
 $controllers = $view->getVariable("user_controllers");
 $days1= $view->getVariable("days1");
