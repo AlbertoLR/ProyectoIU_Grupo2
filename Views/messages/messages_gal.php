@@ -561,6 +561,6 @@
 "Space already exists" => "Espazo xa existente",
 "Search Sessions" => "Buscar Sesións",
 "You don`t have permissions here" => "Non tes permisos",
-
+"Discharge date" => "Data baixa",
   )
 ?>

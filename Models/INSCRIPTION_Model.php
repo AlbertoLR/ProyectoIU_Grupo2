@@ -32,7 +32,7 @@ class INSCRIPTION_Model {
         $inscription = $sql->fetch(PDO::FETCH_ASSOC);
 
         if($inscription != NULL) {
-            return new Inscription($inscription["id"], $inscription["fecha"], $inscription["particular_externo_id"], $inscription["evento_id"], $inscription["reserva_id"], $inscription["cliente_dni_c"], $inscription["id_actividad"]);
+            return new Inscription($inscription["id"], $inscription["fecha"], $inscription["particular_externo_id"], $inscription["evento_id"], $inscription["reserva_id"], $inscription["cliente_dni_c"], $inscription["id_actividad"], $inscription["fecha_baja"]);
         } else {
             return NULL;
         }
@@ -108,14 +108,19 @@ class INSCRIPTION_Model {
     //inserta un inscripción
     public function insert(Inscription $inscription) {
 
-        $sql = $this->db->prepare("INSERT INTO inscripcion(fecha,particular_externo_id,evento_id,reserva_id,cliente_dni_c,id_actividad) values (?,?,?,?,?,?)");
-        $sql->execute(array($inscription->getFecha(),$inscription->getID_Particular_Externo(),$inscription->getID_Evento(),$inscription->getID_Reserva(),$inscription->getDNI_Cliente(), $inscription->getID_Actividad()));
+        $sql = $this->db->prepare("INSERT INTO inscripcion(fecha,particular_externo_id,evento_id,reserva_id,cliente_dni_c,id_actividad,fecha_baja) values (?,?,?,?,?,?,?)");
+        $sql->execute(array($inscription->getFecha(),$inscription->getID_Particular_Externo(),$inscription->getID_Evento(),$inscription->getID_Reserva(),$inscription->getDNI_Cliente(), $inscription->getID_Actividad(),NULL));
     }
 
     //actualiza un inscripción
     public function update(Inscription $inscription){
-        $sql = $this->db->prepare("UPDATE inscripcion SET fecha=?, particular_externo_id=?, evento_id=?, reserva_id=?, cliente_dni_c=?, id_actividad=?  where id=?");
-        $sql->execute(array($inscription->getFecha(),$inscription->getID_Particular_Externo(),$inscription->getID_Evento(),$inscription->getID_Reserva(),$inscription->getDNI_Cliente(),$inscription->getID_Actividad(), $inscription->getIDInscripcion()));
+      if($inscription->getFechaBaja()==""){
+        $baja = NULL;
+      }else{
+        $baja = $inscription->getFechaBaja();
+      }
+        $sql = $this->db->prepare("UPDATE inscripcion SET fecha=?, particular_externo_id=?, evento_id=?, reserva_id=?, cliente_dni_c=?, id_actividad=?,fecha_baja=?  where id=?");
+        $sql->execute(array($inscription->getFecha(),$inscription->getID_Particular_Externo(),$inscription->getID_Evento(),$inscription->getID_Reserva(),$inscription->getDNI_Cliente(),$inscription->getID_Actividad(),$baja, $inscription->getIDInscripcion()));
     }
 
     //borra un inscripción

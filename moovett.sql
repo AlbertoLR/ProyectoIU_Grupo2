@@ -342,7 +342,9 @@ create table `inscripcion` (
   `evento_id` int(11) null,
   `reserva_id` int(11) null,
   `cliente_dni_c` varchar(9) collate utf8_spanish_ci default null,
-  `id_actividad` int(11) null
+  `id_actividad` int(11) null,
+  `fecha_baja` date default null
+
 ) engine=innodb default charset=utf8 collate=utf8_spanish_ci;
 
 
@@ -1269,7 +1271,9 @@ insert into `controller` (`id`, `controllername`) values
 (28,'event'),
 (29,'invoice'),
 (30,'invoiceline'),
-(31,'reservation');
+(31,'reservation'),
+(32,'assistance');
+
 
 
 
@@ -1430,7 +1434,8 @@ insert into `permission` (`id`, `controller`, `action`) values
 (145,'reservation','delete'),
 (146,'reservation','edit'),
 (147,'reservation','show'),
-(148,'reservation','showone');
+(148,'reservation','showone'),
+(149,'assistance','add');
 
 --
 -- dumping data for table `cliente`
@@ -1440,7 +1445,11 @@ insert into `cliente` (`id`, `dni_c`, `nombre_c`, `apellidos_c`, `fecha_nac`,`nu
 (2, '81974662V', 'Elena', 'Nito Del Bosque', '1988-12-12','ES9287423222928374923847', 'Ingeniero', 632588745, 'Pasaje Remosquejades, 300A 4ºD', 'Le encanta Pilates', 'moovettgym@gmail.com', false, default, default, default,false,null),
 (3, '68942909H', 'Manuel', 'López Fernández', '1968-11-12','ES9287423332928374923847', 'Pastelero', 698523147, 'Avenida Debanaries Enllatin Renillin, 59', 'Soy pastelero', 'moovettgym@gmail.com', false, false, false, true,true,null),
 (4, '51453544Z', 'Antonio', 'Míguez Calvo', '1995-01-06','ES9287423332928371259682', null, 635921362, 'C/ Nº, Rúa Alcalde Lorenzo, 6, 15220 Bertamiráns, A Coruña', 'Pasota', 'moovettgym@gmail.com', false, true, true, true,true,null),
-(5, '61682944A', 'Carla', 'González González', '1994-12-28','ES1256987458965230000025', null, 698377781, 'Ronda de Outeiro, 306 - 15011 - A Coruña', 'Vaga', 'moovettgym@gmail.com', false, true, true, true,true,null);
+(5, '61682944A', 'Carla', 'González González', '1994-12-28','ES1256987458965230000025', null, 698377781, 'Ronda de Outeiro, 306 - 15011 - A Coruña', 'Vaga', 'moovettgym@gmail.com', false, true, true, true,true,null),
+(6, '62842899E', 'Carlos', 'Pérez González', '1993-10-26','ES3656996458965230000076', null, 693253331, 'Avda. Buenos Aires, 169 - 32004 - Ourense', 'La constancia es la clave del éxito', 'moovettgym@gmail.com', false, true, true, false,true,null),
+(7, '33799760H', 'Irene', 'Vaamonde Rodríguez', '1996-04-22','ES9656996458965230001111', null, 665397811, 'Avda. Habana, 369 - 32005 - Ourense', 'Me esfuerzo mucho', 'moovettgym@gmail.com', false, true, true, false,true,null),
+(8, '74832985R', 'Alberto', 'Martínez Cuellar', '1979-01-16','ES3696996458965230009638', null, 695234471, 'Rua Progreso, 2 - 32001 - Ourense', null, 'moovettgym@gmail.com', false, true, true, false,true,null),
+(9, '66230235X', 'José', 'Iglesias Álvarez', '1986-08-27','ES7852996458965230001234', null, 61696633, 'Rua Ervedelo, 9 - 32006 - Ourense', null, 'moovettgym@gmail.com', false, true, true, false,true,null);
 
 
 --
@@ -1499,11 +1508,53 @@ insert into `actividad` (`id`, `nombre`,  `capacidad`, `precio`, `categoria_id`)
 --
 -- dumping data for table `inscripcion`
 --
-insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`) values
-(1, null, 1, null, null, '61682944A', '2017-4-3'),
-(2, null, null, 1, null, '68942909H', '2017-4-3'),
-(3, null, null, 2, null, '68942909H', '2017-4-4'),
-(4, 1, null, null, null, null, '2017-4-4');
+insert into `inscripcion` (`id`, `particular_externo_id`, `evento_id`, `id_actividad`, `reserva_id`, `cliente_dni_c`, `fecha`,`fecha_baja`) values
+(1, null, 1, null, null, '61682944A', '2016-4-3',null),
+(2, null, null, 1, null, '68942909H', '2016-4-3',null),
+(3, null, null, 2, null, '68942909H', '2016-4-4',null),
+(4, 1, null, null, null, null, '2016-4-4',null),
+(5, null, null, 3, null, '68942909H', '2016-4-4',null),
+(6, null, null, 4, null, '68942909H', '2016-4-4',null),
+(7, null, null, 5, null, '68942909H', '2016-4-4',null),
+(8, null, null, 6, null, '68942909H', '2016-4-4',null),
+(9, null, null, 1, null, '51453544Z', '2016-4-4',null),
+(10, null, null, 2, null, '51453544Z', '2016-4-4',null),
+(11, null, null, 3, null, '51453544Z', '2016-4-4',null),
+(12, null, null, 4, null, '51453544Z', '2016-4-4',null),
+(13, null, null, 5, null, '51453544Z', '2016-4-4',null),
+(14, null, null, 6, null, '51453544Z', '2016-4-4',null),
+(15, null, null, 1, null, '61682944A', '2016-4-4',null),
+(16, null, null, 2, null, '61682944A', '2016-4-4',null),
+(17, null, null, 3, null, '61682944A', '2016-4-4',null),
+(18, null, null, 4, null, '61682944A', '2016-4-4',null),
+(19, null, null, 5, null, '61682944A', '2016-4-4',null),
+(20, null, null, 6, null, '61682944A', '2016-4-4',null),
+(21, null, null, 1, null, '62842899E', '2016-4-4',null),
+(22, null, null, 2, null, '62842899E', '2016-4-4',null),
+(23, null, null, 3, null, '62842899E', '2016-4-4',null),
+(24, null, null, 4, null, '62842899E', '2016-4-4',null),
+(25, null, null, 5, null, '62842899E', '2016-4-4',null),
+(26, null, null, 6, null, '62842899E', '2016-4-4',null),
+(27, null, null, 1, null, '33799760H', '2016-4-4',null),
+(28, null, null, 2, null, '33799760H', '2016-4-4',null),
+(29, null, null, 3, null, '33799760H', '2016-4-4',null),
+(30, null, null, 4, null, '33799760H', '2016-4-4',null),
+(31, null, null, 5, null, '33799760H', '2016-4-4',null),
+(32, null, null, 6, null, '33799760H', '2016-4-4',null),
+(33, null, null, 1, null, '74832985R', '2016-4-4',null),
+(34, null, null, 2, null, '74832985R', '2016-4-4',null),
+(35, null, null, 3, null, '74832985R', '2016-4-4',null),
+(36, null, null, 4, null, '74832985R', '2016-4-4',null),
+(37, null, null, 5, null, '74832985R', '2016-4-4',null),
+(38, null, null, 6, null, '74832985R', '2016-4-4',null),
+(39, null, null, 1, null, '66230235X', '2016-4-4',null),
+(40, null, null, 2, null, '66230235X', '2016-4-4',null),
+(41, null, null, 3, null, '66230235X', '2016-4-4',null),
+(42, null, null, 4, null, '66230235X', '2016-4-4',null),
+(43, null, null, 5, null, '66230235X', '2016-4-4',null),
+(44, null, null, 6, null, '66230235X', '2016-4-4',null);
+
+
 
 --
 -- dumping data for table `documento`
@@ -2035,7 +2086,8 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (152, 1, 145),
 (153, 1, 146),
 (154, 1, 147),
-(155, 1, 148);
+(155, 1, 148),
+(156, 1, 149);
 
 
 

@@ -31,8 +31,8 @@ y la actividad-->
         <h1><?= i18n("Modify Inscription")?></h1>
         <form action="index.php?controller=inscription&amp;action=edit" method="POST">
             <div class="form-group">
-                <label><?= i18n("Fecha") ?>:</label>
-                <input type="text" name="fecha" class="form-control" value="<?php echo $inscription->getFecha(); ?>" required placeholder="ej: 2015-12-15" id="datevalidoaton">
+                <label><?= i18n("Date") ?>:</label>
+                <input type="text" name="fecha" class="form-control" value="<?php echo $inscription->getFecha(); ?>" required placeholder="ej: 2015-12-15" id="datevalidation">
             </div>
             <div class="form-group">
                 <label><?= i18n("External Particular") ?>:</label>
@@ -95,6 +95,10 @@ y la actividad-->
                           <option value="<?php echo $value["id"] ?>" ><?= $value["nombre"] ?></option>
                     <?php }} ?>
                   </select>
+              </div>
+              <div class="form-group">
+                  <label><?= i18n("Discharge date") ?>:</label>
+                  <input type="text" name="fecha_baja" class="form-control" value="<?php echo $inscription->getFechaBaja(); ?>" required placeholder="ej: 2015-12-15" id="datevalid">
               </div>
           </div>
             <input type="text" name="id" value="<?php echo $inscription->getIDInscripcion(); ?>" hidden="true">

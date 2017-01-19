@@ -563,5 +563,6 @@
 "Space already exists" => "Espacio ya existente",
 "Search Sessions" => "Buscar Sesiones",
 "You don`t have permissions here" => "No tienes permisos",
+"Discharge date" => "Fecha baja",
   )
 ?>

@@ -137,6 +137,7 @@ class INSCRIPTION_Controller extends BaseController {
             $inscription->setID_Reserva($_POST["id_reserva"]);
             $inscription->setDNI_Cliente($_POST["dni_cliente"]);
             $inscription->setID_Actividad($_POST["id_actividad"]);
+            $inscription->setFechaBaja($_POST["fecha_baja"]);
 
 
             try {

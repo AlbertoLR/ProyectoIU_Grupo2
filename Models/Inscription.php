@@ -11,9 +11,10 @@ class Inscription {
     private $ID_Reserva;
     private $DNI_Cliente;
     private $ID_Actividad;
+    private $fecha_baja;
 
     //constructor de la clase Inscription
-    public function __construct($IDInscripcion=NULL, $fecha=NULL, $ID_Particular_Externo=NULL, $ID_Evento=NULL, $ID_Reserva=NULL, $DNI_Cliente=NULL, $ID_Actividad=NULL) {
+    public function __construct($IDInscripcion=NULL, $fecha=NULL, $ID_Particular_Externo=NULL, $ID_Evento=NULL, $ID_Reserva=NULL, $DNI_Cliente=NULL, $ID_Actividad=NULL, $fecha_baja=NULL) {
         $this->IDInscripcion = $IDInscripcion;
         $this->fecha = $fecha;
         $this->ID_Particular_Externo = $ID_Particular_Externo;
@@ -21,6 +22,7 @@ class Inscription {
         $this->ID_Reserva = $ID_Reserva;
         $this->DNI_Cliente = $DNI_Cliente;
         $this->ID_Actividad = $ID_Actividad;
+        $this->fecha_baja = $fecha_baja;
     }
 
 
@@ -82,5 +84,13 @@ class Inscription {
         $this->ID_Actividad = $ID_Actividad;
     }
 
-}
+    public function getFechaBaja() {
+        return $this->fecha_baja;
+    }
 
+    public function setFechaBaja($fecha=NULL) {
+        $this->fecha_baja = $fecha;
+    }
+
+
+}

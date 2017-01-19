@@ -88,6 +88,14 @@ de cada uno-->
                         <td ><?= i18n("No")?></td>
                     <?php  } ?>
                 </tr>
+                <tr>
+                    <th><?= i18n("Discharge date")?>:</th>
+                    <?php if(""==$inscription->getFechaBaja()) {?>
+                        <td ><?= i18n("No")?></td>
+                    <?php  }else{ ?>
+                    <td><?= $inscription->getFechaBaja() ?></td>
+                    <?php  }?>
+                </tr>
             </table>
         </div>
     </div>
