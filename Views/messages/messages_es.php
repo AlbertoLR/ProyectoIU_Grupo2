@@ -566,7 +566,7 @@
 "Discharge date" => "Fecha baja",
 "Check Assistance" => "Asistencia",
 "Assistance Control" => "Control de asistencia",
-
+"Assistance successfully added" => "Asistencia añadida",
 
   )
 ?>
