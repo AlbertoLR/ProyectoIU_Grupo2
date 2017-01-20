@@ -13,3 +13,10 @@ Ter a Máquina Virtual utilizada para o desenvolvemento, ofrecida polo profesor 
 #Usuario Probas
 * nome: admin
 * contrasinal: admin
+
+#Comentarios
+
+* A semana con máis datos insertados é a do Luns 16-01-2017.
+* Todos os clientes están inscritos en algunha actividade.
+* O administrador so ten acceso ás lesión do cliente con DNI 68942909H. Isto débese a que so os usuarios que asignaron a lesión teñen acceso a elas.
+* Para as lesions dos usuarios, o administrador ten acceso a todas elas.

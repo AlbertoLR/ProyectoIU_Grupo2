@@ -1435,7 +1435,8 @@ insert into `permission` (`id`, `controller`, `action`) values
 (146,'reservation','edit'),
 (147,'reservation','show'),
 (148,'reservation','showone'),
-(149,'assistance','add');
+(149,'assistance','add'),
+(150,'assistance','show');
 
 --
 -- dumping data for table `cliente`
@@ -1852,15 +1853,22 @@ insert into `pago` (`id`, `metodo_pago`, `fecha`, `periodicidad`, `cantidad`, `i
 --
 -- dumping data for table `asistencia`
 --
-insert into `asistencia` (`id_cliente`, `sesion_id`, `asiste`) values (1, 1, false),(2, 2, true);
+insert into `asistencia` (`id_cliente`, `sesion_id`, `asiste`) values
+(3, 61, false),
+(4, 61, true),
+(5, 61, false),
+(6, 61, true),
+(7, 61, true),
+(8, 61, true),
+(9, 61, false);
 
 
 --
 -- dumping data for table `alerta`
 --
 insert into `alerta` (`id`, `descripcion`, `user_id`, `pago_id`, `asistencia_id_cliente`,`asistencia_sesion_id`) values
-(1, 'no acude',null,null, 1, 1),
-(2, 'no paga', null, 1, 1, null);
+(1, 'no acude',null,null, 3, 61),
+(2, 'no paga', null, 1, 4, null);
 
 --
 -- dumping data for table `posible_fisio`
@@ -2087,7 +2095,8 @@ insert into `profile_perms` (`id`, `profile`, `permission`) values
 (153, 1, 146),
 (154, 1, 147),
 (155, 1, 148),
-(156, 1, 149);
+(156, 1, 149),
+(157, 1, 150);
 
 
 

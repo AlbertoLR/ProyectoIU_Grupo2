@@ -562,5 +562,7 @@
 "Search Sessions" => "Buscar Sesións",
 "You don`t have permissions here" => "Non tes permisos",
 "Discharge date" => "Data baixa",
+"Check Assistance" => "Asistencia",
+"Assistance Control" => "Control de asistencia",
   )
 ?>

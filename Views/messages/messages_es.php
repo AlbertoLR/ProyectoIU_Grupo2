@@ -564,5 +564,9 @@
 "Search Sessions" => "Buscar Sesiones",
 "You don`t have permissions here" => "No tienes permisos",
 "Discharge date" => "Fecha baja",
+"Check Assistance" => "Asistencia",
+"Assistance Control" => "Control de asistencia",
+
+
   )
 ?>

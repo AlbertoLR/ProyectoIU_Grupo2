@@ -22,7 +22,7 @@ $spaces = $view->getVariable("spaces");
   </ol>
   </div>
     <div class="container">
-      <h1><?= i18n("Create Session")?></h1>
+      <h1><?= i18n("Search Session")?></h1>
         <form action="index.php?controller=session&amp;action=search" method="POST" enctype="multipart/form-data">
 
           <div class="form-group">

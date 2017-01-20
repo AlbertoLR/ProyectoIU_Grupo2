@@ -77,6 +77,8 @@ $permissions = $view->getVariable("permissions");
             <?php } ?>
             <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"] ?></a><p>
             <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"] ?></a><p>
+            <p><a href="index.php?controller=assistance&amp;action=show&amp;sesion=<?php echo $value["id"] ?>&amp;user=<?php echo $value["user_id"] ?>" class="btn btn-default"><?= i18n("Check Assistance") ?></a></p>
+
             <hr>
         <?php }?>
         </td>
@@ -90,6 +92,8 @@ $permissions = $view->getVariable("permissions");
               <?php } ?>
               <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"] ?></a><p>
               <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"]."\n" ?></a><p>
+              <p><a href="index.php?controller=assistance&amp;action=show&amp;sesion=<?php echo $value["id"] ?>&amp;user=<?php echo $value["user_id"] ?>" class="btn btn-default"><?= i18n("Check Assistance") ?></a></p>
+
               <hr>
           <?php }?>
         </td>
@@ -103,6 +107,8 @@ $permissions = $view->getVariable("permissions");
               <?php } ?>
               <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"] ?></a><p>
               <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"]."\n" ?></a><p>
+              <p><a href="index.php?controller=assistance&amp;action=show&amp;sesion=<?php echo $value["id"] ?>&amp;user=<?php echo $value["user_id"] ?>" class="btn btn-default"><?= i18n("Check Assistance") ?></a></p>
+
               <hr>
           <?php }?>
         </td>
@@ -116,6 +122,8 @@ $permissions = $view->getVariable("permissions");
               <?php } ?>
               <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"]."\n" ?></a><p>
               <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"]."\n" ?></a><p>
+              <p><a href="index.php?controller=assistance&amp;action=show&amp;sesion=<?php echo $value["id"] ?>&amp;user=<?php echo $value["user_id"] ?>" class="btn btn-default"><?= i18n("Check Assistance") ?></a></p>
+
               <hr>
           <?php }?>
         </td>
@@ -129,6 +137,8 @@ $permissions = $view->getVariable("permissions");
               <?php } ?>
               <p><a href="index.php?controller=user&amp;action=showone&amp;id=<?php echo $value["user_id"] ?>"><?php echo $value["user"]."\n" ?></a><p>
               <p><a href="index.php?controller=space&amp;action=showone&amp;id=<?php echo $value["space_id"] ?>"><?php echo $value["space"]."\n" ?></a><p>
+              <p><a href="index.php?controller=assistance&amp;action=show&amp;sesion=<?php echo $value["id"] ?>&amp;user=<?php echo $value["user_id"] ?>" class="btn btn-default"><?= i18n("Check Assistance") ?></a></p>
+
               <hr>
           <?php }?>
         </td>

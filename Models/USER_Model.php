@@ -202,6 +202,7 @@ class USER_Model {
            $array[$i]["hora_inicio"] = $values["hora_inicio"];
            $array[$i]["hora_fin"] = $values["hora_fin"];
            $array[$i]["fecha"] = $values["dia"];
+          $array[$i]["id"] = $session->getID();
           if($session->getActivityID()) {
             foreach($activities as $activity => $value){
             if($value["id"]==$session->getActivityID()) {
@@ -217,7 +218,10 @@ class USER_Model {
                  $array[$i]["evento_id"]=$value["id"];
            }
           }
-         }
+        }else{
+          $array[$i]["actividad"] = NULL;
+          $array[$i]["evento"] = NULL;
+        }
 
           }
           foreach($users as $user=> $value){
